@@ -178,6 +178,7 @@ _API_GROUP_ORDER = [
         "DSPLIB_bitwiseANDConst",
         "DSPLIB_logicalComparator",
         "DSPLIB_logicalNOT",
+        "DSPLIB_peakAbsoluteValue",
     ]),
     ("Matrix", [
         "DSPLIB_diag",
