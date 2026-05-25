@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid black;
+        }
+        th {
+            background-color: lightgrey;
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+            word-wrap: break-word;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+<TABLE frame="box" rules="all" cellspacing="0" width="100%" border="1" cellpadding="8">
+    <tr bgcolor="lightgrey">
+        <th><center>Data Type</center></th>
+        <th><center>Data Size</center></th>
+        <th><center>EVM Cycles</center></th>
+        <th><center>Cycles/sample</center></th>
+    </tr>
+    <tr>
+        <td><center>int8_t</center></td>
+        <td><center>4096</center></td>
+        <td><center>174</center></td>
+        <td><center>0.042480469</center></td>
+    </tr>
+    <tr>
+        <td><center>int8_t</center></td>
+        <td><center>1024</center></td>
+        <td><center>78</center></td>
+        <td><center>0.076171875</center></td>
+    </tr>
+    <tr>
+        <td><center>int8_t</center></td>
+        <td><center>256</center></td>
+        <td><center>54</center></td>
+        <td><center>0.2109375</center></td>
+    </tr>
+    <tr>
+        <td><center>int8_t</center></td>
+        <td><center>64</center></td>
+        <td><center>48</center></td>
+        <td><center>0.75</center></td>
+    </tr>
+    <tr>
+        <td><center>int16_t</center></td>
+        <td><center>4096</center></td>
+        <td><center>302</center></td>
+        <td><center>0.073730469</center></td>
+    </tr>
+    <tr>
+        <td><center>int16_t</center></td>
+        <td><center>1024</center></td>
+        <td><center>110</center></td>
+        <td><center>0.107421875</center></td>
+    </tr>
+    <tr>
+        <td><center>int16_t</center></td>
+        <td><center>256</center></td>
+        <td><center>62</center></td>
+        <td><center>0.2421875</center></td>
+    </tr>
+    <tr>
+        <td><center>int16_t</center></td>
+        <td><center>64</center></td>
+        <td><center>50</center></td>
+        <td><center>0.78125</center></td>
+    </tr>
+    <tr>
+        <td><center>int32_t</center></td>
+        <td><center>4096</center></td>
+        <td><center>558</center></td>
+        <td><center>0.136230469</center></td>
+    </tr>
+    <tr>
+        <td><center>int32_t</center></td>
+        <td><center>1024</center></td>
+        <td><center>174</center></td>
+        <td><center>0.169921875</center></td>
+    </tr>
+    <tr>
+        <td><center>int32_t</center></td>
+        <td><center>256</center></td>
+        <td><center>78</center></td>
+        <td><center>0.3046875</center></td>
+    </tr>
+    <tr>
+        <td><center>int32_t</center></td>
+        <td><center>64</center></td>
+        <td><center>78</center></td>
+        <td><center>1.21875</center></td>
+    </tr>
+    <tr>
+        <td><center>int32_t</center></td>
+        <td><center>16</center></td>
+        <td><center>62</center></td>
+        <td><center>3.875</center></td>
+    </tr>
+    <tr>
+        <td><center>float</center></td>
+        <td><center>4096</center></td>
+        <td><center>557</center></td>
+        <td><center>0.135986328</center></td>
+    </tr>
+    <tr>
+        <td><center>float</center></td>
+        <td><center>1024</center></td>
+        <td><center>173</center></td>
+        <td><center>0.168945313</center></td>
+    </tr>
+    <tr>
+        <td><center>float</center></td>
+        <td><center>256</center></td>
+        <td><center>77</center></td>
+        <td><center>0.30078125</center></td>
+    </tr>
+    <tr>
+        <td><center>float</center></td>
+        <td><center>64</center></td>
+        <td><center>61</center></td>
+        <td><center>0.953125</center></td>
+    </tr>
+    <tr>
+        <td><center>float</center></td>
+        <td><center>16</center></td>
+        <td><center>61</center></td>
+        <td><center>3.8125</center></td>
+    </tr>
+    <tr>
+        <td><center>double</center></td>
+        <td><center>4096</center></td>
+        <td><center>1069</center></td>
+        <td><center>0.260986328</center></td>
+    </tr>
+    <tr>
+        <td><center>double</center></td>
+        <td><center>1024</center></td>
+        <td><center>301</center></td>
+        <td><center>0.293945313</center></td>
+    </tr>
+    <tr>
+        <td><center>double</center></td>
+        <td><center>256</center></td>
+        <td><center>109</center></td>
+        <td><center>0.42578125</center></td>
+    </tr>
+    <tr>
+        <td><center>double</center></td>
+        <td><center>64</center></td>
+        <td><center>61</center></td>
+        <td><center>0.953125</center></td>
+    </tr>
+    <tr>
+        <td><center>double</center></td>
+        <td><center>32</center></td>
+        <td><center>53</center></td>
+        <td><center>1.65625</center></td>
+    </tr>
+</table>
+
+</body>
+</html>
