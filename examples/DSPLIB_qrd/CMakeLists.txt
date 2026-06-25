@@ -1,0 +1,2 @@
+set(extObjNames "DSPLIB_matTrans_obj;DSPLIB_matMul_obj")
+dsplib_create_binary_for_example_kernel()

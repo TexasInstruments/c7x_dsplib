@@ -1,0 +1,37 @@
+# Build output
+build*/
+lib/
+bin/
+
+# CMake generated
+**/CMakeCache.txt
+**/CMakeUserPresets.json
+**/CTestTestfile.cmake
+**/CPackConfig.cmake
+**/cmake_install.cmake
+**/install_manifest.txt
+**/compile_commands.json
+
+# Misc generated
+**/.cache
+**/user_guide
+**/test_data
+**/tlmtrace.txt
+**/stats.txt
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Internal tooling (not part of public release)
+scripts/
+tests/
+docs/superpowers/
+
+# Editor / AI tooling
+.vscode/
+.claude/
+
+# Generated docs
+docs/doxygen/html/

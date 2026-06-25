@@ -1,0 +1,65 @@
+# Copyright (C) 2026 Texas Instruments Incorporated
+#
+# SPDX-License-Identifier: Apache-2.0
+
+from __future__ import print_function
+from subprocess import call
+from sys import platform
+
+import sys
+import numpy as np
+import csv
+import os
+
+
+def write_attributes(f, attributes, stringToWrite):
+    f.write("#ifdef WIN32\n")
+    f.write(stringToWrite)
+    f.write("#else\n")
+    f.write(attributes + stringToWrite)
+    f.write("#endif\n")
+    f.write("{\n")
+
+
+def write_header_file(in1, out, testCase, headerFileName):
+    testId = testCase["ID"]
+    samples = testCase["inSamples"]
+    channels = testCase["inChannels"]
+    dTypeIn0 = testCase["dType"]
+    totalSize = samples * channels
+
+    attributesIn1 = '__attribute__((section(".staticData"))) static '
+    attributesOut = '__attribute__((section(".staticData"))) static '
+
+    outputDir = "../../DSPLIB_blkCopyConst2D/test_data/"
+
+    if not os.path.exists(outputDir):
+        os.mkdir(outputDir)
+
+    with open(outputDir + headerFileName, "w") as f:
+        write_attributes(
+            f,
+            attributesIn1,
+            dTypeIn0 + " " + "staticRefIn1Case" + str(testId) + "[]=\n",
+        )
+        for dimX in range(0, 1):
+            print("{:>2}".format(in1[dimX]), file=f, end=", ")
+
+        f.write("\n};")
+        f.write("\n\n")
+        f.close()
+    with open(outputDir + headerFileName, "a") as f:
+        write_attributes(
+            f,
+            attributesOut,
+            dTypeIn0 + " " + "staticRefOutCase" + str(testId) + "[]=\n",
+        )
+
+        for dimY in range(0, channels):
+            for dimX in range(0, samples):
+                print("{:>2}".format(out[dimY, dimX]), file=f, end=", ")
+            print(" ", file=f)
+
+        f.write("\n};")
+        f.write("\n\n")
+        f.close()

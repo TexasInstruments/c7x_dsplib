@@ -1,0 +1,126 @@
+// Copyright (C) 2026 Texas Instruments Incorporated
+//
+// SPDX-License-Identifier: Apache-2.0
+
+#include "DSPLIB_q15tofl_priv.h"
+
+int32_t DSPLIB_q15tofl_getHandleSize(DSPLIB_q15tofl_InitArgs *pKerInitArgs)
+{
+   int32_t privBufSize = sizeof(DSPLIB_q15tofl_PrivArgs);
+
+   DSPLIB_DEBUGPRINTFN(0, "privBufSize: %d\n", privBufSize);
+
+   return privBufSize;
+}
+
+DSPLIB_STATUS DSPLIB_q15tofl_init_checkParams(DSPLIB_kernelHandle            handle,
+                                              const DSPLIB_bufParams1D_t    *bufParamsIn,
+                                              const DSPLIB_bufParams1D_t    *bufParamsOut,
+                                              const DSPLIB_q15tofl_InitArgs *pKerInitArgs)
+{
+   DSPLIB_DEBUGPRINTFN(0, "%s\n", "Entering Function");
+
+   DSPLIB_STATUS status = DSPLIB_SUCCESS;
+
+   if (handle == NULL) {
+      status = DSPLIB_ERR_NULL_POINTER;
+   }
+
+   if (status == DSPLIB_SUCCESS) {
+      if ((bufParamsIn->data_type != DSPLIB_INT16)) {
+         status = DSPLIB_ERR_INVALID_TYPE;
+      }
+      else if ((bufParamsOut->data_type != DSPLIB_FLOAT32) && (bufParamsOut->data_type != DSPLIB_FLOAT64)) {
+         status = DSPLIB_ERR_INVALID_TYPE;
+      }
+      else {
+         /* Nothing to do here */
+      }
+   }
+
+   DSPLIB_DEBUGPRINTFN(0, "Exiting function with return status: %d\n", status);
+
+   return status;
+}
+
+DSPLIB_STATUS
+DSPLIB_q15tofl_exec_checkParams(DSPLIB_kernelHandle handle, const void *restrict pIn, const void *restrict pOut)
+{
+   DSPLIB_DEBUGPRINTFN(0, "%s\n", "Entering function");
+
+   DSPLIB_STATUS status;
+
+   if ((pIn == NULL) || (pOut == NULL)) {
+      status = DSPLIB_ERR_NULL_POINTER;
+   }
+   else {
+      status = DSPLIB_SUCCESS;
+   }
+   DSPLIB_DEBUGPRINTFN(0, "Exiting function with return status: %d\n", status);
+
+   return status;
+}
+
+DSPLIB_STATUS DSPLIB_q15tofl_init(DSPLIB_kernelHandle            handle,
+                                  DSPLIB_bufParams1D_t          *bufParamsIn,
+                                  DSPLIB_bufParams1D_t          *bufParamsOut,
+                                  const DSPLIB_q15tofl_InitArgs *pKerInitArgs)
+{
+   DSPLIB_DEBUGPRINTFN(0, "%s\n", "Entering function");
+
+   DSPLIB_STATUS            status       = DSPLIB_SUCCESS;
+   DSPLIB_q15tofl_PrivArgs *pKerPrivArgs = (DSPLIB_q15tofl_PrivArgs *) handle;
+
+   pKerPrivArgs->blockSize = pKerInitArgs->dataSize;
+
+   DSPLIB_DEBUGPRINTFN(0, "pKerInitArgs->funcStyle: %d bufParamsOut->data_type: %d\n", pKerInitArgs->funcStyle,
+                       bufParamsOut->data_type);
+
+   if (pKerInitArgs->funcStyle == DSPLIB_FUNCTION_NATC) {
+      if (bufParamsOut->data_type == DSPLIB_FLOAT32) {
+         pKerPrivArgs->execute = DSPLIB_q15tofl_exec_cn<float>;
+         status                = DSPLIB_q15tofl_init_cn(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+      }
+      else if (bufParamsOut->data_type == DSPLIB_FLOAT64) {
+         pKerPrivArgs->execute = DSPLIB_q15tofl_exec_cn<double>;
+         status                = DSPLIB_q15tofl_init_cn(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+      }
+      else {
+         status = DSPLIB_ERR_INVALID_TYPE;
+      }
+   }
+   else {
+      if (bufParamsOut->data_type == DSPLIB_FLOAT32) {
+         pKerPrivArgs->execute = DSPLIB_q15tofl_exec_ci<float>;
+         status                = DSPLIB_q15tofl_init_ci<float>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+      }
+      else if (bufParamsOut->data_type == DSPLIB_FLOAT64) {
+         pKerPrivArgs->execute = DSPLIB_q15tofl_exec_ci<double>;
+         status                = DSPLIB_q15tofl_init_ci<double>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+      }
+      else {
+         status = DSPLIB_ERR_INVALID_TYPE;
+      }
+   }
+
+   DSPLIB_DEBUGPRINTFN(0, "Exiting function with return status: %d\n", status);
+
+   return status;
+}
+
+DSPLIB_STATUS DSPLIB_q15tofl_exec(DSPLIB_kernelHandle handle, void *restrict pIn, void *restrict pOut)
+{
+   DSPLIB_STATUS status;
+
+   DSPLIB_DEBUGPRINTFN(0, "%s\n", "Entering function");
+
+   DSPLIB_q15tofl_PrivArgs *pKerPrivArgs = (DSPLIB_q15tofl_PrivArgs *) handle;
+
+   DSPLIB_DEBUGPRINTFN(0, "pKerPrivArgs->blockSize %d\n", pKerPrivArgs->blockSize);
+
+   status = pKerPrivArgs->execute(handle, pIn, pOut);
+
+   DSPLIB_DEBUGPRINTFN(0, "Exiting function with return status: %d\n", status);
+
+   return status;
+}

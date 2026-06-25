@@ -1,0 +1,11 @@
+/*
+ *  Sends the test parameter structure and number of tests
+ */
+void DSPLIB_mat_submat_copy_getTestParams (
+    DSPLIB_mat_submat_copy_testParams_t **params,
+    int32_t *                                 numTests)
+{
+   *params = testParams;
+   *numTests =
+       sizeof (testParams) / sizeof (DSPLIB_mat_submat_copy_testParams_t);
+}
