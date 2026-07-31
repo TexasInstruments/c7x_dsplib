@@ -40,10 +40,9 @@ extern "C" {
 typedef struct {
    /*! @brief Variant of the function refer to @ref DSPLIB_FUNCTION_STYLE     */
    int8_t funcStyle;
-   /*! @brief Size of input data
-              - dimX => # of columns
-              - dimY => # of rows */
+   /*! @brief Number of columns in the input matrix */
    uint32_t dimX;
+   /*! @brief Number of rows in the input matrix */
    uint32_t dimY;
 } DSPLIB_matTransInitArgs;
 
@@ -115,7 +114,7 @@ DSPLIB_STATUS DSPLIB_matTrans_init_checkParams(DSPLIB_kernelHandle            ha
  *
  *  @param [in]  handle :  Active handle to the kernel
  *  @param [in]  pIn    :  Pointer to the structure input buffer
- *  @param [out] pout   :  Pointer to the output buffer
+ *  @param [out] pOut   :  Pointer to the output buffer
  *
  *  @return      Status value indicating success or failure. Refer to @ref DSPLIB_STATUS.
  *
@@ -158,14 +157,10 @@ DSPLIB_STATUS DSPLIB_matTrans_exec(DSPLIB_kernelHandle handle, void *restrict pI
  *                estimate cycles of the loop used in the execution kernel.
  *
  *  @param [in]  handle         :  Active handle to the kernel
- *  @param [in]  dataType       :  Datatype of purticular test case
  *  @param [in]  archCycles     :  Arch compute cycles obtained from asm
  *  @param [in]  estCycles      :  Cycles estimated for that purticular kenel
  *  @param [in]  dataType       :  Datatype of the input data
- *  @param [in]  dim_x          :  Width of the input data
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * DSPLIB_STATUS.
+ *  @param [in]  dim_X          :  Width of the input data
  *
  *  @remarks     None
  */

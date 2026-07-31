@@ -24,7 +24,7 @@ extern "C" {
  *              &1.&\;A \times x \;=\;  L \times U \times x \;=\; U^{T} \times U \times x \;=\; b\\
  *              &2.&\;y  =  U^{-T} \times b  \qquad done\;using\;Forward\;Substitution\\
  *              &3.&\;x  =  U^{-1} \times y  \qquad done\;using\;Backward\;Substitution\\ \f}
- *  *
+ *
  * @ingroup  DSPLIB
  */
 /**@{*/

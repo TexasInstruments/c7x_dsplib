@@ -121,7 +121,7 @@ DSPLIB_STATUS DSPLIB_blkCopyConst2D_init(DSPLIB_kernelHandle                  ha
  *
  *  @param [in]  handle :  Active handle to the kernel
  *  @param [in]  pIn1   :  Pointer to the structure constant buffer
- *  @param [out] pout   :  Pointer to the output buffer
+ *  @param [out] pOut   :  Pointer to the output buffer
  *
  *  @return      Status value indicating success or failure. Refer to @ref
  * DSPLIB_STATUS.
@@ -170,9 +170,6 @@ DSPLIB_STATUS DSPLIB_blkCopyConst2D_exec(DSPLIB_kernelHandle handle, void *restr
  *  @param [in]  handle         :  Active handle to the kernel
  *  @param [in]  archCycles     :  Arch compute cycles obtained from asm
  *  @param [in]  estCycles      :  Cycles estimated for that purticular kenel
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * AUDIOLIB_STATUS.
  *
  *  @remarks     None
  */

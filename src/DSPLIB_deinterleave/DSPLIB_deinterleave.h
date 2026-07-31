@@ -110,7 +110,7 @@ DSPLIB_STATUS DSPLIB_deinterleave_init_checkParams(DSPLIB_kernelHandle          
  *
  *  @param [in]  handle :  Active handle to the kernel
  *  @param [in]  pIn    :  Pointer to the structure input buffer
- *  @param [out] pout   :  Pointer to the output buffer
+ *  @param [out] pOut   :  Pointer to the output buffer
  *
  *  @return      Status value indicating success or failure. Refer to @ref DSPLIB_STATUS.
  *
@@ -154,13 +154,9 @@ DSPLIB_STATUS DSPLIB_deinterleave_exec(DSPLIB_kernelHandle handle, void *restric
  *                estimate cycles of the loop used in the execution kernel.
  *
  *  @param [in]  handle         :  Active handle to the kernel
- *  @param [in]  dataType       :  Datatype of purticular test case
  *  @param [in]  archCycles     :  Arch compute cycles obtained from asm
  *  @param [in]  estCycles      :  Cycles estimated for that purticular kenel
- *  @param [in]  dataType      :  Cycles estimated for that purticular kenel
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * DSPLIB_STATUS.
+ *  @param [in]  dataType       :  Datatype of purticular test case
  *
  *  @remarks     None
  */

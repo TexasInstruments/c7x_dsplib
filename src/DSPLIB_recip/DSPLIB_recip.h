@@ -118,7 +118,7 @@ DSPLIB_STATUS DSPLIB_recip_init_checkParams(DSPLIB_kernelHandle          handle,
  *
  *  @param [in]  handle       :  Active handle to the kernel
  *  @param [in]  pIn  :  Pointer to the structure input buffer
- *  @param [out] pout :  Pointer to the output buffer
+ *  @param [out] pOut :  Pointer to the output buffer
  *
  *  @return      Status value indicating success or failure. Refer to @ref DSPLIB_STATUS.
  *

@@ -125,7 +125,7 @@ int32_t DSPLIB_cascadeBiquad_getHandleSize(DSPLIB_cascadeBiquad_InitArgs *pKerIn
  *
  * @param [in] dataType     : Type of the data in the buffer.
  *                           Supported data types are:
- *                           - @ref DSPLIB_FLOAT32
+ *                           - DSPLIB_FLOAT32
  * @param [in] numStages    : Number of cascade stages
  * @param [in] numChannels   : Number of channels
  * @param [in] biquadForm   : Type of the biquad realization.
@@ -183,8 +183,10 @@ DSPLIB_STATUS DSPLIB_cascadeBiquad_get_coefficients(uint32_t              biquad
  *  @param [in]  handle       :  Active handle to the kernel
  *  @param [in]  bufParamsIn  :  Pointer to the structure containing dimensional
  *                               information of input buffer
- *  @param [in]  bufParamsFilter :  Pointer to the structure containing dimensional
- *                               information of filter buffer
+ *  @param [in]  bufParamsFilterCoeff :  Pointer to the structure containing dimensional
+ *                               information of filter coefficient buffer
+ *  @param [in]  bufParamsFilterVar :  Pointer to the structure containing dimensional
+ *                               information of filter state variable buffer
  *  @param [out] bufParamsOut :  Pointer to the structure containing dimensional
  *                               information of ouput buffer
  *  @param [in]  pKerInitArgs :  Pointer to the structure holding init parameters
@@ -211,8 +213,10 @@ DSPLIB_STATUS DSPLIB_cascadeBiquad_init(DSPLIB_kernelHandle            handle,
  *  @param [in]  handle       :  Active handle to the kernel
  *  @param [in]  bufParamsIn  :  Pointer to the structure containing dimensional
  *                               information of input buffer
- *  @param [in]  bufParamsFilter :  Pointer to the structure containing dimensional
- *                               information of filter buffer
+ *  @param [in]  bufParamsFilterCoeff :  Pointer to the structure containing dimensional
+ *                               information of filter coefficient buffer
+ *  @param [in]  bufParamsFilterVar :  Pointer to the structure containing dimensional
+ *                               information of filter state variable buffer
  *  @param [out] bufParamsOut :  Pointer to the structure containing dimensional
  *                               information of output buffer
  *  @param [in]  pKerInitArgs :  Pointer to the structure holding init parameters
@@ -236,7 +240,8 @@ DSPLIB_STATUS DSPLIB_cascadeBiquad_init_checkParams(DSPLIB_kernelHandle         
  *
  *  @param [in]  handle      : Active handle to the kernel
  *  @param [in]  pIn         : Pointer to buffer holding the input data
- *  @param [in]  pFilter     : Pointer to buffer holding the filter data
+ *  @param [in]  pFilterCoeff : Pointer to buffer holding the filter coefficient data
+ *  @param [in]  pFilterVar  : Pointer to buffer holding the filter state variable data
  *  @param [out] pOut        : Pointer to buffer holding the output data
  *
  *  @return      Status value indicating success or failure. Refer to @ref DSPLIB_STATUS.
@@ -271,7 +276,8 @@ DSPLIB_STATUS DSPLIB_cascadeBiquad_exec(DSPLIB_kernelHandle handle,
  *
  *  @param [in]  handle      : Active handle to the kernel
  *  @param [in]  pIn         : Pointer to buffer holding the input data
- *  @param [in]  pFilter     : Pointer to buffer holding the input data
+ *  @param [in]  pFilterCoeff : Pointer to buffer holding the filter coefficient data
+ *  @param [in]  pFilterVar  : Pointer to buffer holding the filter state variable data
  *  @param [out] pOut        : Pointer to buffer holding the output matrix
  *
  *  @return      Status value indicating success or failure. Refer to @ref DSPLIB_STATUS.
@@ -291,8 +297,10 @@ DSPLIB_STATUS DSPLIB_cascadeBiquad_exec_checkParams(DSPLIB_kernelHandle handle,
  *  @param [in]  handle       :  Active handle to the kernel
  *  @param [in]  bufParamsIn  :  Pointer to the structure containing dimensional
  *                               information of the input buffer
- *  @param [in]  bufParamsFilter  :  Pointer to the structure containing dimensional
- *                               information of the filter buffer
+ *  @param [in]  bufParamsFilterCoeff  :  Pointer to the structure containing dimensional
+ *                               information of the filter coefficient buffer
+ *  @param [in]  bufParamsFilterVar  :  Pointer to the structure containing dimensional
+ *                               information of the filter state variable buffer
  *  @param [in]  bufParamsOut :  Pointer to the structure containing dimensional
  *                               information of the output buffer
  *  @param [out] archCycles   :  Cycles estimated for the compute, startup and

@@ -29,6 +29,7 @@ extern "C" {
 typedef struct {
    /** @brief Variant of the function refer to @ref DSPLIB_FUNCTION_STYLE     */
    int8_t  funcStyle;
+   /** @brief Q-format fractional bits for fixed-point scaling                */
    int32_t qs;
 } DSPLIB_matMul_fixed_InitArgs;
 
@@ -113,7 +114,7 @@ DSPLIB_matMul_fixed_init_checkParams(DSPLIB_kernelHandle                 handle,
  *  @param [in]  handle    :  Active handle to the kernel
  *  @param [in]  pIn0      :  Pointer to the structure input matrix A
  *  @param [in]  pIn1      :  Pointer to the structure input matrix B
- *  @param [out] pout      :  Pointer to the output matrix C
+ *  @param [out] pOut      :  Pointer to the output matrix C
  *
  *  @return      Status value indicating success or failure. Refer to @ref
  * DSPLIB_STATUS.

@@ -13,7 +13,6 @@
  * \brief   load numRows of B into the Bload buffer
  * \details use streaming engine 1 to load numRows of B into the Bload buffer
  * \param  numRows
- * \return  void
  */
 /******************************************************************************/
 __INLINE_FUNC(DSPLIB_UTIL_SE1Bload)

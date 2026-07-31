@@ -164,7 +164,7 @@ DSPLIB_realImagToComplex_init_checkParams(DSPLIB_kernelHandle                   
  *  @param [in]  handle    :  Active handle to the kernel
  *  @param [in]  pIn0      :  Pointer to the structure input real buffer
  *  @param [in]  pIn1      :  Pointer to the structure input imag buffer
- *  @param [out] pout      :  Pointer to the output buffer
+ *  @param [out] pOut      :  Pointer to the output buffer
  *
  *  @return      Status value indicating success or failure. Refer to @ref
  * DSPLIB_STATUS.
@@ -218,8 +218,6 @@ DSPLIB_realImagToComplex_exec(DSPLIB_kernelHandle handle,
  *  @param [in]  handle         :  Active handle to the kernel
  *  @param [in]  archCycles     :  Arch cycles used in that purticluar kernel
  *  @param [in]  estCycles      :  Cycles estimated for that purticular kenel
- *
- *  @return      Void.
  *
  *  @remarks     None
  */

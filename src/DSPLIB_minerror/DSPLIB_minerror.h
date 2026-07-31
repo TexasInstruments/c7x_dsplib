@@ -36,6 +36,7 @@ typedef struct {
    uint32_t vecInSize;
    /*! @brief Size of error coefficients vector                                */
    uint32_t errCoefsSize;
+   /*! @brief Stride of the input data in elements                            */
    uint32_t strideIn;
 } DSPLIB_minerror_InitArgs;
 

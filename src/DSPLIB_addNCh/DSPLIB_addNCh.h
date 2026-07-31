@@ -21,7 +21,7 @@ extern "C" {
  *          - The buffer used for providing input data may be required
  *            to be bigger than data size itself.
  *
- *  * This kernel takes multiple input matrices (stacked as a single 3D matrix)
+ * This kernel takes multiple input matrices (stacked as a single 3D matrix)
  * of size NxM for each input (number of inputs = C), and produces an output
  * matrix of size NxM, where each element is the sum across all input channels.
  *
@@ -146,7 +146,7 @@ DSPLIB_addNCh_init_checkParams(DSPLIB_kernelHandle           handle,
  *
  *  @param [in]  handle       :  Active handle to the kernel
  *  @param [in]  pIn  :  Pointer to the structure input buffer
- *  @param [out] pout :  Pointer to the output buffer
+ *  @param [out] pOut :  Pointer to the output buffer
  *
  *  @return      Status value indicating success or failure. Refer to @ref
  * DSPLIB_STATUS.
@@ -195,8 +195,7 @@ DSPLIB_addNCh_exec(DSPLIB_kernelHandle handle, void *restrict pIn, void *restric
  *  @param [in]  archCycles     :  Arch compute cycles obtained from asm
  *  @param [in]  estCycles      :  Cycles estimated for that purticular kenel
  *
- *  @return      Status value indicating success or failure. Refer to @ref
- * AUDIOLIB_STATUS.
+ *  @param [in]  dataType       :  Data type of the kernel
  *
  *  @remarks     None
  */
@@ -205,5 +204,7 @@ void DSPLIB_addNCh_perfEst(DSPLIB_kernelHandle handle, uint64_t *archCycles, uin
 #ifdef __cplusplus
 }
 #endif
+
+/** @} */
 
 #endif /* DSPLIB_ADDNCH_IXX_IXX_OXX_H_ */
