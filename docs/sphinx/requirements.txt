@@ -1,0 +1,9 @@
+# Sphinx documentation toolchain for DSPLIB.
+# Pinned for reproducible Jenkins builds. Matches the TI processor-sdk-doc
+# stack (sphinx_rtd_theme) plus Breathe/Exhale for Doxygen C API generation.
+sphinx==7.4.7
+sphinx-rtd-theme==2.0.0
+breathe==4.35.0
+exhale==0.3.7
+sphinx-design==0.6.1
+sphinx-copybutton==0.5.2
