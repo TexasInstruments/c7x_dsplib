@@ -43,3 +43,19 @@
   padding: 0 8px;
   box-sizing: border-box;
 }
+/* --- WORK-IN-PROGRESS banner (temporary) -------------------------------
+   Renders a WIP notice at the top of every page's content area so outside
+   readers have clear notice the docs are under active development.
+   REMOVE this block (source + gh-pages) once the documentation is final. */
+.wy-nav-content::before {
+  content: "\1F6A7  Work in progress \2014 this documentation is under active development and may be incomplete or change without notice.";
+  display: block;
+  background: #FFF4E5;
+  color: #7A4100;
+  border: 1px solid #FF991F;
+  border-left: 4px solid #FF991F;
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-bottom: 1.5em;
+  font-weight: 600;
+}
