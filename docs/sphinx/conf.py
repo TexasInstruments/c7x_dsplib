@@ -173,6 +173,7 @@ _API_GROUP_ORDER = [
         "DSPLIB_minEvery",
         "DSPLIB_minIndex",
         "DSPLIB_minerror",
+        "DSPLIB_binaryLogicGate",
         "DSPLIB_bitwiseANDConst",
         "DSPLIB_logicalComparator",
         "DSPLIB_logicalNOT",
