@@ -1,0 +1,61 @@
+/* TI branding overrides for sphinx_rtd_theme.
+   Reused verbatim from TexasInstruments/processor-sdk-doc for a consistent
+   official look across TI documentation sites. */
+
+/* Color overrides */
+.wy-nav-top {
+  background-color: #CC0000; /* TI red */
+}
+.wy-side-nav-search {
+  background-color: #FCFCFC; /* Theme White */
+}
+.wy-side-nav-search > .icon {
+  color: #404040 !important; /* Theme Title Text */
+}
+.wy-side-nav-search > .version {
+  color: #404040 !important; /* Theme Title Text */
+}
+/* Content width override */
+.wy-nav-content {
+  max-width: 100% !important;
+}
+/* Version compatibility override */
+.wy-side-nav-search > div.version {
+  margin-top: -.4045em;
+  margin-bottom: .809em;
+  font-weight: 400;
+  color: hsla(0, 0%, 100%, .3);
+}
+/* Table wrapping override */
+.wy-table-responsive table td,
+.wy-table-responsive table th {
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+/* Logo sizing: the TI wordmark is a wide horizontal SVG (viewBox 800x183).
+   Let it span the sidebar width instead of shrinking to the default logo size. */
+.wy-side-nav-search > a img.logo,
+.wy-side-nav-search .logo {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+/* --- WORK-IN-PROGRESS banner (temporary) -------------------------------
+   Renders a WIP notice at the top of every page's content area so outside
+   readers have clear notice the docs are under active development.
+   REMOVE this block (source + gh-pages) once the documentation is final. */
+.wy-nav-content::before {
+  content: "\1F6A7  Work in progress \2014 this documentation is under active development and may be incomplete or change without notice.";
+  display: block;
+  background: #FFF4E5;
+  color: #7A4100;
+  border: 1px solid #FF991F;
+  border-left: 4px solid #FF991F;
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-bottom: 1.5em;
+  font-weight: 600;
+}

@@ -1,0 +1,3003 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="DSPLIB_fir.html">
+      
+      
+        <link rel="next" href="data_conversion_and_memory.html">
+      
+      
+      <link rel="icon" href="">
+    
+    
+      
+        <title>DSPLIB_cascadeBiquad - DSPLIB Documentation</title>
+      
+    
+    
+      
+        
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+        <link rel="stylesheet" type="text/css" href="../_static/sphinx_immaterial_theme.a027cd878cd91b31c.min.css?v=2be211a8" />
+        <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+        <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+        <link rel="stylesheet" type="text/css" href="../_static/css/theme_overrides.css?v=9b53c505" />
+        <link rel="stylesheet" type="text/css" href="../_static/css/immaterial_overrides.css?v=82266e3c" />
+        <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#breathe-section-title-enums" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="DSPLIB Documentation" class="md-header__button md-logo" aria-label="DSPLIB Documentation" data-md-component="logo">
+      <img src="../_static/ti_logo_mono.svg" alt="logo">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            <a href="../index.html" style="color:inherit;text-decoration:none">DSPLIB Documentation</a>
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DSPLIB_cascadeBiquad
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="teal"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TexasInstruments/c7x_dsplib" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    c7x_dsplib
+    <span class="ti-branch">main</span>
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="DSPLIB Documentation" class="md-nav__button md-logo" aria-label="DSPLIB Documentation" data-md-component="logo">
+      <img src="../_static/ti_logo_mono.svg" alt="logo">
+    </a>
+    DSPLIB Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TexasInstruments/c7x_dsplib" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    c7x_dsplib
+    <span class="ti-branch">main</span>
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting_started.html" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"/></svg>
+  
+  
+  <span class="md-ellipsis">
+    <span>Getting Started</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../repository_layout.html" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3zm12 7h6v4h-6zm0 7h6v4h-6zm-2-4H7v5h6v2H5V9h2v2h6z"/></svg>
+  
+  
+  <span class="md-ellipsis">
+    <span>Repository Layout</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="index.html" class="md-nav__link ">
+              
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.5c-1.35-.85-3.8-1.5-5.5-1.5-1.65 0-3.35.3-4.75 1.05-.1.05-.15.05-.25.05-.25 0-.5-.25-.5-.5V6c.6-.45 1.25-.75 2-1 1.11-.35 2.33-.5 3.5-.5 1.95 0 4.05.4 5.5 1.5 1.45-1.1 3.55-1.5 5.5-1.5 1.17 0 2.39.15 3.5.5.75.25 1.4.55 2 1v14.6c0 .25-.25.5-.5.5-.1 0-.15 0-.25-.05-1.4-.75-3.1-1.05-4.75-1.05-1.7 0-4.15.65-5.5 1.5M12 8v11.5c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5V7c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5m1 3.5c1.11-.68 2.6-1 4.5-1 .91 0 1.76.09 2.5.28V9.23c-.87-.15-1.71-.23-2.5-.23q-2.655 0-4.5.84zm4.5.17c-1.71 0-3.21.26-4.5.79v1.69c1.11-.65 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24v-1.5c-.87-.16-1.71-.23-2.5-.23m2.5 2.9c-.87-.16-1.71-.24-2.5-.24-1.83 0-3.33.27-4.5.8v1.69c1.11-.66 2.6-.99 4.5-.99 1.04 0 1.88.08 2.5.24z"/></svg>
+  
+  
+  <span class="md-ellipsis">
+    <span>DSPLIB API Reference</span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            <span>DSPLIB API Reference</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="common.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span>Common</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="arithmetic.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span>Arithmetic</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="vector.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span>Vector</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="comparison_and_search.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span>Comparison &amp; Search</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="matrix.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span>Matrix</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="linear_algebra.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span>Linear Algebra</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="signal_processing.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    <span>Signal Processing</span>
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            <span>Signal Processing</span>
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DSPLIB_fir.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span>DSPLIB_<wbr>fir</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    <span>DSPLIB_<wbr>cascade<wbr>Biquad</span>
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span>DSPLIB_<wbr>cascade<wbr>Biquad</span>
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#breathe-section-title-enums" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Enums</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_biquadForm" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>biquad<wbr>Form</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_biquadForm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_biquadForm.DSPLIB_BIQUAD_TIF" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>BIQUAD_<wbr>TIF</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_biquadForm.DSPLIB_BIQUAD_DF1" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>BIQUAD_<wbr>DF1</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_biquadForm.DSPLIB_BIQUAD_DF2" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>BIQUAD_<wbr>DF2</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_biquadForm.DSPLIB_BIQUAD_TDF2" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>BIQUAD_<wbr>TDF2</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#breathe-section-title-functions" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Functions</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_getHandleSize" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>get<wbr>Handle<wbr>Size</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_getHandleSize">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_getHandleSize-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_getHandleSize-p-pKerInitArgs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_getHandleSize.pKerInitArgs (C function parameter) — [in] : Pointer to structure holding init parameters"><span>p<wbr>Ker<wbr>Init<wbr>Args</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_getHandleSize-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>get_<wbr>coefficients<wbr>Buffer<wbr>Desc</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-dataType" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc.dataType (C function parameter) — DSPLIB_FLOAT32"><span>data<wbr>Type</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-numStages" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc.numStages (C function parameter) — [in] : Number of cascade stages"><span>num<wbr>Stages</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-numChannels" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc.numChannels (C function parameter) — [in] : Number of channels"><span>num<wbr>Channels</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-biquadForm" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc.biquadForm (C function parameter) — DSPLIB_BIQUAD_TIF"><span>biquad<wbr>Form</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-enableNChCoeffs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc.enableNChCoeffs (C function parameter) — 0 =&gt; same coefficients for all channels"><span>enable<wbr>NCh<wbr>Coeffs</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-pBufParamsFilterCoeffOpt" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc.pBufParamsFilterCoeffOpt (C function parameter) — [inout] : Pointer to the buffer descriptor."><span>p<wbr>Buf<wbr>Params<wbr>Filter<wbr>Coeff<wbr>Opt</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>get_<wbr>coefficients</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_get_coefficients">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-biquadForm" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficients.biquadForm (C function parameter) — [in] : Biquad form (e.g. DSPLIB_BIQUAD_DF2 or DSPLIB_BIQUAD_TIF)"><span>biquad<wbr>Form</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-enableNChCoeffs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficients.enableNChCoeffs (C function parameter) — [in] : Flag to enable different coefficients per channel"><span>enable<wbr>NCh<wbr>Coeffs</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pBufParamsFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficients.pBufParamsFilterCoeff (C function parameter) — [in] : Pointer to the coefficient buffer descriptor"><span>p<wbr>Buf<wbr>Params<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pBufParamsFilterCoeffOpt" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficients.pBufParamsFilterCoeffOpt (C function parameter) — [in] Pointer to the optimized coefficient buffer descriptor"><span>p<wbr>Buf<wbr>Params<wbr>Filter<wbr>Coeff<wbr>Opt</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficients.pFilterCoeff (C function parameter) — [in] : Pointer to the input coefficients buffer"><span>p<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pFilterCoeffOpt" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficients.pFilterCoeffOpt (C function parameter) — [out] : Pointer to the output optimized coefficients buffer"><span>p<wbr>Filter<wbr>Coeff<wbr>Opt</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>init</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_init">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-p-handle" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init.handle (C function parameter) — [in] : Active handle to the kernel"><span>handle</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsIn" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init.bufParamsIn (C function parameter) — [in] : Pointer to the structure containing dimensional information of input buffer"><span>buf<wbr>Params<wbr>In</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init.bufParamsFilterCoeff (C function parameter) — [in] : Pointer to the structure containing dimensional information of filter coefficient buffer"><span>buf<wbr>Params<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsFilterVar" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init.bufParamsFilterVar (C function parameter) — [in] : Pointer to the structure containing dimensional information of filter state variable buffer"><span>buf<wbr>Params<wbr>Filter<wbr>Var</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsOut" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init.bufParamsOut (C function parameter) — [out] : Pointer to the structure containing dimensional information of ouput buffer"><span>buf<wbr>Params<wbr>Out</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-p-pKerInitArgs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init.pKerInitArgs (C function parameter) — [in] : Pointer to the structure holding init parameters"><span>p<wbr>Ker<wbr>Init<wbr>Args</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>init_<wbr>check<wbr>Params</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_init_checkParams">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-handle" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init_checkParams.handle (C function parameter) — [in] : Active handle to the kernel"><span>handle</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsIn" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init_checkParams.bufParamsIn (C function parameter) — [in] : Pointer to the structure containing dimensional information of input buffer"><span>buf<wbr>Params<wbr>In</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init_checkParams.bufParamsFilterCoeff (C function parameter) — [in] : Pointer to the structure containing dimensional information of filter coefficient buffer"><span>buf<wbr>Params<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsFilterVar" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init_checkParams.bufParamsFilterVar (C function parameter) — [in] : Pointer to the structure containing dimensional information of filter state variable buffer"><span>buf<wbr>Params<wbr>Filter<wbr>Var</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsOut" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init_checkParams.bufParamsOut (C function parameter) — [out] : Pointer to the structure containing dimensional information of output buffer"><span>buf<wbr>Params<wbr>Out</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-pKerInitArgs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init_checkParams.pKerInitArgs (C function parameter) — [in] : Pointer to the structure holding init parameters"><span>p<wbr>Ker<wbr>Init<wbr>Args</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>exec</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_exec">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-p-handle" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec.handle (C function parameter) — [in] : Active handle to the kernel"><span>handle</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-p-pIn" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec.pIn (C function parameter) — [in] : Pointer to buffer holding the input data"><span>p<wbr>In</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-p-pFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec.pFilterCoeff (C function parameter) — [in] : Pointer to buffer holding the filter coefficient data"><span>p<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-p-pFilterVar" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec.pFilterVar (C function parameter) — [in] : Pointer to buffer holding the filter state variable data"><span>p<wbr>Filter<wbr>Var</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-p-pOut" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec.pOut (C function parameter) — [out] : Pointer to buffer holding the output data"><span>p<wbr>Out</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>exec_<wbr>check<wbr>Params</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_exec_checkParams">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-handle" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec_checkParams.handle (C function parameter) — [in] : Active handle to the kernel"><span>handle</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pIn" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec_checkParams.pIn (C function parameter) — [in] : Pointer to buffer holding the input data"><span>p<wbr>In</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec_checkParams.pFilterCoeff (C function parameter) — [in] : Pointer to buffer holding the filter coefficient data"><span>p<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pFilterVar" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec_checkParams.pFilterVar (C function parameter) — [in] : Pointer to buffer holding the filter state variable data"><span>p<wbr>Filter<wbr>Var</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pOut" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec_checkParams.pOut (C function parameter) — [out] : Pointer to buffer holding the output matrix"><span>p<wbr>Out</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>perf<wbr>Est</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_perfEst">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-handle" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.handle (C function parameter) — [in] : Active handle to the kernel"><span>handle</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsIn" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.bufParamsIn (C function parameter) — [in] : Pointer to the structure containing dimensional information of the input buffer"><span>buf<wbr>Params<wbr>In</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.bufParamsFilterCoeff (C function parameter) — [in] : Pointer to the structure containing dimensional information of the filter coefficient buffer"><span>buf<wbr>Params<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsFilterVar" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.bufParamsFilterVar (C function parameter) — [in] : Pointer to the structure containing dimensional information of the filter state variable buffer"><span>buf<wbr>Params<wbr>Filter<wbr>Var</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsOut" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.bufParamsOut (C function parameter) — [in] : Pointer to the structure containing dimensional information of the output buffer"><span>buf<wbr>Params<wbr>Out</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-archCycles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.archCycles (C function parameter) — [out] : Cycles estimated for the compute, startup and teardown"><span>arch<wbr>Cycles</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-estCycles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.estCycles (C function parameter) — [out] : Cycles estimated for the compute, startup, teardown and any associated overhead"><span>est<wbr>Cycles</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>Init<wbr>Args</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_InitArgs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#breathe-section-title-public-members" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Public Members</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs.funcStyle" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>func<wbr>Style</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs.dataSize" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>data<wbr>Size</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs.numStages" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>num<wbr>Stages</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs.numChannels" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>num<wbr>Channels</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs.enableNChCoeffs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>enable<wbr>NCh<wbr>Coeffs</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs.biquadForm" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>biquad<wbr>Form</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="data_conversion_and_memory.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <span>Data Conversion &amp; Memory</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../perf/index.html" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"/></svg>
+  
+  
+  <span class="md-ellipsis">
+    <span>Performance</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license.html" class="md-nav__link">
+        
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.17C14.4 3.8 13.27 3 12 3m0 2a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m-6.5 5.25L7 14H4zm13 0L20 14h-3z"/></svg>
+  
+  
+  <span class="md-ellipsis">
+    <span>License</span>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#breathe-section-title-enums" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Enums</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_biquadForm" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>biquad<wbr>Form</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_biquadForm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_biquadForm.DSPLIB_BIQUAD_TIF" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>BIQUAD_<wbr>TIF</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_biquadForm.DSPLIB_BIQUAD_DF1" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>BIQUAD_<wbr>DF1</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_biquadForm.DSPLIB_BIQUAD_DF2" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>BIQUAD_<wbr>DF2</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_biquadForm.DSPLIB_BIQUAD_TDF2" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>BIQUAD_<wbr>TDF2</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#breathe-section-title-functions" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Functions</span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_getHandleSize" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>get<wbr>Handle<wbr>Size</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_getHandleSize">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_getHandleSize-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_getHandleSize-p-pKerInitArgs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_getHandleSize.pKerInitArgs (C function parameter) — [in] : Pointer to structure holding init parameters"><span>p<wbr>Ker<wbr>Init<wbr>Args</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_getHandleSize-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>get_<wbr>coefficients<wbr>Buffer<wbr>Desc</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-dataType" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc.dataType (C function parameter) — DSPLIB_FLOAT32"><span>data<wbr>Type</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-numStages" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc.numStages (C function parameter) — [in] : Number of cascade stages"><span>num<wbr>Stages</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-numChannels" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc.numChannels (C function parameter) — [in] : Number of channels"><span>num<wbr>Channels</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-biquadForm" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc.biquadForm (C function parameter) — DSPLIB_BIQUAD_TIF"><span>biquad<wbr>Form</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-enableNChCoeffs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc.enableNChCoeffs (C function parameter) — 0 =&gt; same coefficients for all channels"><span>enable<wbr>NCh<wbr>Coeffs</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-pBufParamsFilterCoeffOpt" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficientsBufferDesc.pBufParamsFilterCoeffOpt (C function parameter) — [inout] : Pointer to the buffer descriptor."><span>p<wbr>Buf<wbr>Params<wbr>Filter<wbr>Coeff<wbr>Opt</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>get_<wbr>coefficients</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_get_coefficients">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-biquadForm" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficients.biquadForm (C function parameter) — [in] : Biquad form (e.g. DSPLIB_BIQUAD_DF2 or DSPLIB_BIQUAD_TIF)"><span>biquad<wbr>Form</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-enableNChCoeffs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficients.enableNChCoeffs (C function parameter) — [in] : Flag to enable different coefficients per channel"><span>enable<wbr>NCh<wbr>Coeffs</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pBufParamsFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficients.pBufParamsFilterCoeff (C function parameter) — [in] : Pointer to the coefficient buffer descriptor"><span>p<wbr>Buf<wbr>Params<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pBufParamsFilterCoeffOpt" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficients.pBufParamsFilterCoeffOpt (C function parameter) — [in] Pointer to the optimized coefficient buffer descriptor"><span>p<wbr>Buf<wbr>Params<wbr>Filter<wbr>Coeff<wbr>Opt</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficients.pFilterCoeff (C function parameter) — [in] : Pointer to the input coefficients buffer"><span>p<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pFilterCoeffOpt" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_get_coefficients.pFilterCoeffOpt (C function parameter) — [out] : Pointer to the output optimized coefficients buffer"><span>p<wbr>Filter<wbr>Coeff<wbr>Opt</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_get_coefficients-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>init</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_init">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-p-handle" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init.handle (C function parameter) — [in] : Active handle to the kernel"><span>handle</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsIn" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init.bufParamsIn (C function parameter) — [in] : Pointer to the structure containing dimensional information of input buffer"><span>buf<wbr>Params<wbr>In</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init.bufParamsFilterCoeff (C function parameter) — [in] : Pointer to the structure containing dimensional information of filter coefficient buffer"><span>buf<wbr>Params<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsFilterVar" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init.bufParamsFilterVar (C function parameter) — [in] : Pointer to the structure containing dimensional information of filter state variable buffer"><span>buf<wbr>Params<wbr>Filter<wbr>Var</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsOut" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init.bufParamsOut (C function parameter) — [out] : Pointer to the structure containing dimensional information of ouput buffer"><span>buf<wbr>Params<wbr>Out</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-p-pKerInitArgs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init.pKerInitArgs (C function parameter) — [in] : Pointer to the structure holding init parameters"><span>p<wbr>Ker<wbr>Init<wbr>Args</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>init_<wbr>check<wbr>Params</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_init_checkParams">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-handle" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init_checkParams.handle (C function parameter) — [in] : Active handle to the kernel"><span>handle</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsIn" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init_checkParams.bufParamsIn (C function parameter) — [in] : Pointer to the structure containing dimensional information of input buffer"><span>buf<wbr>Params<wbr>In</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init_checkParams.bufParamsFilterCoeff (C function parameter) — [in] : Pointer to the structure containing dimensional information of filter coefficient buffer"><span>buf<wbr>Params<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsFilterVar" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init_checkParams.bufParamsFilterVar (C function parameter) — [in] : Pointer to the structure containing dimensional information of filter state variable buffer"><span>buf<wbr>Params<wbr>Filter<wbr>Var</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsOut" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init_checkParams.bufParamsOut (C function parameter) — [out] : Pointer to the structure containing dimensional information of output buffer"><span>buf<wbr>Params<wbr>Out</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-pKerInitArgs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_init_checkParams.pKerInitArgs (C function parameter) — [in] : Pointer to the structure holding init parameters"><span>p<wbr>Ker<wbr>Init<wbr>Args</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_init_checkParams-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>exec</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_exec">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-p-handle" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec.handle (C function parameter) — [in] : Active handle to the kernel"><span>handle</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-p-pIn" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec.pIn (C function parameter) — [in] : Pointer to buffer holding the input data"><span>p<wbr>In</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-p-pFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec.pFilterCoeff (C function parameter) — [in] : Pointer to buffer holding the filter coefficient data"><span>p<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-p-pFilterVar" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec.pFilterVar (C function parameter) — [in] : Pointer to buffer holding the filter state variable data"><span>p<wbr>Filter<wbr>Var</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-p-pOut" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec.pOut (C function parameter) — [out] : Pointer to buffer holding the output data"><span>p<wbr>Out</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>exec_<wbr>check<wbr>Params</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_exec_checkParams">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-handle" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec_checkParams.handle (C function parameter) — [in] : Active handle to the kernel"><span>handle</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pIn" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec_checkParams.pIn (C function parameter) — [in] : Pointer to buffer holding the input data"><span>p<wbr>In</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec_checkParams.pFilterCoeff (C function parameter) — [in] : Pointer to buffer holding the filter coefficient data"><span>p<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pFilterVar" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec_checkParams.pFilterVar (C function parameter) — [in] : Pointer to buffer holding the filter state variable data"><span>p<wbr>Filter<wbr>Var</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pOut" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_exec_checkParams.pOut (C function parameter) — [out] : Pointer to buffer holding the output matrix"><span>p<wbr>Out</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_exec_checkParams-returns" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Returns</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>perf<wbr>Est</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_perfEst">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-parameters" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Parameters</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-handle" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.handle (C function parameter) — [in] : Active handle to the kernel"><span>handle</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsIn" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.bufParamsIn (C function parameter) — [in] : Pointer to the structure containing dimensional information of the input buffer"><span>buf<wbr>Params<wbr>In</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsFilterCoeff" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.bufParamsFilterCoeff (C function parameter) — [in] : Pointer to the structure containing dimensional information of the filter coefficient buffer"><span>buf<wbr>Params<wbr>Filter<wbr>Coeff</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsFilterVar" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.bufParamsFilterVar (C function parameter) — [in] : Pointer to the structure containing dimensional information of the filter state variable buffer"><span>buf<wbr>Params<wbr>Filter<wbr>Var</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsOut" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.bufParamsOut (C function parameter) — [in] : Pointer to the structure containing dimensional information of the output buffer"><span>buf<wbr>Params<wbr>Out</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-archCycles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.archCycles (C function parameter) — [out] : Cycles estimated for the compute, startup and teardown"><span>arch<wbr>Cycles</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_perfEst-p-estCycles" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span title="DSPLIB_cascadeBiquad_perfEst.estCycles (C function parameter) — [out] : Cycles estimated for the compute, startup, teardown and any associated overhead"><span>est<wbr>Cycles</span></span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>DSPLIB_<wbr>cascade<wbr>Biquad_<wbr>Init<wbr>Args</span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DSPLIB_cascadeBiquad_InitArgs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#breathe-section-title-public-members" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>Public Members</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs.funcStyle" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>func<wbr>Style</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs.dataSize" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>data<wbr>Size</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs.numStages" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>num<wbr>Stages</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs.numChannels" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>num<wbr>Channels</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs.enableNChCoeffs" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>enable<wbr>NCh<wbr>Coeffs</span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c.DSPLIB_cascadeBiquad_InitArgs.biquadForm" class="md-nav__link">
+    
+    <span class="md-ellipsis">
+      <span>biquad<wbr>Form</span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                
+                
+                  
+
+
+<h1 id="dsplib-cascadebiquad">DSPLIB_cascadeBiquad<a class="headerlink" href="#dsplib-cascadebiquad" title="Link to this heading">¶</a></h1>
+<dl class="objdesc">
+<dt class="sig sig-object highlight cpp">
+<span class="target" id="group__DSPLIB__cascadeBiquad"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">DSPLIB_cascadeBiquad</span></span></dt>
+<dd><p>Kernel for multichannel multistage cascade on input data. </p>
+<p>The kernel supports computation of biquads of a vector of several inputs in one kernel call. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-enums">Enums<a class="headerlink" href="#breathe-section-title-enums" title="Permalink to this headline">¶</a></p>
+<dl class="c enum objdesc">
+<dt class="sig sig-object highlight c" id="c.DSPLIB_biquadForm">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1ga9084172c6fbd0443e3370f8a8a41ff52"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_biquadForm</span></span></span><a class="headerlink" href="#c.DSPLIB_biquadForm" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Enumeration for biquad realization form. </p>
+<p>This enumeration defines the type of biquad realization.<ul class="simple">
+<li><p>DSPLIB_BIQUAD_TIF : TI Form</p></li>
+<li><p>DSPLIB_BIQUAD_DF1 : Direct Form I</p></li>
+<li><p>DSPLIB_BIQUAD_DF2 : Direct Form II</p></li>
+<li><p>DSPLIB_BIQUAD_TDF2 : Transposed Direct Form II </p></li>
+</ul>
+</p>
+<p><em>Values:</em></p>
+<dl class="c enumerator objdesc">
+<dt class="sig sig-object highlight c" id="c.DSPLIB_biquadForm.DSPLIB_BIQUAD_TIF">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1gga9084172c6fbd0443e3370f8a8a41ff52a1702e80afe22b0aee862cf6bc65cd25b"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_BIQUAD_TIF</span></span></span><a class="headerlink" href="#c.DSPLIB_biquadForm.DSPLIB_BIQUAD_TIF" title="Link to this definition">¶</a><br /></dt>
+<dd><p>TI Form. </p>
+</dd></dl>
+
+<dl class="c enumerator objdesc">
+<dt class="sig sig-object highlight c" id="c.DSPLIB_biquadForm.DSPLIB_BIQUAD_DF1">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1gga9084172c6fbd0443e3370f8a8a41ff52a9fa912aff66e69969d56ea0acd9c819b"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_BIQUAD_DF1</span></span></span><a class="headerlink" href="#c.DSPLIB_biquadForm.DSPLIB_BIQUAD_DF1" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Direct Form I. </p>
+</dd></dl>
+
+<dl class="c enumerator objdesc">
+<dt class="sig sig-object highlight c" id="c.DSPLIB_biquadForm.DSPLIB_BIQUAD_DF2">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1gga9084172c6fbd0443e3370f8a8a41ff52ab0ed94c1f07193af227e53a730417a0f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_BIQUAD_DF2</span></span></span><a class="headerlink" href="#c.DSPLIB_biquadForm.DSPLIB_BIQUAD_DF2" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Direct Form II. </p>
+</dd></dl>
+
+<dl class="c enumerator objdesc">
+<dt class="sig sig-object highlight c" id="c.DSPLIB_biquadForm.DSPLIB_BIQUAD_TDF2">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1gga9084172c6fbd0443e3370f8a8a41ff52afd6921c093b5973be5815ca1d5e1b2c0"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_BIQUAD_TDF2</span></span></span><a class="headerlink" href="#c.DSPLIB_biquadForm.DSPLIB_BIQUAD_TDF2" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Transposed Direct Form II. </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions<a class="headerlink" href="#breathe-section-title-functions" title="Permalink to this headline">¶</a></p>
+<dl class="c function objdesc">
+<dt class="sig sig-object highlight sig-wrap c" id="c.DSPLIB_cascadeBiquad_getHandleSize">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1ga27e8dc6de58de4e70ff933826e73d7fc"></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_cascadeBiquad_getHandleSize</span></span></span><span class="sig-paren">(</span><span class="sig-param-decl"><a class="reference internal" href="#c.DSPLIB_cascadeBiquad_InitArgs" title="DSPLIB_cascadeBiquad_InitArgs (C struct) — Structure containing the parameters to initialize the kernel."><span class="n"><span class="pre">DSPLIB_cascadeBiquad_InitArgs</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_getHandleSize-p-pKerInitArgs" title="pKerInitArgs (C function parameter) — [in] : Pointer to structure holding init parameters"><span class="n"><span class="pre">pKerInitArgs</span></span></a></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_getHandleSize" title="Link to this definition">¶</a><br /></dt>
+<dd><p>This is a query function to calculate the size of internal handle. </p>
+<p><div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>Application is expected to allocate buffer of the requested size and provide it as input to other functions requiring it. </p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="c.DSPLIB_cascadeBiquad_getHandleSize-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_getHandleSize-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="c.DSPLIB_cascadeBiquad_getHandleSize-p-pKerInitArgs"><a class="reference internal" href="#c.DSPLIB_cascadeBiquad_InitArgs" title="DSPLIB_cascadeBiquad_InitArgs (C struct) — Structure containing the parameters to initialize the kernel."><span class="n">DSPLIB_cascadeBiquad_InitArgs</span></a><span class="w"> </span><span class="p">*</span><span class="n sig-name">pKerInitArgs</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_getHandleSize-p-pKerInitArgs" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to structure holding init parameters </p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="c.DSPLIB_cascadeBiquad_getHandleSize-returns">Returns<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_getHandleSize-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Size of the buffer in bytes </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function objdesc">
+<dt class="sig sig-object highlight sig-wrap c" id="c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1gabd3e051ce6399413288299ae01258fda"></span><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_STATUS" title="DSPLIB_STATUS (C type) — Return value for DSPLIB functions."><span class="n"><span class="pre">DSPLIB_STATUS</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_cascadeBiquad_get_coefficientsBufferDesc</span></span></span><span class="sig-paren">(</span><span class="sig-param-decl"><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-dataType" title="dataType (C function parameter) — DSPLIB_FLOAT32"><span class="n"><span class="pre">dataType</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-numStages" title="numStages (C function parameter) — [in] : Number of cascade stages"><span class="n"><span class="pre">numStages</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-numChannels" title="numChannels (C function parameter) — [in] : Number of channels"><span class="n"><span class="pre">numChannels</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-biquadForm" title="biquadForm (C function parameter) — DSPLIB_BIQUAD_TIF"><span class="n"><span class="pre">biquadForm</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-enableNChCoeffs" title="enableNChCoeffs (C function parameter) — 0 =&gt; same coefficients for all channels"><span class="n"><span class="pre">enableNChCoeffs</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-pBufParamsFilterCoeffOpt" title="pBufParamsFilterCoeffOpt (C function parameter) — [inout] : Pointer to the buffer descriptor."><span class="n"><span class="pre">pBufParamsFilterCoeffOpt</span></span></a></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Get coefficient buffer descriptor for optimized cascade biquad. </p>
+<p><div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>The application is expected to allocate the buffer using the dimension information in the returned buffer descriptor. </p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-dataType"><span class="n">uint32_t</span><span class="w"> </span><span class="n sig-name">dataType</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-dataType" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Type of the data in the buffer. Supported data types are:<ul class="simple">
+<li><p>DSPLIB_FLOAT32 </p></li>
+</ul>
+</p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-numStages"><span class="n">uint32_t</span><span class="w"> </span><span class="n sig-name">numStages</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-numStages" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Number of cascade stages </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-numChannels"><span class="n">uint32_t</span><span class="w"> </span><span class="n sig-name">numChannels</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-numChannels" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Number of channels </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-biquadForm"><span class="n">uint32_t</span><span class="w"> </span><span class="n sig-name">biquadForm</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-biquadForm" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Type of the biquad realization. Supported forms are:<ul class="simple">
+<li><p><a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1gga9084172c6fbd0443e3370f8a8a41ff52a1702e80afe22b0aee862cf6bc65cd25b"><span class="std std-ref">DSPLIB_BIQUAD_TIF</span></a></p></li>
+<li><p><a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1gga9084172c6fbd0443e3370f8a8a41ff52a9fa912aff66e69969d56ea0acd9c819b"><span class="std std-ref">DSPLIB_BIQUAD_DF1</span></a></p></li>
+<li><p><a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1gga9084172c6fbd0443e3370f8a8a41ff52ab0ed94c1f07193af227e53a730417a0f"><span class="std std-ref">DSPLIB_BIQUAD_DF2</span></a></p></li>
+<li><p><a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1gga9084172c6fbd0443e3370f8a8a41ff52afd6921c093b5973be5815ca1d5e1b2c0"><span class="std std-ref">DSPLIB_BIQUAD_TDF2</span></a></p></li>
+</ul>
+</p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-enableNChCoeffs"><span class="n">uint32_t</span><span class="w"> </span><span class="n sig-name">enableNChCoeffs</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-enableNChCoeffs" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> Flag to enable per channel filter coefficients.<ul class="simple">
+<li><p>0 =&gt; same coefficients for all channels</p></li>
+<li><p>1 =&gt; different coefficients for each channel </p></li>
+</ul>
+</p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-pBufParamsFilterCoeffOpt"><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pBufParamsFilterCoeffOpt</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-p-pBufParamsFilterCoeffOpt" title="Permalink to this definition">¶</a></dt><dd><p><strong>[inout]</strong> : Pointer to the buffer descriptor.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-returns">Returns<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficientsBufferDesc-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Status value indicating success or failure. Refer to <a class="reference internal" href="DSPLIB_COMMON.html#group__DSPLIB__COMMON_1ga8aeae6eaaa4a985992e12c3dcac5a370"><span class="std std-ref">DSPLIB_STATUS</span></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function objdesc">
+<dt class="sig sig-object highlight sig-wrap c" id="c.DSPLIB_cascadeBiquad_get_coefficients">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1ga411bfd2400a7a9a13afa9fc87beea337"></span><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_STATUS" title="DSPLIB_STATUS (C type) — Return value for DSPLIB functions."><span class="n"><span class="pre">DSPLIB_STATUS</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_cascadeBiquad_get_coefficients</span></span></span><span class="sig-paren">(</span><span class="sig-param-decl"><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-biquadForm" title="biquadForm (C function parameter) — [in] : Biquad form (e.g. DSPLIB_BIQUAD_DF2 or DSPLIB_BIQUAD_TIF)"><span class="n"><span class="pre">biquadForm</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-enableNChCoeffs" title="enableNChCoeffs (C function parameter) — [in] : Flag to enable different coefficients per channel"><span class="n"><span class="pre">enableNChCoeffs</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pBufParamsFilterCoeff" title="pBufParamsFilterCoeff (C function parameter) — [in] : Pointer to the coefficient buffer descriptor"><span class="n"><span class="pre">pBufParamsFilterCoeff</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pBufParamsFilterCoeffOpt" title="pBufParamsFilterCoeffOpt (C function parameter) — [in] Pointer to the optimized coefficient buffer descriptor"><span class="n"><span class="pre">pBufParamsFilterCoeffOpt</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pFilterCoeff" title="pFilterCoeff (C function parameter) — [in] : Pointer to the input coefficients buffer"><span class="n"><span class="pre">pFilterCoeff</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pFilterCoeffOpt" title="pFilterCoeffOpt (C function parameter) — [out] : Pointer to the output optimized coefficients buffer"><span class="n"><span class="pre">pFilterCoeffOpt</span></span></a></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficients" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Helper function to get the coefficients for the optimized cascade biquad. </p>
+<p><div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>Calculates the optimized coefficients for the cascade biquad. </p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="c.DSPLIB_cascadeBiquad_get_coefficients-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficients-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="c.DSPLIB_cascadeBiquad_get_coefficients-p-biquadForm"><span class="n">uint32_t</span><span class="w"> </span><span class="n sig-name">biquadForm</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-biquadForm" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Biquad form (e.g. DSPLIB_BIQUAD_DF2 or DSPLIB_BIQUAD_TIF) </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_get_coefficients-p-enableNChCoeffs"><span class="n">uint32_t</span><span class="w"> </span><span class="n sig-name">enableNChCoeffs</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-enableNChCoeffs" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Flag to enable different coefficients per channel </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_get_coefficients-p-pBufParamsFilterCoeff"><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pBufParamsFilterCoeff</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pBufParamsFilterCoeff" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the coefficient buffer descriptor </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_get_coefficients-p-pBufParamsFilterCoeffOpt"><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pBufParamsFilterCoeffOpt</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pBufParamsFilterCoeffOpt" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> Pointer to the optimized coefficient buffer descriptor </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_get_coefficients-p-pFilterCoeff"><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pFilterCoeff</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pFilterCoeff" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the input coefficients buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_get_coefficients-p-pFilterCoeffOpt"><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pFilterCoeffOpt</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficients-p-pFilterCoeffOpt" title="Permalink to this definition">¶</a></dt><dd><p><strong>[out]</strong> : Pointer to the output optimized coefficients buffer</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="c.DSPLIB_cascadeBiquad_get_coefficients-returns">Returns<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_get_coefficients-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Status value indicating success or failure. Refer to <a class="reference internal" href="DSPLIB_COMMON.html#group__DSPLIB__COMMON_1ga8aeae6eaaa4a985992e12c3dcac5a370"><span class="std std-ref">DSPLIB_STATUS</span></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function objdesc">
+<dt class="sig sig-object highlight sig-wrap c" id="c.DSPLIB_cascadeBiquad_init">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1ga97879114c46531d9ff6daa14d337175c"></span><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_STATUS" title="DSPLIB_STATUS (C type) — Return value for DSPLIB functions."><span class="n"><span class="pre">DSPLIB_STATUS</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_cascadeBiquad_init</span></span></span><span class="sig-paren">(</span><span class="sig-param-decl"><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_kernelHandle" title="DSPLIB_kernelHandle (C type) — Handle type for DSPLIB operations."><span class="n"><span class="pre">DSPLIB_kernelHandle</span></span></a><span class="w"> </span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_init-p-handle" title="handle (C function parameter) — [in] : Active handle to the kernel"><span class="n"><span class="pre">handle</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsIn" title="bufParamsIn (C function parameter) — [in] : Pointer to the structure containing dimensional information of input buffer"><span class="n"><span class="pre">bufParamsIn</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsFilterCoeff" title="bufParamsFilterCoeff (C function parameter) — [in] : Pointer to the structure containing dimensional information of filter coefficient buffer"><span class="n"><span class="pre">bufParamsFilterCoeff</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsFilterVar" title="bufParamsFilterVar (C function parameter) — [in] : Pointer to the structure containing dimensional information of filter state variable buffer"><span class="n"><span class="pre">bufParamsFilterVar</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsOut" title="bufParamsOut (C function parameter) — [out] : Pointer to the structure containing dimensional information of ouput buffer"><span class="n"><span class="pre">bufParamsOut</span></span></a>, </span><span class="sig-param-decl"><a class="reference internal" href="#c.DSPLIB_cascadeBiquad_InitArgs" title="DSPLIB_cascadeBiquad_InitArgs (C struct) — Structure containing the parameters to initialize the kernel."><span class="n"><span class="pre">DSPLIB_cascadeBiquad_InitArgs</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_init-p-pKerInitArgs" title="pKerInitArgs (C function parameter) — [in] : Pointer to the structure holding init parameters"><span class="n"><span class="pre">pKerInitArgs</span></span></a></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init" title="Link to this definition">¶</a><br /></dt>
+<dd><p>This function should be called before the <a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1ga0814c072d4e893c1e270aa633b86e3a2"><span class="std std-ref">DSPLIB_cascadeBiquad_exec</span></a> function is called. This function takes care of any one-time operations such as setting up the configuration of required hardware resources such as the streaming engines. The results of these operations are stored in the handle. </p>
+<p><div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>Application is expected to provide a valid handle. </p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="c.DSPLIB_cascadeBiquad_init-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="c.DSPLIB_cascadeBiquad_init-p-handle"><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_kernelHandle" title="DSPLIB_kernelHandle (C type) — Handle type for DSPLIB operations."><span class="n">DSPLIB_kernelHandle</span></a><span class="w"> </span><span class="n sig-name">handle</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init-p-handle" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Active handle to the kernel </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_init-p-bufParamsIn"><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">bufParamsIn</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsIn" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the structure containing dimensional information of input buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_init-p-bufParamsFilterCoeff"><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">bufParamsFilterCoeff</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsFilterCoeff" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the structure containing dimensional information of filter coefficient buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_init-p-bufParamsFilterVar"><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">bufParamsFilterVar</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsFilterVar" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the structure containing dimensional information of filter state variable buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_init-p-bufParamsOut"><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">bufParamsOut</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init-p-bufParamsOut" title="Permalink to this definition">¶</a></dt><dd><p><strong>[out]</strong> : Pointer to the structure containing dimensional information of ouput buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_init-p-pKerInitArgs"><a class="reference internal" href="#c.DSPLIB_cascadeBiquad_InitArgs" title="DSPLIB_cascadeBiquad_InitArgs (C struct) — Structure containing the parameters to initialize the kernel."><span class="n">DSPLIB_cascadeBiquad_InitArgs</span></a><span class="w"> </span><span class="p">*</span><span class="n sig-name">pKerInitArgs</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init-p-pKerInitArgs" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the structure holding init parameters</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="c.DSPLIB_cascadeBiquad_init-returns">Returns<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Status value indicating success or failure. Refer to <a class="reference internal" href="DSPLIB_COMMON.html#group__DSPLIB__COMMON_1ga8aeae6eaaa4a985992e12c3dcac5a370"><span class="std std-ref">DSPLIB_STATUS</span></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function objdesc">
+<dt class="sig sig-object highlight sig-wrap c" id="c.DSPLIB_cascadeBiquad_init_checkParams">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1gadf44f698e9d2631d7d450e28d0acafbd"></span><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_STATUS" title="DSPLIB_STATUS (C type) — Return value for DSPLIB functions."><span class="n"><span class="pre">DSPLIB_STATUS</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_cascadeBiquad_init_checkParams</span></span></span><span class="sig-paren">(</span><span class="sig-param-decl"><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_kernelHandle" title="DSPLIB_kernelHandle (C type) — Handle type for DSPLIB operations."><span class="n"><span class="pre">DSPLIB_kernelHandle</span></span></a><span class="w"> </span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-handle" title="handle (C function parameter) — [in] : Active handle to the kernel"><span class="n"><span class="pre">handle</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsIn" title="bufParamsIn (C function parameter) — [in] : Pointer to the structure containing dimensional information of input buffer"><span class="n"><span class="pre">bufParamsIn</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsFilterCoeff" title="bufParamsFilterCoeff (C function parameter) — [in] : Pointer to the structure containing dimensional information of filter coefficient buffer"><span class="n"><span class="pre">bufParamsFilterCoeff</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsFilterVar" title="bufParamsFilterVar (C function parameter) — [in] : Pointer to the structure containing dimensional information of filter state variable buffer"><span class="n"><span class="pre">bufParamsFilterVar</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsOut" title="bufParamsOut (C function parameter) — [out] : Pointer to the structure containing dimensional information of output buffer"><span class="n"><span class="pre">bufParamsOut</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#c.DSPLIB_cascadeBiquad_InitArgs" title="DSPLIB_cascadeBiquad_InitArgs (C struct) — Structure containing the parameters to initialize the kernel."><span class="n"><span class="pre">DSPLIB_cascadeBiquad_InitArgs</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-pKerInitArgs" title="pKerInitArgs (C function parameter) — [in] : Pointer to the structure holding init parameters"><span class="n"><span class="pre">pKerInitArgs</span></span></a></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init_checkParams" title="Link to this definition">¶</a><br /></dt>
+<dd><p>This function checks the validity of the parameters passed to <a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1ga97879114c46531d9ff6daa14d337175c"><span class="std std-ref">DSPLIB_cascadeBiquad_init</span></a> function. This function is called with the same parameters as the <a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1ga97879114c46531d9ff6daa14d337175c"><span class="std std-ref">DSPLIB_cascadeBiquad_init</span></a>, and this function must be called before the <a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1ga97879114c46531d9ff6daa14d337175c"><span class="std std-ref">DSPLIB_cascadeBiquad_init</span></a> is called. </p>
+<p><div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>None </p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="c.DSPLIB_cascadeBiquad_init_checkParams-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init_checkParams-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="c.DSPLIB_cascadeBiquad_init_checkParams-p-handle"><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_kernelHandle" title="DSPLIB_kernelHandle (C type) — Handle type for DSPLIB operations."><span class="n">DSPLIB_kernelHandle</span></a><span class="w"> </span><span class="n sig-name">handle</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-handle" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Active handle to the kernel </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsIn"><span class="k">const</span><span class="w"> </span><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">bufParamsIn</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsIn" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the structure containing dimensional information of input buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsFilterCoeff"><span class="k">const</span><span class="w"> </span><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">bufParamsFilterCoeff</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsFilterCoeff" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the structure containing dimensional information of filter coefficient buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsFilterVar"><span class="k">const</span><span class="w"> </span><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">bufParamsFilterVar</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsFilterVar" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the structure containing dimensional information of filter state variable buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsOut"><span class="k">const</span><span class="w"> </span><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">bufParamsOut</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-bufParamsOut" title="Permalink to this definition">¶</a></dt><dd><p><strong>[out]</strong> : Pointer to the structure containing dimensional information of output buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_init_checkParams-p-pKerInitArgs"><span class="k">const</span><span class="w"> </span><a class="reference internal" href="#c.DSPLIB_cascadeBiquad_InitArgs" title="DSPLIB_cascadeBiquad_InitArgs (C struct) — Structure containing the parameters to initialize the kernel."><span class="n">DSPLIB_cascadeBiquad_InitArgs</span></a><span class="w"> </span><span class="p">*</span><span class="n sig-name">pKerInitArgs</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init_checkParams-p-pKerInitArgs" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the structure holding init parameters</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="c.DSPLIB_cascadeBiquad_init_checkParams-returns">Returns<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_init_checkParams-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Status value indicating success or failure. Refer to <a class="reference internal" href="DSPLIB_COMMON.html#group__DSPLIB__COMMON_1ga8aeae6eaaa4a985992e12c3dcac5a370"><span class="std std-ref">DSPLIB_STATUS</span></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function objdesc">
+<dt class="sig sig-object highlight sig-wrap c" id="c.DSPLIB_cascadeBiquad_exec">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1ga0814c072d4e893c1e270aa633b86e3a2"></span><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_STATUS" title="DSPLIB_STATUS (C type) — Return value for DSPLIB functions."><span class="n"><span class="pre">DSPLIB_STATUS</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_cascadeBiquad_exec</span></span></span><span class="sig-paren">(</span><span class="sig-param-decl"><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_kernelHandle" title="DSPLIB_kernelHandle (C type) — Handle type for DSPLIB operations."><span class="n"><span class="pre">DSPLIB_kernelHandle</span></span></a><span class="w"> </span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_exec-p-handle" title="handle (C function parameter) — [in] : Active handle to the kernel"><span class="n"><span class="pre">handle</span></span></a>, </span><span class="sig-param-decl"><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_exec-p-pIn" title="pIn (C function parameter) — [in] : Pointer to buffer holding the input data"><span class="n"><span class="pre">pIn</span></span></a>, </span><span class="sig-param-decl"><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_exec-p-pFilterCoeff" title="pFilterCoeff (C function parameter) — [in] : Pointer to buffer holding the filter coefficient data"><span class="n"><span class="pre">pFilterCoeff</span></span></a>, </span><span class="sig-param-decl"><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_exec-p-pFilterVar" title="pFilterVar (C function parameter) — [in] : Pointer to buffer holding the filter state variable data"><span class="n"><span class="pre">pFilterVar</span></span></a>, </span><span class="sig-param-decl"><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_exec-p-pOut" title="pOut (C function parameter) — [out] : Pointer to buffer holding the output data"><span class="n"><span class="pre">pOut</span></span></a></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec" title="Link to this definition">¶</a><br /></dt>
+<dd><p>This function is the main kernel compute function. </p>
+<p>Please refer to details under <a class="reference internal" href="#group__DSPLIB__cascadeBiquad"><span class="std std-ref">DSPLIB_cascadeBiquad</span></a></p>
+<p><div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>Before calling this function, application is expected to call <a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1ga97879114c46531d9ff6daa14d337175c"><span class="std std-ref">DSPLIB_cascadeBiquad_init</span></a> and <a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1ga336c1794cc951de45a3fdeb3687bffe5"><span class="std std-ref">DSPLIB_cascadeBiquad_exec_checkParams</span></a> functions. This ensures resource configuration and error checks are done only once for several invocations of this function. </p>
+</div>
+<dl class="simple">
+<dt><strong>Assumptions:</strong></dt><dd><p><ul class="simple">
+<li><p>None</p></li>
+</ul>
+</p>
+</dd>
+<dt><strong>Performance Considerations:</strong></dt><dd><p>For best performance,<ul class="simple">
+<li><p>the input and output data buffers are expected to be in L2 memory</p></li>
+<li><p>the buffer pointers are assumed to be 64-byte aligned</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="c.DSPLIB_cascadeBiquad_exec-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="c.DSPLIB_cascadeBiquad_exec-p-handle"><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_kernelHandle" title="DSPLIB_kernelHandle (C type) — Handle type for DSPLIB operations."><span class="n">DSPLIB_kernelHandle</span></a><span class="w"> </span><span class="n sig-name">handle</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec-p-handle" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Active handle to the kernel </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_exec-p-pIn"><span class="kt">void</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pIn</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec-p-pIn" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to buffer holding the input data </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_exec-p-pFilterCoeff"><span class="kt">void</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pFilterCoeff</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec-p-pFilterCoeff" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to buffer holding the filter coefficient data </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_exec-p-pFilterVar"><span class="kt">void</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pFilterVar</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec-p-pFilterVar" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to buffer holding the filter state variable data </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_exec-p-pOut"><span class="kt">void</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pOut</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec-p-pOut" title="Permalink to this definition">¶</a></dt><dd><p><strong>[out]</strong> : Pointer to buffer holding the output data</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="c.DSPLIB_cascadeBiquad_exec-returns">Returns<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Status value indicating success or failure. Refer to <a class="reference internal" href="DSPLIB_COMMON.html#group__DSPLIB__COMMON_1ga8aeae6eaaa4a985992e12c3dcac5a370"><span class="std std-ref">DSPLIB_STATUS</span></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function objdesc">
+<dt class="sig sig-object highlight sig-wrap c" id="c.DSPLIB_cascadeBiquad_exec_checkParams">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1ga336c1794cc951de45a3fdeb3687bffe5"></span><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_STATUS" title="DSPLIB_STATUS (C type) — Return value for DSPLIB functions."><span class="n"><span class="pre">DSPLIB_STATUS</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_cascadeBiquad_exec_checkParams</span></span></span><span class="sig-paren">(</span><span class="sig-param-decl"><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_kernelHandle" title="DSPLIB_kernelHandle (C type) — Handle type for DSPLIB operations."><span class="n"><span class="pre">DSPLIB_kernelHandle</span></span></a><span class="w"> </span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-handle" title="handle (C function parameter) — [in] : Active handle to the kernel"><span class="n"><span class="pre">handle</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pIn" title="pIn (C function parameter) — [in] : Pointer to buffer holding the input data"><span class="n"><span class="pre">pIn</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pFilterCoeff" title="pFilterCoeff (C function parameter) — [in] : Pointer to buffer holding the filter coefficient data"><span class="n"><span class="pre">pFilterCoeff</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pFilterVar" title="pFilterVar (C function parameter) — [in] : Pointer to buffer holding the filter state variable data"><span class="n"><span class="pre">pFilterVar</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pOut" title="pOut (C function parameter) — [out] : Pointer to buffer holding the output matrix"><span class="n"><span class="pre">pOut</span></span></a></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec_checkParams" title="Link to this definition">¶</a><br /></dt>
+<dd><p>This function checks the validity of the parameters passed to <a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1ga0814c072d4e893c1e270aa633b86e3a2"><span class="std std-ref">DSPLIB_cascadeBiquad_exec</span></a> function. This function is called with the same parameters as the <a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1ga0814c072d4e893c1e270aa633b86e3a2"><span class="std std-ref">DSPLIB_cascadeBiquad_exec</span></a>, and this function must be called before the <a class="reference internal" href="#group__DSPLIB__cascadeBiquad_1ga0814c072d4e893c1e270aa633b86e3a2"><span class="std std-ref">DSPLIB_cascadeBiquad_exec</span></a> is called. </p>
+<p><div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>None </p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="c.DSPLIB_cascadeBiquad_exec_checkParams-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec_checkParams-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="c.DSPLIB_cascadeBiquad_exec_checkParams-p-handle"><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_kernelHandle" title="DSPLIB_kernelHandle (C type) — Handle type for DSPLIB operations."><span class="n">DSPLIB_kernelHandle</span></a><span class="w"> </span><span class="n sig-name">handle</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-handle" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Active handle to the kernel </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_exec_checkParams-p-pIn"><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pIn</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pIn" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to buffer holding the input data </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_exec_checkParams-p-pFilterCoeff"><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pFilterCoeff</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pFilterCoeff" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to buffer holding the filter coefficient data </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_exec_checkParams-p-pFilterVar"><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pFilterVar</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pFilterVar" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to buffer holding the filter state variable data </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_exec_checkParams-p-pOut"><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">pOut</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec_checkParams-p-pOut" title="Permalink to this definition">¶</a></dt><dd><p><strong>[out]</strong> : Pointer to buffer holding the output matrix</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even" id="c.DSPLIB_cascadeBiquad_exec_checkParams-returns">Returns<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_exec_checkParams-returns" title="Permalink to this headline">¶</a></dt>
+<dd class="field-even"><p>Status value indicating success or failure. Refer to <a class="reference internal" href="DSPLIB_COMMON.html#group__DSPLIB__COMMON_1ga8aeae6eaaa4a985992e12c3dcac5a370"><span class="std std-ref">DSPLIB_STATUS</span></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function objdesc">
+<dt class="sig sig-object highlight sig-wrap c" id="c.DSPLIB_cascadeBiquad_perfEst">
+<span class="target" id="group__DSPLIB__cascadeBiquad_1gaa8d9fad923561187281d882d9ec10b41"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_cascadeBiquad_perfEst</span></span></span><span class="sig-paren">(</span><span class="sig-param-decl"><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_kernelHandle" title="DSPLIB_kernelHandle (C type) — Handle type for DSPLIB operations."><span class="n"><span class="pre">DSPLIB_kernelHandle</span></span></a><span class="w"> </span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_perfEst-p-handle" title="handle (C function parameter) — [in] : Active handle to the kernel"><span class="n"><span class="pre">handle</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsIn" title="bufParamsIn (C function parameter) — [in] : Pointer to the structure containing dimensional information of the input buffer"><span class="n"><span class="pre">bufParamsIn</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsFilterCoeff" title="bufParamsFilterCoeff (C function parameter) — [in] : Pointer to the structure containing dimensional information of the filter coefficient buffer"><span class="n"><span class="pre">bufParamsFilterCoeff</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsFilterVar" title="bufParamsFilterVar (C function parameter) — [in] : Pointer to the structure containing dimensional information of the filter state variable buffer"><span class="n"><span class="pre">bufParamsFilterVar</span></span></a>, </span><span class="sig-param-decl"><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">DSPLIB_bufParams2D_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsOut" title="bufParamsOut (C function parameter) — [in] : Pointer to the structure containing dimensional information of the output buffer"><span class="n"><span class="pre">bufParamsOut</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_perfEst-p-archCycles" title="archCycles (C function parameter) — [out] : Cycles estimated for the compute, startup and teardown"><span class="n"><span class="pre">archCycles</span></span></a>, </span><span class="sig-param-decl"><span class="n"><span class="pre">uint64_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><a class="n reference internal" href="#c.DSPLIB_cascadeBiquad_perfEst-p-estCycles" title="estCycles (C function parameter) — [out] : Cycles estimated for the compute, startup, teardown and any associated overhead"><span class="n"><span class="pre">estCycles</span></span></a></span><span class="sig-paren">)</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_perfEst" title="Link to this definition">¶</a><br /></dt>
+<dd><p>This is a utility function that gives an estimate of the cycles consumed for the kernel execution. </p>
+<p><div class="remark admonition">
+<p class="admonition-title">Remark</p>
+<p>None </p>
+</div>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd" id="c.DSPLIB_cascadeBiquad_perfEst-parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_perfEst-parameters" title="Permalink to this headline">¶</a></dt>
+<dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="c.DSPLIB_cascadeBiquad_perfEst-p-handle"><a class="desctype reference internal" href="DSPLIB_COMMON.html#c.DSPLIB_kernelHandle" title="DSPLIB_kernelHandle (C type) — Handle type for DSPLIB operations."><span class="n">DSPLIB_kernelHandle</span></a><span class="w"> </span><span class="n sig-name">handle</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_perfEst-p-handle" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Active handle to the kernel </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsIn"><span class="k">const</span><span class="w"> </span><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">bufParamsIn</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsIn" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the structure containing dimensional information of the input buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsFilterCoeff"><span class="k">const</span><span class="w"> </span><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">bufParamsFilterCoeff</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsFilterCoeff" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the structure containing dimensional information of the filter coefficient buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsFilterVar"><span class="k">const</span><span class="w"> </span><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">bufParamsFilterVar</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsFilterVar" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the structure containing dimensional information of the filter state variable buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsOut"><span class="k">const</span><span class="w"> </span><span class="n">DSPLIB_bufParams2D_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">bufParamsOut</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_perfEst-p-bufParamsOut" title="Permalink to this definition">¶</a></dt><dd><p><strong>[in]</strong> : Pointer to the structure containing dimensional information of the output buffer </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_perfEst-p-archCycles"><span class="n">uint64_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">archCycles</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_perfEst-p-archCycles" title="Permalink to this definition">¶</a></dt><dd><p><strong>[out]</strong> : Cycles estimated for the compute, startup and teardown </p>
+</dd>
+<dt id="c.DSPLIB_cascadeBiquad_perfEst-p-estCycles"><span class="n">uint64_t</span><span class="w"> </span><span class="p">*</span><span class="n sig-name">estCycles</span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_perfEst-p-estCycles" title="Permalink to this definition">¶</a></dt><dd><p><strong>[out]</strong> : Cycles estimated for the compute, startup, teardown and any associated overhead </p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="c struct objdesc">
+<dt class="sig sig-object highlight c" id="c.DSPLIB_cascadeBiquad_InitArgs">
+<span class="target" id="structDSPLIB__cascadeBiquad__InitArgs"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DSPLIB_cascadeBiquad_InitArgs</span></span></span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_InitArgs" title="Link to this definition">¶</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;DSPLIB_cascadeBiquad.h&gt;</em></div>
+<p>Structure containing the parameters to initialize the kernel. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members<a class="headerlink" href="#breathe-section-title-public-members" title="Permalink to this headline">¶</a></p>
+<dl class="c var objdesc">
+<dt class="sig sig-object highlight c" id="c.DSPLIB_cascadeBiquad_InitArgs.funcStyle">
+<span class="target" id="structDSPLIB__cascadeBiquad__InitArgs_1a7961bbcb482caafd468dcc5f71e35bf4"></span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">funcStyle</span></span></span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_InitArgs.funcStyle" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Variant of the function refer to <a class="reference internal" href="DSPLIB_COMMON.html#group__DSPLIB__COMMON_1ga6265acab61c515129ed544127e91df0f"><span class="std std-ref">DSPLIB_FUNCTION_STYLE</span></a></p>
+</dd></dl>
+
+<dl class="c var objdesc">
+<dt class="sig sig-object highlight c" id="c.DSPLIB_cascadeBiquad_InitArgs.dataSize">
+<span class="target" id="structDSPLIB__cascadeBiquad__InitArgs_1a059cbddea4110f029588fecfeb95a6dc"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dataSize</span></span></span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_InitArgs.dataSize" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Size of input data </p>
+</dd></dl>
+
+<dl class="c var objdesc">
+<dt class="sig sig-object highlight c" id="c.DSPLIB_cascadeBiquad_InitArgs.numStages">
+<span class="target" id="structDSPLIB__cascadeBiquad__InitArgs_1aad2b8ef4f532e6fba0d78690d9bbe539"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">numStages</span></span></span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_InitArgs.numStages" title="Link to this definition">¶</a><br /></dt>
+<dd><p>number of stages </p>
+</dd></dl>
+
+<dl class="c var objdesc">
+<dt class="sig sig-object highlight c" id="c.DSPLIB_cascadeBiquad_InitArgs.numChannels">
+<span class="target" id="structDSPLIB__cascadeBiquad__InitArgs_1a0bb68e9fbec1da47926e8077715f5324"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">numChannels</span></span></span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_InitArgs.numChannels" title="Link to this definition">¶</a><br /></dt>
+<dd><p>number of channels </p>
+</dd></dl>
+
+<dl class="c var objdesc">
+<dt class="sig sig-object highlight c" id="c.DSPLIB_cascadeBiquad_InitArgs.enableNChCoeffs">
+<span class="target" id="structDSPLIB__cascadeBiquad__InitArgs_1a7d221f72d784da9fb776d899422b2605"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">enableNChCoeffs</span></span></span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_InitArgs.enableNChCoeffs" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Flag to enable per channel filter coefficients: 0 =&gt; same coefficients for all channels 1 =&gt; different coefficients for each channel </p>
+</dd></dl>
+
+<dl class="c var objdesc">
+<dt class="sig sig-object highlight c" id="c.DSPLIB_cascadeBiquad_InitArgs.biquadForm">
+<span class="target" id="structDSPLIB__cascadeBiquad__InitArgs_1a08502e572cd59fca111f6eff997eea71"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">biquadForm</span></span></span><a class="headerlink" href="#c.DSPLIB_cascadeBiquad_InitArgs.biquadForm" title="Link to this definition">¶</a><br /></dt>
+<dd><p>biquad realization form </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    Aug 07, 2026
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2026, Texas Instruments Incorporated.
+        
+    </div>
+  
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "search.highlight", "toc.follow"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+      
+        <script src="../_static/sphinx_immaterial_theme.32136f45f91ae6956.min.js?v=a7a9472a"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
+        <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    
+  </body>
+</html>
