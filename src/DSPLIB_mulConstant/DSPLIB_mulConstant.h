@@ -164,6 +164,20 @@ DSPLIB_mulConstant_exec(DSPLIB_kernelHandle handle, void *restrict pIn1, void *r
 
 /**@}*/
 
+/**
+ *  @brief        This funtion is called to calculate the arch cycles and
+ *                estimate cycles of the loop used in the execution kernel.
+ *
+ *  @param [in]  handle         :  Active handle to the kernel
+ *  @param [in]  archCycles     :  Arch cycles used in that particluar kernel
+ *  @param [in]  estCycles      :  Cycles estimated for that particular kenel
+ *
+ *  @return      Void.
+ *
+ *  @remarks     None
+ */
+void DSPLIB_mulConstant_perfEst(DSPLIB_kernelHandle handle, uint64_t *archCycles, uint64_t *estCycles);
+
 #ifdef __cplusplus
 }
 #endif

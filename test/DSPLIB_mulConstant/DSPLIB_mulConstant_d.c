@@ -36,9 +36,9 @@ int DSPLIB_mulConstant_d(uint32_t *pProfile, uint8_t LevelOfFeedback)
    uint64_t archCycles = 0;
    uint64_t estCycles  = 0;
 
-   mulConstant_testParams_t *prm;
-   mulConstant_testParams_t  currPrm;
-   mulConstant_getTestParams(&prm, &test_cases);
+   DSPLIB_mulConstant_testParams_t *prm;
+   DSPLIB_mulConstant_testParams_t  currPrm;
+   DSPLIB_mulConstant_getTestParams(&prm, &test_cases);
 
    DSPLIB_mulConstant_InitArgs kerInitArgs;
 
@@ -88,15 +88,7 @@ int DSPLIB_mulConstant_d(uint32_t *pProfile, uint8_t LevelOfFeedback)
 
          int32_t dataWidth;
 
-         if (currPrm.dataType == DSPLIB_FLOAT32) {
-            dataWidth = sizeof(DSPLIB_F32);
-         }
-         else if (currPrm.dataType == DSPLIB_FLOAT64) {
-            dataWidth = sizeof(DSPLIB_D64);
-         }
-         else {
-            dataWidth = DSPLIB_sizeof(currPrm.dataType);
-         }
+         dataWidth = DSPLIB_sizeof(currPrm.dataType);
 
          void *pIn1 = (void *) TI_memalign(DSPLIB_L2DATA_ALIGNMENT, 1 * dataWidth);
          void *pIn2 = (void *) TI_memalign(DSPLIB_L2DATA_ALIGNMENT, bufParamsIn.dim_x * dataWidth);
@@ -133,18 +125,19 @@ int DSPLIB_mulConstant_d(uint32_t *pProfile, uint8_t LevelOfFeedback)
             /* No need to fill anything here, we just used patter 0xAB
              * for testing purposes.                                    */
 
-            if (currPrm.dataType == DSPLIB_FLOAT32 || currPrm.dataType == DSPLIB_FLOAT64) {
-               TI_fillBuffer_float_bounded(prm[tpi].testPattern, 0, pIn1, prm[tpi].staticIn, 1, 1, 0, dataWidth,
+            if (currPrm.dataType == DSPLIB_FLOAT32 || currPrm.dataType == DSPLIB_FLOAT64 ||
+                currPrm.dataType == DSPLIB_CFLOAT32) {
+               TI_fillBuffer_float_bounded(prm[tpi].testPattern, 0, pIn1, prm[tpi].staticIn1, 1, 1, 0, dataWidth,
                                            testPatternString);
 
-               TI_fillBuffer_float_bounded(prm[tpi].testPattern, 0, pIn2, prm[tpi].staticIn, bufParamsIn.dim_x, 1, 0,
+               TI_fillBuffer_float_bounded(prm[tpi].testPattern, 0, pIn2, prm[tpi].staticIn2, bufParamsIn.dim_x, 1, 0,
                                            dataWidth, testPatternString);
             }
             else {
-               TI_fillBuffer(prm[tpi].testPattern, (uint8_t) 255, pIn1, prm[tpi].staticIn, 1, 1, 0,
+               TI_fillBuffer(prm[tpi].testPattern, (uint8_t) 255, pIn1, prm[tpi].staticIn1, 1, 1, 0,
                              DSPLIB_sizeof(currPrm.dataType), testPatternString);
 
-               TI_fillBuffer(prm[tpi].testPattern, (uint8_t) 255, pIn2, prm[tpi].staticIn, bufParamsIn.dim_x, 1, 0,
+               TI_fillBuffer(prm[tpi].testPattern, (uint8_t) 255, pIn2, prm[tpi].staticIn2, bufParamsIn.dim_x, 1, 0,
                              DSPLIB_sizeof(currPrm.dataType), testPatternString);
             }
 
@@ -230,7 +223,8 @@ int DSPLIB_mulConstant_d(uint32_t *pProfile, uint8_t LevelOfFeedback)
 #if DSPLIB_DEBUGPRINT
             printf("DSPLIB_DEBUGPRINT  DSPLIB_mulConstant_d CP 6 status_nat %d\n", status_nat);
 #endif
-            if (currPrm.dataType == DSPLIB_FLOAT32 || currPrm.dataType == DSPLIB_FLOAT64) {
+            if (currPrm.dataType == DSPLIB_FLOAT32 || currPrm.dataType == DSPLIB_FLOAT64 ||
+                currPrm.dataType == DSPLIB_CFLOAT32) {
                status_nat_vs_opt = TI_compare_mem_2D_float((void *) pOut, (void *) pOutCn, 0.001, (double) powf(2, -10),
                                                            bufParamsOut.dim_x, 1, 0, dataWidth);
             }
@@ -283,14 +277,17 @@ int DSPLIB_mulConstant_d(uint32_t *pProfile, uint8_t LevelOfFeedback)
 
             sprintf(desc, "%s generated input | Data size = %d", testPatternString, currPrm.dataSize);
 
+            DSPLIB_mulConstant_perfEst(handle, &archCycles, &estCycles);
+
             // write to CSV, must happen prior to write to screen because TI_profile_formula_mulConstant clears values
             // in counters
             fprintf(fpOutputCSV, "mulConstant, %d, %d, %d, Data size:%d, %d, %d, %d, %lu, %lu, %.2f, %d\n", testNum,
                     currPrm.testPattern, DSPLIB_sizeof(bufParamsIn.data_type) * 8, currPrm.dataSize, currPrm.dataSize,
-                    archCycles, cycles[TI_PROFILE_KERNEL_OPT],
+                    0, 0,
+                    archCycles, (uint64_t) cycles[TI_PROFILE_KERNEL_OPT],
                     ((DSPLIB_F32) cycles[TI_PROFILE_KERNEL_OPT]) / ((DSPLIB_F32) archCycles), !currentTestFail);
 
-            TI_profile_add_test(testNum++, currPrm.dataSize, 0, 0, currentTestFail, desc);
+            TI_profile_add_test(testNum++, currPrm.dataSize, archCycles, estCycles, currentTestFail, desc);
          }
          else {
             sprintf(desc, "Data size=%d", currPrm.dataSize);

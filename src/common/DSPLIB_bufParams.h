@@ -37,8 +37,14 @@ typedef enum _DSPLIB_data_type_e {
    /* Standard floating point data types */
    DSPLIB_FLOAT16 = 11, /**<  16-bit floating point number */
    DSPLIB_FLOAT32 = 12, /**<  32-bit floating point number */
-   DSPLIB_FLOAT64 = 13  /**<  64-bit floating point number */
+   DSPLIB_FLOAT64 = 13, /**<  64-bit floating point number */
 
+   /* Complex data types */
+   DSPLIB_CINT16   = 14, /**<  Complex 16-bit integer (int16 re + int16 im, 4 bytes total) */
+   DSPLIB_CINT32   = 15, /**<  Complex 32-bit integer (int32 re + int32 im, 8 bytes total) */
+   DSPLIB_CINT64   = 16, /**<  Complex 64-bit integer (int64 re + int64 im, 16 bytes total) */
+   DSPLIB_CFLOAT32 = 17, /**<  Complex 32-bit floating point (float re + float im, 8 bytes total) */
+   DSPLIB_CFLOAT64 = 18, /**<  Complex 64-bit floating point (double re + double im, 16 bytes total) */
 } DSPLIB_data_type_e;
 
 /* ---------------------------------------------------------------- */
@@ -150,6 +156,15 @@ static inline int32_t DSPLIB_sizeof(uint32_t type)
       size = 8;
    }
    else if ((type == (uint32_t) DSPLIB_INT128) || (type == (uint32_t) DSPLIB_UINT128)) {
+      size = 16;
+   }
+   else if (type == (uint32_t) DSPLIB_CINT16) {
+      size = 4;
+   }
+   else if ((type == (uint32_t) DSPLIB_CFLOAT32) || (type == (uint32_t) DSPLIB_CINT32)) {
+      size = 8;
+   }
+   else if ((type == (uint32_t) DSPLIB_CFLOAT64) || (type == (uint32_t) DSPLIB_CINT64)) {
       size = 16;
    }
    else {
