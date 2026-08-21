@@ -189,9 +189,9 @@ int32_t TI_compare_mem_2D(void    *a,
    for (row = 0; row < height; row++) {
       for (col = 0; col < width; col++) {
          int64_t valA, valB;
-         int32_t offset;
+         size_t offset;
 
-         offset = (row * (stride / elementSize)) + col;
+         offset = ((size_t)row * (stride / elementSize)) + col;
          valA   = 0;
          valB   = 0;
 

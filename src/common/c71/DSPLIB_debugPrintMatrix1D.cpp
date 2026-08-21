@@ -15,7 +15,7 @@ template <typename dataType> void DSPLIB_debugPrintMatrix_helper(dataType *matri
 
    DSPLIB_PRINTF("%p |", xPtr);
    for (x = 0; x < params->dim_x; x++) {
-      DSPLIB_PRINTF("%3d ", *(xPtr));
+      DSPLIB_PRINTF("%3d ", static_cast<int>(*xPtr));
       xPtr++;
    }
    DSPLIB_PRINTF("%s", "|\n");
@@ -24,10 +24,26 @@ template <typename dataType> void DSPLIB_debugPrintMatrix_helper(dataType *matri
 }
 
 template void DSPLIB_debugPrintMatrix_helper<int8_t>(int8_t *matrix, const DSPLIB_bufParams1D_t *params);
-template void DSPLIB_debugPrintMatrix_helper<uint8_t>(uint8_t *matrix, const DSPLIB_bufParams1D_t *params);
 template void DSPLIB_debugPrintMatrix_helper<int16_t>(int16_t *matrix, const DSPLIB_bufParams1D_t *params);
-template void DSPLIB_debugPrintMatrix_helper<uint16_t>(uint16_t *matrix, const DSPLIB_bufParams1D_t *params);
 template void DSPLIB_debugPrintMatrix_helper<int32_t>(int32_t *matrix, const DSPLIB_bufParams1D_t *params);
+
+template <typename dataType> void DSPLIB_debugPrintMatrix_helperU(dataType *matrix, const DSPLIB_bufParams1D_t *params)
+{
+   uint32_t  x;
+   dataType *xPtr = matrix;
+
+   DSPLIB_PRINTF("%p |", xPtr);
+   for (x = 0; x < params->dim_x; x++) {
+      DSPLIB_PRINTF("%3u ", static_cast<unsigned int>(*xPtr));
+      xPtr++;
+   }
+   DSPLIB_PRINTF("%s", "|\n");
+
+   return;
+}
+
+template void DSPLIB_debugPrintMatrix_helperU<uint8_t>(uint8_t *matrix, const DSPLIB_bufParams1D_t *params);
+template void DSPLIB_debugPrintMatrix_helperU<uint16_t>(uint16_t *matrix, const DSPLIB_bufParams1D_t *params);
 
 /******************************************************************************/
 
@@ -55,13 +71,13 @@ void DSPLIB_debugPrintMatrix1D(void *matrix, const DSPLIB_bufParams1D_t *params)
       DSPLIB_debugPrintMatrix_helper<int16_t>((int16_t *) matrix, params);
       break;
    case DSPLIB_UINT16:
-      DSPLIB_debugPrintMatrix_helper<uint16_t>((uint16_t *) matrix, params);
+      DSPLIB_debugPrintMatrix_helperU<uint16_t>((uint16_t *) matrix, params);
       break;
    case DSPLIB_INT8:
       DSPLIB_debugPrintMatrix_helper<int8_t>((int8_t *) matrix, params);
       break;
    case DSPLIB_UINT8:
-      DSPLIB_debugPrintMatrix_helper<uint8_t>((uint8_t *) matrix, params);
+      DSPLIB_debugPrintMatrix_helperU<uint8_t>((uint8_t *) matrix, params);
       break;
    default:
       DSPLIB_PRINTF("\nERROR: Unrecognized data type in %s.\n", __FUNCTION__);

@@ -153,7 +153,7 @@ inline void bexp_exec_ci_unsigned_small_inputs(void *restrict pIn,
    using SignedDataType = std::make_signed_t<UnsignedDataType>;
    shift                = __norm((SignedDataType) mask_final);
    out_val              = (uint32_t) (shift + 1);
-   if (((uint64_t) 1 << (uint64_t) (num_bits - 1)) & mask_final) {
+   if (((uint64_t) 1 << ((uint64_t) num_bits - 1)) & mask_final) {
       out_val = 0;
    }
    *pOutLocal = out_val;
@@ -222,7 +222,7 @@ template <typename UnsignedDataType> inline void bexp_exec_ci_unsigned(void *res
    using SignedDataType = std::make_signed_t<UnsignedDataType>;
    shift                = __norm((SignedDataType) mask_final);
    out_val              = (uint32_t) (shift + 1);
-   if (((uint64_t) 1 << (uint64_t) (num_bits - 1)) & mask_final) {
+   if (((uint64_t) 1 << ((uint64_t) num_bits - 1)) & mask_final) {
       out_val = 0;
    }
    *pOutLocal = out_val;
