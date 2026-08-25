@@ -24,34 +24,35 @@ inline void minerror_exec_cn_integer8or16or32_inputs(void *restrict pIn,
    Integer8or16or32BitPromotedDataType val;
    *pMaxValLocal = std::numeric_limits<Integer8or16or32BitPromotedDataType>::min();
 
+   int32_t offset = dataSize !=0 ? (strideIn / dataSize) : 0;
    for (int32_t counter = 0; counter < (int32_t) vecInSize; counter++) {
       val = 0;
       Integer8or16or32BitPromotedDataType product1 =
-          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * (strideIn / dataSize) + 0]) *
+          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * offset + 0]) *
             (Integer8or16or32BitPromotedDataType) pErrCoefsLocal[0]));
       Integer8or16or32BitPromotedDataType product2 =
-          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * (strideIn / dataSize) + 1]) *
+          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * offset + 1]) *
             (Integer8or16or32BitPromotedDataType) pErrCoefsLocal[1]));
       Integer8or16or32BitPromotedDataType product3 =
-          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * (strideIn / dataSize) + 2]) *
+          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * offset + 2]) *
             (Integer8or16or32BitPromotedDataType) pErrCoefsLocal[2]));
       Integer8or16or32BitPromotedDataType product4 =
-          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * (strideIn / dataSize) + 3]) *
+          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * offset + 3]) *
             (Integer8or16or32BitPromotedDataType) pErrCoefsLocal[3]));
       Integer8or16or32BitPromotedDataType product5 =
-          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * (strideIn / dataSize) + 4]) *
+          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * offset + 4]) *
             (Integer8or16or32BitPromotedDataType) pErrCoefsLocal[4]));
       Integer8or16or32BitPromotedDataType product6 =
-          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * (strideIn / dataSize) + 5]) *
+          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * offset + 5]) *
             (Integer8or16or32BitPromotedDataType) pErrCoefsLocal[5]));
       Integer8or16or32BitPromotedDataType product7 =
-          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * (strideIn / dataSize) + 6]) *
+          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * offset + 6]) *
             (Integer8or16or32BitPromotedDataType) pErrCoefsLocal[6]));
       Integer8or16or32BitPromotedDataType product8 =
-          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * (strideIn / dataSize) + 7]) *
+          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * offset + 7]) *
             (Integer8or16or32BitPromotedDataType) pErrCoefsLocal[7]));
       Integer8or16or32BitPromotedDataType product9 =
-          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * (strideIn / dataSize) + 8]) *
+          ((((Integer8or16or32BitPromotedDataType) pInLocal[counter * offset + 8]) *
             (Integer8or16or32BitPromotedDataType) pErrCoefsLocal[8]));
 
       Integer8or16or32BitPromotedDataType acc1 = (product1 >> 1) + (product2 >> 1);
@@ -95,11 +96,12 @@ inline void minerror_exec_cn_integer64_inputs(void *restrict pIn,
    pMaxValScaler = std::numeric_limits<Integer64BitConvertedDataType>::min();
    *pMaxValLocal = pMaxValScaler;
 
+   int32_t offset = (dataSize != 0)? (strideIn / dataSize) : 0;
    for (int32_t counter = 0; counter < (int32_t) vecInSize; counter++) {
       val = 0;
       // Dot product
       for (int32_t j = 0; j < (int32_t) errCoefsSize; j++) {
-         val += ((Integer64BitConvertedDataType) pInLocal[counter * (strideIn / dataSize) + j]) *
+         val += ((Integer64BitConvertedDataType) pInLocal[counter * offset + j]) *
                 (Integer64BitDataType) pErrCoefsLocal[j];
       }
 
@@ -132,11 +134,12 @@ inline void minerror_exec_cn_float_inputs(void *restrict pIn,
    FloatingPointPromotedDataType val;
    *pMaxValLocal = std::numeric_limits<FloatingPointPromotedDataType>::min();
 
+   int32_t offset = dataSize != 0? (strideIn / dataSize) : 0;
    for (int32_t counter = 0; counter < (int32_t) vecInSize; counter++) {
       val = 0;
       // Dot product
       for (int32_t j = 0; j < (int32_t) errCoefsSize; j++) {
-         val += ((FloatingPointPromotedDataType) pInLocal[counter * (strideIn / dataSize) + j]) * pErrCoefsLocal[j];
+         val += ((FloatingPointPromotedDataType) pInLocal[counter * offset + j]) * pErrCoefsLocal[j];
       }
 
       // Store the max value and the corresponding index
