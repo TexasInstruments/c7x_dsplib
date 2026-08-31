@@ -382,7 +382,7 @@ int32_t TI_compare_mem_roi2DDualStride(void    *a,
 
    for (row = 0; row < height; row++) {
       for (col = 0; col < width; col++) {
-         int32_t valA = 0.0, valB = 0.0;
+         int32_t valA = 0, valB = 0;
          int32_t offsetA, offsetB;
 
          offsetA = (row * (strideA / elementSize)) + col;
@@ -505,7 +505,7 @@ int32_t TI_compare_mem_3DDualStride(void    *a,
    for (ctrZ = 0; ctrZ < dim_z; ctrZ++) {
       for (ctrY = 0; ctrY < dim_y; ctrY++) {
          for (ctrX = 0; ctrX < dim_x; ctrX++) {
-            int32_t valA = 0.0, valB = 0.0;
+            int32_t valA = 0, valB = 0;
             int32_t offsetA, offsetB;
 
             offsetA = (ctrZ * (strideA_z / elementSize)) + (ctrY * (strideA_y / elementSize)) + ctrX;
@@ -2681,7 +2681,7 @@ double calculateSNR(float *dstRef, float *dstOpt, uint32_t blockSize, uint32_t n
       }
    }
 
-   SNR = (pNoise != 0.0)? 10 * log10(pSignal / pNoise) : 0.0;
+   SNR = (pNoise != 0.0)? 10 * log10(pSignal / pNoise) : INFINITY;
 
    return SNR;
 }
