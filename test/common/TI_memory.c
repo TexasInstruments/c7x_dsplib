@@ -382,7 +382,7 @@ int32_t TI_compare_mem_roi2DDualStride(void    *a,
 
    for (row = 0; row < height; row++) {
       for (col = 0; col < width; col++) {
-         int32_t valA, valB;
+         int32_t valA = 0, valB = 0;
          int32_t offsetA, offsetB;
 
          offsetA = (row * (strideA / elementSize)) + col;
@@ -505,7 +505,7 @@ int32_t TI_compare_mem_3DDualStride(void    *a,
    for (ctrZ = 0; ctrZ < dim_z; ctrZ++) {
       for (ctrY = 0; ctrY < dim_y; ctrY++) {
          for (ctrX = 0; ctrX < dim_x; ctrX++) {
-            int32_t valA, valB;
+            int32_t valA = 0, valB = 0;
             int32_t offsetA, offsetB;
 
             offsetA = (ctrZ * (strideA_z / elementSize)) + (ctrY * (strideA_y / elementSize)) + ctrX;
@@ -646,7 +646,7 @@ int32_t TI_compare_mem_2D_float(void    *a,
 
    for (row = 0; row < height; row++) {
       for (col = 0; col < width; col++) {
-         double  valA, valB;
+         double  valA = 0.0, valB = 0.0;
          int32_t offset;
 
          offset = (row * (stride / elementSize)) + col;
@@ -745,7 +745,7 @@ int32_t TI_compare_mem_2DDualStride_float(void    *a,
 
    for (row = 0; row < height; row++) {
       for (col = 0; col < width; col++) {
-         double  valA, valB;
+         double  valA = 0.0, valB = 0.0;
          int32_t offsetA;
          int32_t offsetB;
 
@@ -865,7 +865,7 @@ int32_t TI_compare_mem_2D_upper_triangle_float(void    *a,
 
    for (row = 0; row < order; row++) {
       for (col = row; col < order; col++) {
-         double  valA, valB;
+         double  valA = 0.0, valB = 0.0;
          int32_t offset;
 
          offset = (row * (stride / elementSize)) + col;
@@ -968,7 +968,7 @@ int32_t TI_compare_mem_2D_upper_triangle(void    *a,
 
    for (row = 0; row < order; row++) {
       for (col = row; col < order; col++) {
-         double  valA, valB;
+         double  valA = 0.0, valB = 0.0;
          int32_t offset1, offset2;
 
          offset1 = (row * (stride1 / elementSize1)) + col;
@@ -1087,7 +1087,7 @@ int32_t TI_compare_mem_3D_float(void    *a,
    for (ctrZ = 0; ctrZ < dim_z; ctrZ++) {
       for (ctrY = 0; ctrY < dim_y; ctrY++) {
          for (ctrX = 0; ctrX < dim_x; ctrX++) {
-            double  valA, valB;
+            double  valA = 0.0, valB = 0.0;
             int32_t offset;
 
             offset = (ctrZ * (stride_z / elementSize)) + (ctrY * (stride_y / elementSize)) + ctrX;
@@ -1193,7 +1193,7 @@ int32_t TI_compare_mem_3D_float_dualStride(void    *a,
    for (ch = 0; ch < dim_z; ch++) {
       for (row = 0; row < dim_y; row++) {
          for (col = 0; col < dim_x; col++) {
-            double  valA, valB;
+            double  valA = 0.0, valB = 0.0;
             int32_t offsetA, offsetB;
 
             offsetA = ch * (stride_zA / elementSize) + (row * (stride_yA / elementSize)) + col;
@@ -2666,6 +2666,7 @@ double calculateSNR(float *dstRef, float *dstOpt, uint32_t blockSize, uint32_t n
 
    double pSignal = 0.0;
    double pNoise  = 0.0;
+   double SNR = 0.0;
 
    for (c = 0; c < numChannels; c++) {
 
@@ -2680,7 +2681,7 @@ double calculateSNR(float *dstRef, float *dstOpt, uint32_t blockSize, uint32_t n
       }
    }
 
-   double SNR = 10 * log10(pSignal / pNoise);
+   SNR = (pNoise != 0.0)? 10 * log10(pSignal / pNoise) : INFINITY;
 
    return SNR;
 }

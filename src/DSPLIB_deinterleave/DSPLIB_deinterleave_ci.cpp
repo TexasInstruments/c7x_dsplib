@@ -439,7 +439,8 @@ inline void deinterleave_compute_16bit(DSPLIB_kernelHandle handle, void *restric
    __SA0_OPEN(sa0Params);
 
    if (widthIn == 1) {
-      __SE1_OPEN(pInLocal + ((strideIn / dataSize) * (eleCount / 2)), se0Params);
+      int32_t offset = dataSize > 0? ((strideIn / dataSize) * (eleCount / 2)) : 0;
+      __SE1_OPEN(pInLocal + offset, se0Params);
       for (int i = 0; i < loopCount; i++) {
          vec loadVec1 = c7x::strm_eng<0, vec>::get_adv();
          vec loadVec2 = c7x::strm_eng<0, vec>::get_adv();

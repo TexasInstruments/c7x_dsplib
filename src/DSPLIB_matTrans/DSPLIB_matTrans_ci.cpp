@@ -36,9 +36,9 @@ inline void matTrans_init_64bit(DSPLIB_kernelHandle         handle,
 
    se0Params.ICNT0     = widthIn;
    se0Params.ICNT1     = (heightIn > (uint32_t) eleCount) ? eleCount : heightIn;
-   se0Params.DIM1      = strideIn / dataSize;
+   se0Params.DIM1      = (dataSize > 0)? strideIn / dataSize : 0;
    se0Params.ICNT2     = iter;
-   se0Params.DIM2      = (strideIn / dataSize) * eleCount;
+   se0Params.DIM2      = (dataSize > 0)? (strideIn / dataSize) * eleCount : 0;
    se0Params.DIMFMT    = __SE_DIMFMT_3D;
    se0Params.TRANSPOSE = __SE_TRANSPOSE_64BIT;
    se0Params.ELETYPE   = SE_ELETYPE;
@@ -46,7 +46,7 @@ inline void matTrans_init_64bit(DSPLIB_kernelHandle         handle,
 
    sa0Params.ICNT0         = eleCount;
    sa0Params.ICNT1         = widthIn;
-   sa0Params.DIM1          = strideOut / dataSize;
+   sa0Params.DIM1          = (dataSize > 0)? strideOut / dataSize : 0;
    sa0Params.ICNT2         = iter;
    sa0Params.DIM2          = eleCount;
    sa0Params.VECLEN        = SA_VECLEN;
@@ -87,16 +87,16 @@ inline void matTrans_init_32bit(DSPLIB_kernelHandle         handle,
    se0Params.TRANSPOSE = __SE_TRANSPOSE_32BIT;
    se0Params.ICNT0     = widthIn;
    se0Params.ICNT1     = (heightIn > (uint32_t) eleCount) ? eleCount : heightIn;
-   se0Params.DIM1      = strideIn / dataSize;
+   se0Params.DIM1      = (dataSize > 0)? strideIn / dataSize : 0;
    se0Params.ICNT2     = iter;
-   se0Params.DIM2      = (strideIn / dataSize) * eleCount;
+   se0Params.DIM2      = (dataSize > 0)? (strideIn / dataSize) * eleCount : 0;
    se0Params.DIMFMT    = __SE_DIMFMT_3D;
    se0Params.ELETYPE   = SE_ELETYPE;
    se0Params.VECLEN    = SE_VECLEN;
 
    sa0Params.ICNT0         = eleCount;
    sa0Params.ICNT1         = widthIn;
-   sa0Params.DIM1          = strideOut / dataSize;
+   sa0Params.DIM1          = (dataSize > 0)? strideOut / dataSize : 0;
    sa0Params.ICNT2         = iter;
    sa0Params.DIM2          = eleCount;
    sa0Params.VECLEN        = SA_VECLEN;
@@ -138,20 +138,20 @@ inline void matTrans_init_16bit(DSPLIB_kernelHandle         handle,
    se0Params.TRANSPOSE = __SE_TRANSPOSE_32BIT;
    se0Params.ICNT0     = 16;
    se0Params.ICNT1     = (heightIn > (uint32_t) (eleCount / 2)) ? (eleCount / 2) : heightIn;
-   se0Params.DIM1      = strideIn / dataSize;
+   se0Params.DIM1      = (dataSize > 0)? strideIn / dataSize : 0;
    se0Params.ICNT2     = 2;
-   se0Params.DIM2      = (strideIn / dataSize) * eleCount / 2;
+   se0Params.DIM2      = (dataSize > 0)? (strideIn / dataSize) * eleCount / 2 : 0;
    se0Params.ICNT3     = (widthIn + 15) / 16;
    se0Params.DIM3      = 16;
    se0Params.ICNT4     = iter;
-   se0Params.DIM4      = (strideIn / dataSize) * eleCount;
+   se0Params.DIM4      = (dataSize > 0)? (strideIn / dataSize) * eleCount : 0;
    se0Params.DIMFMT    = __SE_DIMFMT_5D;
    se0Params.ELETYPE   = SE_ELETYPE;
    se0Params.VECLEN    = SE_VECLEN;
 
    sa0Params.ICNT0         = eleCount;
    sa0Params.ICNT1         = paddedWidth;
-   sa0Params.DIM1          = strideOut / dataSize;
+   sa0Params.DIM1          = (dataSize > 0)? strideOut / dataSize : 0;
    sa0Params.ICNT2         = iter;
    sa0Params.DIM2          = eleCount;
    sa0Params.VECLEN        = SA_VECLEN;
@@ -211,7 +211,7 @@ inline void matTrans_init_8bit(DSPLIB_kernelHandle         handle,
 
    sa0Params.ICNT0         = outEleCount;
    sa0Params.ICNT1         = widthIn;
-   sa0Params.DIM1          = strideOut / dataSize;
+   sa0Params.DIM1          = (dataSize > 0)? strideOut / dataSize : 0;
    sa0Params.ICNT2         = iter;
    sa0Params.DIM2          = outEleCount;
    sa0Params.VECLEN        = SA_VECLEN;
@@ -570,7 +570,8 @@ inline void matTrans_compute_8bit(DSPLIB_kernelHandle handle, void *restrict pIn
    __SE0_OPEN(pInLocal, se0Params);
    __SA0_OPEN(sa0Params);
 #if (__C7X_VEC_SIZE_BITS__ == 256)
-   __SE1_OPEN(pInLocal + ((strideIn / dataSize) * (eleCount / 2)), se0Params);
+     int32_t offset = dataSize > 0 ? ((strideIn / dataSize) * (eleCount / 2)) : 0;
+   __SE1_OPEN(pInLocal + offset, se0Params);
    for (int i = 0; i < loopCount; i++) {
 
       vec loadVec1 = c7x::strm_eng<0, vec>::get_adv();
