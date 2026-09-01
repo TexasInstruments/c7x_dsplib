@@ -84,7 +84,7 @@ extensions = [
     "sphinx_design",
     "sphinx_copybutton",
     "sphinx.ext.graphviz",
-    "sphinx_rtd_theme",
+    "sphinx_immaterial",
 ]
 
 # ---------------------------------------------------------------------------
@@ -99,6 +99,10 @@ master_doc = "index"
 
 primary_domain     = "c"
 highlight_language = "c"
+
+pygments_style = "friendly"
+# No maximum_signature_line_length: let signatures render single-line in the
+# gray sig block (natural wrap) — the clean look.
 
 # ---------------------------------------------------------------------------
 # Breathe configuration
@@ -130,11 +134,99 @@ _API_DIR = os.path.join(os.path.dirname(__file__), "api")
 # Groups rendered without ``:members:`` because their header has an unbalanced
 # Doxygen group (``@{`` with no ``@}``), which duplicates a member under ``-W``.
 # Remove entries here once the corresponding header is fixed on Bitbucket dev.
-_NO_MEMBERS_GROUPS = {"DSPLIB_addNCh"}
+# Note: all headers are now balanced (0 Doxygen warnings); this set is empty.
+_NO_MEMBERS_GROUPS = set()
+
+# Ordered API grouping for the index page.  Each entry is
+# (category_title, [group_stem, ...]) matching the README kernel taxonomy.
+# Any group discovered in the XML but NOT listed here is emitted under a
+# final "Other" toctree and triggers a build warning.
+_API_GROUP_ORDER = [
+    ("Common", [
+        "DSPLIB_COMMON",
+    ]),
+    ("Arithmetic", [
+        "DSPLIB_add",
+        "DSPLIB_addConstant",
+        "DSPLIB_addNCh",
+        "DSPLIB_sub",
+        "DSPLIB_subConstant",
+        "DSPLIB_mul",
+        "DSPLIB_mulConstant",
+        "DSPLIB_negate",
+        "DSPLIB_sqr",
+        "DSPLIB_sqrAdd",
+        "DSPLIB_recip",
+    ]),
+    ("Vector", [
+        "DSPLIB_dotprod",
+        "DSPLIB_dotp_sqr",
+        "DSPLIB_w_vec",
+        "DSPLIB_bexp",
+    ]),
+    ("Comparison & Search", [
+        "DSPLIB_max",
+        "DSPLIB_maxEvery",
+        "DSPLIB_maxIndex",
+        "DSPLIB_min",
+        "DSPLIB_minEvery",
+        "DSPLIB_minIndex",
+        "DSPLIB_minerror",
+    ]),
+    ("Matrix", [
+        "DSPLIB_matMul",
+        "DSPLIB_matMul_fixed",
+        "DSPLIB_matTrans",
+        "DSPLIB_mat_submat_copy",
+        "DSPLIB_blkCopy2D",
+        "DSPLIB_blkCopyConst2D",
+    ]),
+    ("Linear Algebra", [
+        "DSPLIB_cholesky",
+        "DSPLIB_cholesky_inplace",
+        "DSPLIB_cholesky_solver",
+        "DSPLIB_lud",
+        "DSPLIB_lud_inv",
+        "DSPLIB_lud_sol",
+        "DSPLIB_qrd",
+        "DSPLIB_qrd_inverse",
+        "DSPLIB_qrd_solver",
+        "DSPLIB_svd",
+        "DSPLIB_svd_small",
+    ]),
+    ("Signal Processing", [
+        "DSPLIB_fir",
+        "DSPLIB_cascadeBiquad",
+    ]),
+    ("Data Conversion & Memory", [
+        "DSPLIB_fltoq15",
+        "DSPLIB_q15tofl",
+        "DSPLIB_realImagToComplex",
+        "DSPLIB_interleave",
+        "DSPLIB_deinterleave",
+        "DSPLIB_blk_move",
+        "DSPLIB_blk_eswap",
+    ]),
+]
+
+
+def _caption_to_slug(caption):
+    """Convert a caption like 'Signal Processing' to a slug like 'signal_processing'."""
+    return caption.lower().replace(" ", "_").replace("&", "and").replace(",", "")
 
 
 def _generate_api_pages(xml_directory, api_directory):
-    """Emit api/index.rst + one api/<group>.rst per Doxygen group found in XML."""
+    """Emit api/index.rst + one api/<group>.rst per Doxygen group found in XML.
+
+    Layout produced:
+    - Per-group pages: ``api/<group_name>.rst`` (one ``.. doxygengroup::`` each).
+    - Landing pages per caption: ``api/<slug>.rst`` with a toctree of that
+      caption's group pages.  sphinx-immaterial ignores ``:caption:`` on nested
+      toctrees but DOES render each top-level toctree entry in api/index as a
+      nav section when each entry is itself a landing page.
+    - ``api/index.rst``: ONE flat toctree listing all landing pages in
+      _API_GROUP_ORDER order so immaterial renders each as a nav section.
+    """
     if not os.path.isdir(xml_directory):
         return
     os.makedirs(api_directory, exist_ok=True)
@@ -157,15 +249,11 @@ def _generate_api_pages(xml_directory, api_directory):
                  else name)
         groups.append((name, title))
 
-    # One page per kernel group. ``:members:`` expands inner structs (e.g.
-    # <kernel>_InitArgs) so their fields render, not just the struct name.
-    #
-    # Exception: a group whose header has an unclosed Doxygen group (``@{``
-    # without a matching ``@}``) double-attributes a member, which trips a
-    # duplicate-ID error under ``-W`` when ``:members:`` is used. Such groups
-    # render without ``:members:`` until the header is fixed (code fix lands on
-    # Bitbucket dev, tracked separately). Their struct fields will populate
-    # automatically once the source group is balanced.
+    # Build lookup dicts.
+    group_titles = {name: title for name, title in groups}
+    discovered   = {name for name, _title in groups}
+
+    # One per-group page per kernel group.
     for name, title in groups:
         underline = "=" * max(len(title), 3)
         with open(os.path.join(api_directory, f"{name}.rst"), "w",
@@ -174,15 +262,63 @@ def _generate_api_pages(xml_directory, api_directory):
             opts = "" if name in _NO_MEMBERS_GROUPS else "\n   :members:"
             fh.write(f".. doxygengroup:: {name}{opts}\n")
 
-    # API landing page with a toctree of every kernel page.
+    # Ungrouped pages (new kernels not yet in _API_GROUP_ORDER).
+    grouped_stems = {stem for _cat, stems in _API_GROUP_ORDER for stem in stems}
+    ungrouped = sorted(discovered - grouped_stems)
+    if ungrouped:
+        print(f"WARNING: ungrouped API page(s): {', '.join(ungrouped)}")
+
+    # -----------------------------------------------------------------------
+    # Landing pages per caption + api/index toctree.
+    # -----------------------------------------------------------------------
+    landing_index_entries = []  # page slugs for api/index toctree
+
+    for category, stems in _API_GROUP_ORDER:
+        present = [s for s in stems if s in discovered]
+        if not present:
+            continue
+        slug = _caption_to_slug(category)
+        underline = "=" * max(len(category), 3)
+        landing_file = os.path.join(api_directory, f"{slug}.rst")
+        with open(landing_file, "w", encoding="utf-8") as fh:
+            fh.write(f"{category}\n{underline}\n\n")
+            fh.write(".. toctree::\n   :maxdepth: 1\n\n")
+            for stem in present:
+                fh.write(f"   {stem}\n")
+            fh.write("\n")
+        landing_index_entries.append(slug)
+
+    # Track all emitted RST names for stale cleanup.
+    all_emitted = set(discovered)  # per-group pages
+    all_emitted.update(landing_index_entries)  # landing pages
+    if ungrouped:
+        all_emitted.update(ungrouped)
+    all_emitted.add("index")
+
+    # Remove stale RST files from prior builds.
+    for stale in glob.glob(os.path.join(api_directory, "*.rst")):
+        stem = os.path.splitext(os.path.basename(stale))[0]
+        if stem not in all_emitted:
+            os.remove(stale)
+
+    # api/index.rst: flat toctree listing all landing pages.
     with open(os.path.join(api_directory, "index.rst"), "w",
               encoding="utf-8") as fh:
-        fh.write("API Reference\n=============\n\n")
-        fh.write("Per-kernel API documentation generated from the source "
-                 "headers.\n\n")
-        fh.write(".. toctree::\n   :maxdepth: 1\n\n")
-        for name, _title in groups:
-            fh.write(f"   {name}\n")
+        fh.write(":icon: material/book-open-variant\n\nDSPLIB API Reference\n====================\n\n")
+        fh.write(".. toctree::\n   :maxdepth: 2\n\n")
+        for slug in landing_index_entries:
+            fh.write(f"   {slug}\n")
+        if ungrouped:
+            # Ungrouped gets its own landing page "other.rst".
+            other_file = os.path.join(api_directory, "other.rst")
+            with open(other_file, "w", encoding="utf-8") as ofh:
+                ofh.write("Other\n=====\n\n")
+                ofh.write(".. toctree::\n   :maxdepth: 1\n\n")
+                for stem in ungrouped:
+                    ofh.write(f"   {stem}\n")
+                ofh.write("\n")
+            fh.write("   other\n")
+        fh.write("\n")
 
 
 _generate_api_pages(xml_dir, _API_DIR)
@@ -279,7 +415,7 @@ def _generate_perf_pages(summary_path, html_dir, perf_dir):
 
     with open(os.path.join(perf_dir, "index.rst"), "w",
               encoding="utf-8") as fh:
-        fh.write("Performance\n===========\n\n")
+        fh.write(":icon: material/chart-line\n\nPerformance\n===========\n\n")
         fh.write("Measured kernel performance per device. EVM warm cycles are "
                  "obtained by profiling the kernel's compute code after a cold "
                  "run. See each kernel's API page for parameter definitions.\n\n")
@@ -296,24 +432,66 @@ _generate_perf_pages(_PERF_SUMMARY, _PERF_HTML_DIR, _PERF_DIR)
 # No custom macros needed for DSPLIB — rely on MathJax 3 defaults.
 
 # ---------------------------------------------------------------------------
+# Warning suppression
+# ---------------------------------------------------------------------------
+# Some Doxygen @code blocks in DSPLIB headers contain non-C token sequences
+# that Pygments retries in relaxed mode — the output is correct but the
+# first-pass attempt triggers a warning.  Suppress this specific category.
+suppress_warnings = ["misc.highlighting_failure"]
+
+# ---------------------------------------------------------------------------
 # HTML output
 # ---------------------------------------------------------------------------
 
-html_theme        = "sphinx_rtd_theme"
+html_theme        = "sphinx_immaterial"
+html_title        = "DSPLIB Documentation"
 html_static_path  = ["_static"]
-html_logo         = "_static/img/ti_logo.svg"
+html_logo         = "_static/img/ti_logo_mono.svg"
 
 html_show_sphinx      = False
 html_show_sourcelink  = False
 html_copy_source      = False
 html_last_updated_fmt = "%b %d, %Y"
 
+html_theme_options = {
+    # Palette: calm single light scheme with TI-adjacent neutral tones.
+    # No dark-mode toggle; user can tune later.
+    "palette": [
+        {
+            "scheme": "default",
+            "primary": "red",
+            "accent":  "teal",
+        },
+    ],
+    # Features: clean navigation, no tabs (too much chrome).
+    "features": [
+        "navigation.top",   # back-to-top button
+        "search.highlight", # highlight search terms after navigation
+        "toc.follow",       # TOC sidebar tracks scroll position
+    ],
+    # Source repo shown in the header: GitHub logo + repo name.
+    # The branch label ("main") is added via the source.html template
+    # override (see _templates/partials/source.html).
+    "repo_url":  "https://github.com/TexasInstruments/c7x_dsplib",
+    "repo_name": "c7x_dsplib",
+    "icon": {"repo": "material/github"},
+}
+
+# Template overrides (partials/source.html adds the branch badge).
+templates_path = ["_templates"]
+
 # ---------------------------------------------------------------------------
 # Theme customisation hook
-# This follows the exact pattern used in TexasInstruments/processor-sdk-doc:
-# the CSS override is loaded via app.add_css_file() inside setup() rather
-# than through html_css_files, so it is applied after the RTD theme styles.
+#
+# theme_overrides.css targets .wy-* RTD classes that don't exist in
+# sphinx-immaterial — load it anyway (harmless, no matching selectors).
+# Add a second CSS file targeting sphinx-immaterial's .md-* selectors for:
+#   - WIP amber banner via .md-content__inner::before
+#   - C signature token colouring (same palette as RTD version, new selectors)
 # ---------------------------------------------------------------------------
 
 def setup(app):
+    # Original RTD overrides (harmless, no matching selectors in immaterial).
     app.add_css_file("css/theme_overrides.css")
+    # Immaterial-specific overrides: WIP banner + sig colouring.
+    app.add_css_file("css/immaterial_overrides.css")

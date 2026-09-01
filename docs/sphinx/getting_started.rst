@@ -1,3 +1,5 @@
+:icon: material/rocket-launch
+
 Getting Started
 ===============
 
@@ -55,6 +57,14 @@ Available Presets
 
 Quick Start — PC simulation (AM62D)
 -----------------------------------
+
+.. important::
+
+   Step 2 below (``cmake --build build --target=gen_all_test_case_headers``) is
+   **mandatory** before the first autotest build. The per-kernel test vectors are
+   generated into the source tree, not shipped — **the unit tests will not build
+   until you run it once.** See *Generating Test Data (Static Headers)* below for
+   details.
 
 .. code-block:: bash
 

@@ -18,7 +18,7 @@ extern "C" {
  * @brief Kernel for calculating Singular Value Decomposition (SVD).
  *        - Implementated for:
  *          - Dimensions: 6X6 and 6X7 input matrix.
- *          - Data Type : Double Precision ( @ref DSPLIB_FLOAT64 )
+ *          - Data Type : Double Precision ( DSPLIB_FLOAT64 )
  *
  *
  * @details
@@ -164,8 +164,6 @@ DSPLIB_STATUS DSPLIB_svd_small_init(DSPLIB_kernelHandle              handle,
  *  @param [out] pDiag      : Pointer to the output buffer pDiag
  *  @param [out] pSuperDiag : Pointer to the output buffer pSuperDiag
  *  @param [in]  pU1        : Pointer to the intermediate transpose buffer pU1
- *  @param [in]  pV1        : Pointer to the intermediate transpose buffer pV1
- *  @param [out] pScratch   : Pointer to the intermediate scratch buffer pScratch
  *
  *  @return      Status value indicating success or failure. Refer to @ref DSPLIB_STATUS.
  *

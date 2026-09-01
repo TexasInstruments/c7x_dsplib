@@ -115,7 +115,7 @@ DSPLIB_dotp_sqr_init_checkParams(DSPLIB_kernelHandle             handle,
  *  @param [in]  handle       :  Active handle to the kernel
  *  @param [in]  pIn1  :  Pointer to the structure input buffer 1
  *  @param [in]  pIn2  :  Pointer to the structure input buffer 2
- *  @param [out] pout :  Pointer to the output buffer
+ *  @param [out] pOut :  Pointer to the output buffer
  *
  *  @return      Status value indicating success or failure. Refer to @ref
  * DSPLIB_STATUS.
@@ -134,7 +134,8 @@ DSPLIB_STATUS DSPLIB_dotp_sqr_exec_checkParams(DSPLIB_kernelHandle handle,
  *               @ref DSPLIB_dotp_sqr_exec
  *
  *  @param [in]  handle      : Active handle to the kernel
- *  @param [in]  pIn         : Pointer to buffer holding the input data
+ *  @param [in]  pIn1        : Pointer to buffer holding the first input data
+ *  @param [in]  pIn2        : Pointer to buffer holding the second input data
  *  @param [out] pOut        : Pointer to buffer holding the output data
  *
  *  @return      Status value indicating success or failure. Refer to @ref

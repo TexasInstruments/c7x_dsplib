@@ -13,6 +13,7 @@
  * \brief
  * \details
  * \param[in] numRows
+ * \param[in] vQFactor  Q-format scaling factor
  * \param[in] cBackDst
  * \return  void
  */

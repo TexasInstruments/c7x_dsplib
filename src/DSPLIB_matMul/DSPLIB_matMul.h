@@ -112,7 +112,7 @@ DSPLIB_matMul_init_checkParams(DSPLIB_kernelHandle           handle,
  *  @param [in]  handle    :  Active handle to the kernel
  *  @param [in]  pIn0      :  Pointer to the structure input matrix A
  *  @param [in]  pIn1      :  Pointer to the structure input matrix B
- *  @param [out] pout      :  Pointer to the output matrix C
+ *  @param [out] pOut      :  Pointer to the output matrix C
  *
  *  @return      Status value indicating success or failure. Refer to @ref
  * DSPLIB_STATUS.

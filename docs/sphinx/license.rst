@@ -1,3 +1,5 @@
+:icon: material/scale-balance
+
 License
 =======
 
