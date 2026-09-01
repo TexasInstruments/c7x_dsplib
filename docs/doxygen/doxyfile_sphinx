@@ -1,0 +1,455 @@
+# Doxyfile 1.9.2  —  XML-only output for Sphinx/Breathe
+#
+# This file is a configure_file() template: CMake substitutes @VAR@ placeholders
+# with absolute paths so Doxygen can be invoked from any working directory
+# without fragile relative-path fixups (cf. the "bad hack" in the legacy
+# doxyfile_user_guide path for WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}).
+#
+# Generated output contract (consumed by cmake/doxygen.cmake):
+#   OUTPUT_DIRECTORY  = @DOXYGEN_XML_OUT_PARENT@     (e.g. <build>/docs)
+#   XML_OUTPUT        = xml
+#   => final XML dir  = @DOXYGEN_XML_OUT_PARENT@/xml  (i.e. <build>/docs/xml)
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+
+DOXYFILE_ENCODING      = UTF-8
+
+PROJECT_NAME           = "DSPLIB"
+
+PROJECT_NUMBER         =
+
+PROJECT_BRIEF          =
+
+PROJECT_LOGO           = @DOXYGEN_SRC_DOCS@/doxygen/html/ti_logo.png
+
+# Absolute path so Doxygen can be run from any WORKING_DIRECTORY.
+OUTPUT_DIRECTORY       = @DOXYGEN_XML_OUT_PARENT@
+
+CREATE_SUBDIRS         = NO
+
+ALLOW_UNICODE_NAMES    = NO
+
+OUTPUT_LANGUAGE        = English
+
+BRIEF_MEMBER_DESC      = YES
+
+REPEAT_BRIEF           = YES
+
+ABBREVIATE_BRIEF       = "The $name class" \
+                         "The $name widget" \
+                         "The $name file" \
+                         is \
+                         provides \
+                         specifies \
+                         contains \
+                         represents \
+                         a \
+                         an \
+                         the
+
+ALWAYS_DETAILED_SEC    = NO
+
+INLINE_INHERITED_MEMB  = NO
+
+FULL_PATH_NAMES        = NO
+
+STRIP_FROM_PATH        =
+
+STRIP_FROM_INC_PATH    =
+
+SHORT_NAMES            = NO
+
+JAVADOC_AUTOBRIEF      = NO
+
+JAVADOC_BANNER         = NO
+
+QT_AUTOBRIEF           = NO
+
+MULTILINE_CPP_IS_BRIEF = NO
+
+PYTHON_DOCSTRING       = YES
+
+INHERIT_DOCS           = YES
+
+SEPARATE_MEMBER_PAGES  = NO
+
+TAB_SIZE               = 4
+
+ALIASES                = "HLINE=<hr size=\"2\" width=\"50%\" align=\"left\">"
+
+OPTIMIZE_OUTPUT_FOR_C  = YES
+
+OPTIMIZE_OUTPUT_JAVA   = NO
+
+OPTIMIZE_FOR_FORTRAN   = NO
+
+OPTIMIZE_OUTPUT_VHDL   = NO
+
+OPTIMIZE_OUTPUT_SLICE  = NO
+
+EXTENSION_MAPPING      =
+
+MARKDOWN_SUPPORT       = YES
+
+TOC_INCLUDE_HEADINGS   = 0
+
+AUTOLINK_SUPPORT       = YES
+
+BUILTIN_STL_SUPPORT    = NO
+
+CPP_CLI_SUPPORT        = NO
+
+SIP_SUPPORT            = NO
+
+IDL_PROPERTY_SUPPORT   = YES
+
+DISTRIBUTE_GROUP_DOC   = NO
+
+GROUP_NESTED_COMPOUNDS = NO
+
+SUBGROUPING            = YES
+
+INLINE_GROUPED_CLASSES = NO
+
+INLINE_SIMPLE_STRUCTS  = NO
+
+TYPEDEF_HIDES_STRUCT   = YES
+
+LOOKUP_CACHE_SIZE      = 0
+
+NUM_PROC_THREADS       = 1
+
+#---------------------------------------------------------------------------
+# Build related configuration options
+#---------------------------------------------------------------------------
+
+# Only surface entities that carry Doxygen documentation (the public kernel
+# APIs). Undocumented internal helpers are omitted from the user guide.
+EXTRACT_ALL            = NO
+
+EXTRACT_PRIVATE        = NO
+
+EXTRACT_PRIV_VIRTUAL   = NO
+
+EXTRACT_PACKAGE        = NO
+
+EXTRACT_STATIC         = NO
+
+EXTRACT_LOCAL_CLASSES  = YES
+
+EXTRACT_LOCAL_METHODS  = YES
+
+EXTRACT_ANON_NSPACES   = YES
+
+RESOLVE_UNNAMED_PARAMS = YES
+
+HIDE_UNDOC_MEMBERS     = NO
+
+HIDE_UNDOC_CLASSES     = NO
+
+HIDE_FRIEND_COMPOUNDS  = NO
+
+HIDE_IN_BODY_DOCS      = NO
+
+INTERNAL_DOCS          = NO
+
+CASE_SENSE_NAMES       = YES
+
+HIDE_SCOPE_NAMES       = NO
+
+HIDE_COMPOUND_REFERENCE= NO
+
+SHOW_INCLUDE_FILES     = YES
+
+SHOW_GROUPED_MEMB_INC  = NO
+
+FORCE_LOCAL_INCLUDES   = NO
+
+INLINE_INFO            = YES
+
+SORT_MEMBER_DOCS       = NO
+
+SORT_BRIEF_DOCS        = NO
+
+SORT_MEMBERS_CTORS_1ST = NO
+
+SORT_GROUP_NAMES       = YES
+
+SORT_BY_SCOPE_NAME     = NO
+
+STRICT_PROTO_MATCHING  = NO
+
+GENERATE_TODOLIST      = YES
+
+GENERATE_TESTLIST      = NO
+
+GENERATE_BUGLIST       = NO
+
+GENERATE_DEPRECATEDLIST= NO
+
+ENABLED_SECTIONS       =
+
+MAX_INITIALIZER_LINES  = 30
+
+SHOW_USED_FILES        = YES
+
+SHOW_FILES             = YES
+
+SHOW_NAMESPACES        = YES
+
+FILE_VERSION_FILTER    =
+
+# LAYOUT_FILE is intentionally omitted for the XML output: Doxygen uses the
+# layout only for HTML/LaTeX formatting; Breathe reads the raw XML elements.
+
+CITE_BIB_FILES         =
+
+#---------------------------------------------------------------------------
+# Configuration options related to warning and progress messages
+#---------------------------------------------------------------------------
+
+QUIET                  = NO
+
+WARNINGS               = YES
+
+WARN_IF_UNDOCUMENTED   = YES
+
+WARN_IF_DOC_ERROR      = YES
+
+WARN_NO_PARAMDOC       = YES
+
+WARN_AS_ERROR          = NO
+
+WARN_FORMAT            = "$file:$line: $text"
+
+WARN_LOGFILE           =
+
+#---------------------------------------------------------------------------
+# Configuration options related to the input files
+#
+# All paths are absolute (injected by CMake @ONLY substitution) to avoid
+# any working-directory ambiguity.  The legacy doxyfile_user_guide used the
+# relative forms  ../src/  and  ./docs/doxygen/...  combined with
+# WORKING_DIRECTORY=${CMAKE_CURRENT_BINARY_DIR}, then needed a string-
+# replace hack ("./docs" -> "../docs") because those relative paths resolved
+# into the build tree instead of the source tree.  Absolute paths eliminate
+# that fragility entirely.
+#---------------------------------------------------------------------------
+
+INPUT                  = @DOXYGEN_SRC_ROOT@/src/ \
+                         @DOXYGEN_SRC_DOCS@/doxygen/content_pages/main_page.h \
+                         @DOXYGEN_SRC_DOCS@/doxygen/content_pages/build_instructions.h \
+                         @DOXYGEN_SRC_DOCS@/doxygen/content_pages/performance_summary.h \
+                         @DOXYGEN_SRC_DOCS@/doxygen/content_pages/build_instructions_linux.h \
+                         @DOXYGEN_SRC_DOCS@/doxygen/content_pages/TI_disclaimer.h
+
+INPUT_ENCODING         = UTF-8
+
+# Public API reference: document header prototypes only, not the intrinsic
+# implementation .cpp files (those are internal and would swamp the API tree).
+FILE_PATTERNS          = *.h
+
+RECURSIVE              = YES
+
+EXCLUDE                = @DOXYGEN_SRC_ROOT@/package \
+                         @DOXYGEN_SRC_ROOT@/Version.h \
+                         @DOXYGEN_SRC_DOCS@/doxygen/release.h
+
+EXCLUDE_SYMLINKS       = NO
+
+# Exclude internal implementation, but keep src/common/DSPLIB_types.h so that
+# \ref targets (DSPLIB_STATUS, DSPLIB_FUNCTION_STYLE, DSPLIB_FLOAT32/64, the
+# kernel handle, ...) resolve. The other common/ headers stay excluded.
+EXCLUDE_PATTERNS       = */old/* \
+                         */*testParams.h \
+                         */test_data/* \
+                         */common/DSPLIB_inlines.h \
+                         */common/DSPLIB_bufParams.h \
+                         */common/DSPLIB_utility.h \
+                         */common/TI_platforms.h \
+                         */*_priv.h \
+                         */*_common.h
+
+EXCLUDE_SYMBOLS        =
+
+EXAMPLE_PATH           = @DOXYGEN_SRC_DOCS@/doxygen/html/
+
+EXAMPLE_PATTERNS       = *
+
+EXAMPLE_RECURSIVE      = YES
+
+# The legacy images/ dir was not carried over; point at the existing html/
+# assets dir so Doxygen does not warn about an unreadable image path.
+IMAGE_PATH             = @DOXYGEN_SRC_DOCS@/doxygen/html
+
+INPUT_FILTER           =
+
+FILTER_PATTERNS        =
+
+FILTER_SOURCE_FILES    = NO
+
+FILTER_SOURCE_PATTERNS =
+
+USE_MDFILE_AS_MAINPAGE =
+
+#---------------------------------------------------------------------------
+# Configuration options related to source browsing
+#---------------------------------------------------------------------------
+
+SOURCE_BROWSER         = YES
+
+INLINE_SOURCES         = NO
+
+STRIP_CODE_COMMENTS    = YES
+
+REFERENCED_BY_RELATION = NO
+
+REFERENCES_RELATION    = NO
+
+REFERENCES_LINK_SOURCE = YES
+
+SOURCE_TOOLTIPS        = YES
+
+USE_HTAGS              = NO
+
+VERBATIM_HEADERS       = YES
+
+#---------------------------------------------------------------------------
+# Configuration options related to the alphabetical class index
+#---------------------------------------------------------------------------
+
+ALPHABETICAL_INDEX     = NO
+
+IGNORE_PREFIX          =
+
+#---------------------------------------------------------------------------
+# Configuration options related to the HTML output — DISABLED
+#---------------------------------------------------------------------------
+
+GENERATE_HTML          = NO
+
+HTML_OUTPUT            = html
+
+#---------------------------------------------------------------------------
+# Configuration options related to the LaTeX output — DISABLED
+#---------------------------------------------------------------------------
+
+GENERATE_LATEX         = NO
+
+#---------------------------------------------------------------------------
+# Formula rendering settings (retained from doxyfile_user_guide)
+#
+# Doxygen emits <formula> nodes in the XML output regardless of the HTML-
+# centric USE_MATHJAX / HTML_FORMULA_FORMAT settings.  Breathe/Sphinx can
+# then render them via its own MathJax or LaTeX pipeline.
+#---------------------------------------------------------------------------
+
+FORMULA_FONTSIZE       = 10
+
+FORMULA_TRANSPARENT    = YES
+
+FORMULA_MACROFILE      =
+
+USE_MATHJAX            = YES
+
+MATHJAX_FORMAT         = HTML-CSS
+
+MATHJAX_RELPATH        = http://cdn.mathjax.org/mathjax/latest
+
+MATHJAX_EXTENSIONS     = TeX/AMSmath \
+                         TeX/AMSsymbols
+
+MATHJAX_CODEFILE       =
+
+#---------------------------------------------------------------------------
+# Configuration options related to the RTF output — DISABLED
+#---------------------------------------------------------------------------
+
+GENERATE_RTF           = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the man page output — DISABLED
+#---------------------------------------------------------------------------
+
+GENERATE_MAN           = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the XML output — PRIMARY OUTPUT
+#---------------------------------------------------------------------------
+
+GENERATE_XML           = YES
+
+# XML_OUTPUT is relative to OUTPUT_DIRECTORY.
+# With OUTPUT_DIRECTORY = @DOXYGEN_XML_OUT_PARENT@  and  XML_OUTPUT = xml,
+# Doxygen writes XML to  @DOXYGEN_XML_OUT_PARENT@/xml  (i.e. <build>/docs/xml).
+XML_OUTPUT             = xml
+
+# Suppress per-file source listings in XML to keep output size manageable.
+# Set to YES only if Breathe needs to render annotated source cross-references.
+XML_PROGRAMLISTING     = NO
+
+XML_NS_MEMB_FILE_SCOPE = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the DOCBOOK output — DISABLED
+#---------------------------------------------------------------------------
+
+GENERATE_DOCBOOK       = NO
+
+#---------------------------------------------------------------------------
+# Configuration options related to the preprocessor
+#---------------------------------------------------------------------------
+
+ENABLE_PREPROCESSING   = YES
+
+MACRO_EXPANSION        = YES
+
+EXPAND_ONLY_PREDEF     = YES
+
+SEARCH_INCLUDES        = YES
+
+INCLUDE_PATH           =
+
+INCLUDE_FILE_PATTERNS  =
+
+# Strip the C99 `restrict` qualifier (and compiler variants) from extracted
+# signatures. Sphinx's declaration parser rejects `restrict`, and exhale's
+# group-based function pages fall back to the C++ parser. EXPAND_ONLY_PREDEF
+# keeps every other macro untouched.
+PREDEFINED             = restrict= \
+                         __restrict= \
+                         __restrict__=
+
+EXPAND_AS_DEFINED      =
+
+SKIP_FUNCTION_MACROS   = YES
+
+#---------------------------------------------------------------------------
+# Configuration options related to external references
+#---------------------------------------------------------------------------
+
+TAGFILES               =
+
+GENERATE_TAGFILE       =
+
+ALLEXTERNALS           = NO
+
+EXTERNAL_GROUPS        = YES
+
+EXTERNAL_PAGES         = YES
+
+#---------------------------------------------------------------------------
+# Configuration options related to the dot tool — DISABLED (matches source)
+#---------------------------------------------------------------------------
+
+CLASS_DIAGRAMS         = NO
+
+HIDE_UNDOC_RELATIONS   = NO
+
+HAVE_DOT               = NO
+
+DOT_NUM_THREADS        = 0
+
+DOT_CLEANUP            = YES

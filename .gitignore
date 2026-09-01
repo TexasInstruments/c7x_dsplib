@@ -35,3 +35,12 @@ docs/superpowers/
 
 # Generated docs
 docs/doxygen/html/
+docs/sphinx/api/
+docs/sphinx/perf/
+docs/sphinx/_build/
+
+# Docs build virtualenv (local only)
+.docs-venv/
+
+# Internal docs-publishing notes (not part of public release)
+docs/PUBLISHING_NOTES.md
