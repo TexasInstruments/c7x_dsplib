@@ -147,24 +147,18 @@ DSPLIB_STATUS
 DSPLIB_mul_exec(DSPLIB_kernelHandle handle, void *restrict pIn1, void *restrict pIn2, void *restrict pOut);
 
 /**
- *  @brief       This function checks the validity of the parameters passed to
- *               @ref DSPLIB_mul_exec function. This function
- *               is called with the same parameters as the
- *               @ref DSPLIB_mul_exec, and this function
- *               must be called before the
- *               @ref DSPLIB_mul_exec is called.
+ *  @brief        This funtion is called to calculate the arch cycles and
+ *                estimate cycles of the loop used in the execution kernel.
  *
- *  @param [in]  handle      : Active handle to the kernel
- *  @param [in]  pIn         : Pointer to buffer holding the input data
- *  @param [in]  pFilter     : Pointer to buffer holding the input data
- *  @param [out] pOut        : Pointer to buffer holding the output matrix
+ *  @param [in]  handle         :  Active handle to the kernel
+ *  @param [in]  archCycles     :  Arch cycles used in that particluar kernel
+ *  @param [in]  estCycles      :  Cycles estimated for that particular kenel
  *
- *  @return      Status value indicating success or failure. Refer to @ref DSPLIB_STATUS.
+ *  @return      Void.
  *
  *  @remarks     None
  */
-
-/**@}*/
+void DSPLIB_mul_perfEst(DSPLIB_kernelHandle handle, uint64_t *archCycles, uint64_t *estCycles);
 
 #ifdef __cplusplus
 }

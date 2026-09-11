@@ -117,6 +117,8 @@ typedef struct {
     *         @ref DSPLIB_mul_init that will be retrieved
     *         and used by @ref DSPLIB_mul_exec                */
    int32_t blockSize;
+   uint32_t nElePerVec;   /**< elements per 512-bit vector, set by init_ci */
+   uint32_t prologCycles; /**< SPLOOP prolog depth, set by init_ci */
 
    uint8_t bufPblock[DSPLIB_MUL_IXX_IXX_OXX_PBLOCK_SIZE];
 } DSPLIB_mul_PrivArgs;

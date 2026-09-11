@@ -12,17 +12,17 @@
 #include "../common/DSPLIB_test.h"
 
 typedef struct {
-   uint8_t  testPattern; /* 0: consmult, 1: sequential, 2: random, 3: static array, 4: file, etc */
-   void    *staticIn;
+   uint8_t  testPattern;
+   void    *staticIn1;          /* pointer to input vector 1 */
+   void    *staticIn2;          /* pointer to input vector 2 */
    void    *staticOut;
    uint32_t dataType;
    uint32_t dataSize;
-   uint32_t shift;              // 0-> for float, double, required for integer types
-   uint32_t outputDataLocation; // 0 -> HEAP (probably L2SRAM), 1 -> MSMC
+   uint32_t outputDataLocation;
    uint32_t numReps;
    uint32_t testID;
-} mul_testParams_t;
+} DSPLIB_mul_testParams_t;
 
-void mul_getTestParams(mul_testParams_t **params, int32_t *numTests);
+void DSPLIB_mul_getTestParams(DSPLIB_mul_testParams_t **params, int32_t *numTests);
 
 #endif /* define DSPLIB_mul_IXX_IXX_OXX_IDAT_H */
