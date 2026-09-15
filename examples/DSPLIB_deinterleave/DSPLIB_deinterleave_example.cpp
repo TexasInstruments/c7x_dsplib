@@ -19,7 +19,7 @@ uint16_t inMatUint16[16][16] = {
     {640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 650, 651, 652, 653, 654, 655},
     {768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783},
     {896, 897, 898, 899, 900, 901, 902, 903, 904, 905, 906, 907, 908, 909, 910, 911},
-    {1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 103},
+    {1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039},
     {1152, 1153, 1154, 1155, 1156, 1157, 1158, 1159, 1160, 1161, 1162, 1163, 1164, 1165, 1166, 1167},
     {1280, 1281, 1282, 1283, 1284, 1285, 1286, 1287, 1288, 1289, 1290, 1291, 1292, 1293, 1294, 1295},
     {1408, 1409, 1410, 1411, 1412, 1413, 1414, 1415, 1416, 1417, 1418, 1419, 1420, 1421, 1422, 1423},
@@ -179,7 +179,7 @@ int main(void)
       if (status == DSPLIB_SUCCESS) {
          status = DSPLIB_deinterleave_exec_checkParams(handle, inMatDp, outMatDp);
          if (status == DSPLIB_SUCCESS) {
-            status = DSPLIB_interleave_exec(handle, inMatDp, outMatDp);
+            status = DSPLIB_deinterleave_exec(handle, inMatDp, outMatDp);
          }
       }
    }
@@ -201,6 +201,63 @@ int main(void)
          printf("%.2lf, ", *pOutMat2++);
       }
       printf("\n");
+   }
+
+   /* Example: extract real and imaginary components from interleaved complex
+    * float data.  The input is treated as a 2-row matrix where row 0 holds the
+    * real parts and row 1 holds the imaginary parts (i.e. dim_x=2, one column
+    * per complex sample).  After deinterleave the output rows become columns,
+    * so outReal[i] = real part of sample i and outImag[i] = imaginary part. */
+   int32_t numSamples = 8;
+
+   /* Interleaved layout: { re0, im0, re1, im1, ... } */
+   float inComplex[16] = {1.0f, -9.0f,
+                          2.0f, -10.0f,
+                          3.0f, -11.0f,
+                          4.0f, -12.0f,
+                          5.0f, -13.0f,
+                          6.0f, -14.0f,
+                          7.0f, -15.0f,
+                          8.0f, -16.0f};
+   /* Contiguous output buffer: first numSamples floats are real,
+    * next numSamples floats are imaginary.
+    * Padded to 2 x 16 (one 512-bit SIMD vector per channel) so the
+    * predicated vector stores in the CI kernel do not overflow. */
+   float outSplit[32]  = {0};
+
+   bufParamsIn.data_type = DSPLIB_FLOAT32;
+   bufParamsIn.dim_x     = 2;           /* 2 channels: real and imaginary */
+   bufParamsIn.dim_y     = numSamples;
+   bufParamsIn.stride_y  = 2 * DSPLIB_sizeof(DSPLIB_FLOAT32);
+
+   bufParamsOut.data_type = DSPLIB_FLOAT32;
+   bufParamsOut.dim_x     = numSamples; /* one output row per channel */
+   bufParamsOut.dim_y     = 2;
+   bufParamsOut.stride_y  = numSamples * DSPLIB_sizeof(DSPLIB_FLOAT32);
+
+   status = DSPLIB_deinterleave_init_checkParams(handle, &bufParamsIn, &bufParamsOut, &kerInitArgs);
+   if (status == DSPLIB_SUCCESS) {
+      status = DSPLIB_deinterleave_init(handle, &bufParamsIn, &bufParamsOut, &kerInitArgs);
+      if (status == DSPLIB_SUCCESS) {
+         status = DSPLIB_deinterleave_exec_checkParams(handle, inComplex, outSplit);
+         if (status == DSPLIB_SUCCESS) {
+            status = DSPLIB_deinterleave_exec(handle, inComplex, outSplit);
+         }
+      }
+   }
+
+   /* First numSamples floats are real; next numSamples floats are imaginary */
+   float *pReal = outSplit;
+   float *pImag = outSplit + numSamples;
+
+   printf("\n\nComplex deinterleave (extract real/imaginary from cfloat)\n");
+   printf("Input (interleaved re/im pairs):\n");
+   for (int i = 0; i < numSamples; i++) {
+      printf("  sample[%d] = %.1f + %.1fi\n", i, inComplex[2 * i], inComplex[2 * i + 1]);
+   }
+   printf("\nOutput (split real and imaginary channels):\n");
+   for (int i = 0; i < numSamples; i++) {
+      printf("  real[%d] = %5.1f,  imag[%d] = %5.1f\n", i, pReal[i], i, pImag[i]);
    }
 
    free(handle);
