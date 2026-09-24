@@ -79,6 +79,7 @@ reference implementation under `test/DSPLIB_idat_gen/DSPLIB_<kernel>/` for test 
 ### Matrix
 | Kernel | Description |
 |--------|-------------|
+| `DSPLIB_diag` | Extracts a diagonal from a square matrix |
 | `DSPLIB_matMul` | Matrix multiply (floating-point) |
 | `DSPLIB_matMul_fixed` | Matrix multiply (fixed-point) |
 | `DSPLIB_matTrans` | Matrix transpose |

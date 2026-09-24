@@ -97,6 +97,14 @@ def getCmdLineArgs():
         help="Set to generate all cases",
     )
 
+    parser.add_argument(
+        "-t",
+        type=int,
+        default=None,
+        dest="testCase",
+        help="Generate a single test case by ID",
+    )
+
     myArgs = parser.parse_args()
 
     return myArgs

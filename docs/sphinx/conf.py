@@ -174,6 +174,7 @@ _API_GROUP_ORDER = [
         "DSPLIB_minerror",
     ]),
     ("Matrix", [
+        "DSPLIB_diag",
         "DSPLIB_matMul",
         "DSPLIB_matMul_fixed",
         "DSPLIB_matTrans",
