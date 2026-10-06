@@ -5,6 +5,8 @@
 #ifndef TI_TEST_H_
 #define TI_TEST_H_ 1
 
+#define DSPLIB_WARM_REPS (1)
+
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>

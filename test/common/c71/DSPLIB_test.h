@@ -7,7 +7,7 @@
 
 #include "../../../src/common/c71/DSPLIB_debug.h"
 #include "TI_memory.h" // the local c71 variant
-#include "init_mma.h"
+#include "../../../src/common/c71/init_mma.h"
 #include <time.h> // using the current time to set randomization seed
 
 void DSPLIB_TEST_init();
