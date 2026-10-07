@@ -1,0 +1,5 @@
+void DSPLIB_mulConstant_getTestParams(DSPLIB_mulConstant_testParams_t **params, int32_t *numTests)
+{
+   *params    = testParams;
+   *numTests  = sizeof(testParams) / sizeof(DSPLIB_mulConstant_testParams_t);
+}

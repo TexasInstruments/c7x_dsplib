@@ -120,8 +120,10 @@ typedef struct {
    /** @brief Size of input buffer for different batches
     *         @ref DSPLIB_mulConstant_init that will be retrieved
     *         and used by @ref DSPLIB_mulConstant_exec                */
-   int32_t blockSize;
-   uint8_t bufPblock[DSPLIB_MULCONSTANT_IXX_IXX_OXX_PBLOCK_SIZE];
+   int32_t  blockSize;
+   uint32_t nElePerVec;   /**< elements per 512-bit vector, set by init_ci */
+   uint32_t prologCycles; /**< SPLOOP prolog depth, set by init_ci */
+   uint8_t  bufPblock[DSPLIB_MULCONSTANT_IXX_IXX_OXX_PBLOCK_SIZE];
 } DSPLIB_mulConstant_PrivArgs;
 
 /**

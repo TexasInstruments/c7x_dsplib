@@ -4,6 +4,7 @@
 
 #include "DSPLIB_mulConstant_priv.h"
 
+
 int32_t DSPLIB_mulConstant_getHandleSize(DSPLIB_mulConstant_InitArgs *pKerInitArgs)
 {
    int32_t privBufSize = sizeof(DSPLIB_mulConstant_PrivArgs);
@@ -28,7 +29,9 @@ DSPLIB_STATUS DSPLIB_mulConstant_init_checkParams(DSPLIB_kernelHandle           
       if ((bufParamsIn->data_type != DSPLIB_INT16) && (bufParamsIn->data_type != DSPLIB_INT32) &&
           (bufParamsIn->data_type != DSPLIB_INT8) && (bufParamsIn->data_type != DSPLIB_FLOAT32) &&
           (bufParamsIn->data_type != DSPLIB_FLOAT64) && (bufParamsIn->data_type != DSPLIB_UINT8) &&
-          (bufParamsIn->data_type != DSPLIB_UINT16) && (bufParamsIn->data_type != DSPLIB_UINT32)) {
+          (bufParamsIn->data_type != DSPLIB_UINT16) && (bufParamsIn->data_type != DSPLIB_UINT32) &&
+          (bufParamsIn->data_type != DSPLIB_CFLOAT32) && (bufParamsIn->data_type != DSPLIB_CINT16) &&
+          (bufParamsIn->data_type != DSPLIB_CINT32)) {
          status = DSPLIB_ERR_INVALID_TYPE;
       }
       else if (bufParamsIn->data_type != bufParamsOut->data_type) {
@@ -105,6 +108,15 @@ DSPLIB_STATUS DSPLIB_mulConstant_init(DSPLIB_kernelHandle                handle,
       else if (bufParamsIn->data_type == DSPLIB_UINT32) {
          pKerPrivArgs->execute = DSPLIB_mulConstant_exec_cn<uint32_t, DSPLIB_UINT32>;
       }
+      else if (bufParamsIn->data_type == DSPLIB_CFLOAT32) {
+         pKerPrivArgs->execute = DSPLIB_mulConstant_exec_cn<cfloat, DSPLIB_CFLOAT32>;
+      }
+      else if (bufParamsIn->data_type == DSPLIB_CINT16) {
+         pKerPrivArgs->execute = DSPLIB_mulConstant_exec_cn<cshort, DSPLIB_CINT16>;
+      }
+      else if (bufParamsIn->data_type == DSPLIB_CINT32) {
+         pKerPrivArgs->execute = DSPLIB_mulConstant_exec_cn<cint, DSPLIB_CINT32>;
+      }
       else {
          status = DSPLIB_ERR_INVALID_TYPE;
 #if DSPLIB_DEBUGPRINT
@@ -147,6 +159,18 @@ DSPLIB_STATUS DSPLIB_mulConstant_init(DSPLIB_kernelHandle                handle,
       else if (bufParamsIn->data_type == DSPLIB_UINT32) {
          pKerPrivArgs->execute = DSPLIB_mulConstant_exec_ci<uint32_t, DSPLIB_UINT32>;
          status                = DSPLIB_mulConstant_init_ci<uint32_t>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+      }
+      else if (bufParamsIn->data_type == DSPLIB_CFLOAT32) {
+         pKerPrivArgs->execute = DSPLIB_mulConstant_exec_ci<cfloat, DSPLIB_CFLOAT32>;
+         status                = DSPLIB_mulConstant_init_ci<cfloat>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+      }
+      else if (bufParamsIn->data_type == DSPLIB_CINT16) {
+         pKerPrivArgs->execute = DSPLIB_mulConstant_exec_ci<cshort, DSPLIB_CINT16>;
+         status                = DSPLIB_mulConstant_init_ci<cshort>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+      }
+      else if (bufParamsIn->data_type == DSPLIB_CINT32) {
+         pKerPrivArgs->execute = DSPLIB_mulConstant_exec_ci<cint, DSPLIB_CINT32>;
+         status                = DSPLIB_mulConstant_init_ci<cint>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
       }
       else {
          status = DSPLIB_ERR_INVALID_TYPE;

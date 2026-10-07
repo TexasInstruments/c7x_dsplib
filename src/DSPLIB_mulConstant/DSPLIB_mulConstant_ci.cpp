@@ -34,21 +34,13 @@ DSPLIB_STATUS DSPLIB_mulConstant_init_ci(DSPLIB_kernelHandle                hand
    SA_VECLEN  = c7x::sa_veclen<vec>::value;
    SE_ELETYPE = c7x::se_eletype<vec>::value;
 
-   /**********************************************************************/
-   /* Prepare streaming engine 1 to fetch the input                      */
-   /**********************************************************************/
    se0Params = __gen_SE_TEMPLATE_v1();
-
    se0Params.ICNT0   = blockSize;
    se0Params.ELETYPE = SE_ELETYPE;
    se0Params.VECLEN  = SE_VECLEN;
    se0Params.DIMFMT  = __SE_DIMFMT_1D;
 
-   /**********************************************************************/
-   /* Prepare SA template to store output                                */
-   /**********************************************************************/
    sa0Params = __gen_SA_TEMPLATE_v1();
-
    sa0Params.ICNT0  = blockSize;
    sa0Params.DIM1   = blockSize;
    sa0Params.VECLEN = SA_VECLEN;
@@ -57,8 +49,31 @@ DSPLIB_STATUS DSPLIB_mulConstant_init_ci(DSPLIB_kernelHandle                hand
    *(__SE_TEMPLATE_v1 *) ((uint8_t *) pBlock + SE_SE0_PARAM_OFFSET) = se0Params;
    *(__SA_TEMPLATE_v1 *) ((uint8_t *) pBlock + SE_SA0_PARAM_OFFSET) = sa0Params;
 
+   pKerPrivArgs->nElePerVec = c7x::element_count_of<vec>::value;
+   /* cfloat uses VCMPYSP + VADDSP in series (latency 8); all other types latency 4 */
+   pKerPrivArgs->prologCycles = std::is_same<dataType, cfloat>::value ? 7 : 4;
+
    return status;
 }
+
+void DSPLIB_mulConstant_perfEst(DSPLIB_kernelHandle handle, uint64_t *archCycles, uint64_t *estCycles)
+{
+   DSPLIB_mulConstant_PrivArgs *pKerPrivArgs = (DSPLIB_mulConstant_PrivArgs *) handle;
+
+   uint64_t nVecs = ((uint64_t) pKerPrivArgs->blockSize + pKerPrivArgs->nElePerVec - 1) / pKerPrivArgs->nElePerVec;
+   *archCycles    = 41 + pKerPrivArgs->prologCycles + nVecs;
+   *estCycles     = *archCycles;
+}
+
+template DSPLIB_STATUS DSPLIB_mulConstant_init_ci<int8_t>(DSPLIB_kernelHandle                handle,
+                                                          const DSPLIB_bufParams1D_t        *bufParamsIn,
+                                                          const DSPLIB_bufParams1D_t        *bufParamsOut,
+                                                          const DSPLIB_mulConstant_InitArgs *pKerInitArgs);
+
+template DSPLIB_STATUS DSPLIB_mulConstant_init_ci<uint8_t>(DSPLIB_kernelHandle                handle,
+                                                           const DSPLIB_bufParams1D_t        *bufParamsIn,
+                                                           const DSPLIB_bufParams1D_t        *bufParamsOut,
+                                                           const DSPLIB_mulConstant_InitArgs *pKerInitArgs);
 
 template DSPLIB_STATUS DSPLIB_mulConstant_init_ci<int16_t>(DSPLIB_kernelHandle                handle,
                                                            const DSPLIB_bufParams1D_t        *bufParamsIn,
@@ -80,16 +95,6 @@ template DSPLIB_STATUS DSPLIB_mulConstant_init_ci<uint32_t>(DSPLIB_kernelHandle 
                                                             const DSPLIB_bufParams1D_t        *bufParamsOut,
                                                             const DSPLIB_mulConstant_InitArgs *pKerInitArgs);
 
-template DSPLIB_STATUS DSPLIB_mulConstant_init_ci<int8_t>(DSPLIB_kernelHandle                handle,
-                                                          const DSPLIB_bufParams1D_t        *bufParamsIn,
-                                                          const DSPLIB_bufParams1D_t        *bufParamsOut,
-                                                          const DSPLIB_mulConstant_InitArgs *pKerInitArgs);
-
-template DSPLIB_STATUS DSPLIB_mulConstant_init_ci<uint8_t>(DSPLIB_kernelHandle                handle,
-                                                           const DSPLIB_bufParams1D_t        *bufParamsIn,
-                                                           const DSPLIB_bufParams1D_t        *bufParamsOut,
-                                                           const DSPLIB_mulConstant_InitArgs *pKerInitArgs);
-
 template DSPLIB_STATUS DSPLIB_mulConstant_init_ci<float>(DSPLIB_kernelHandle                handle,
                                                          const DSPLIB_bufParams1D_t        *bufParamsIn,
                                                          const DSPLIB_bufParams1D_t        *bufParamsOut,
@@ -100,6 +105,24 @@ template DSPLIB_STATUS DSPLIB_mulConstant_init_ci<double>(DSPLIB_kernelHandle   
                                                           const DSPLIB_bufParams1D_t        *bufParamsOut,
                                                           const DSPLIB_mulConstant_InitArgs *pKerInitArgs);
 
+template DSPLIB_STATUS DSPLIB_mulConstant_init_ci<cfloat>(DSPLIB_kernelHandle                handle,
+                                                          const DSPLIB_bufParams1D_t        *bufParamsIn,
+                                                          const DSPLIB_bufParams1D_t        *bufParamsOut,
+                                                          const DSPLIB_mulConstant_InitArgs *pKerInitArgs);
+
+template DSPLIB_STATUS DSPLIB_mulConstant_init_ci<cshort>(DSPLIB_kernelHandle                handle,
+                                                          const DSPLIB_bufParams1D_t        *bufParamsIn,
+                                                          const DSPLIB_bufParams1D_t        *bufParamsOut,
+                                                          const DSPLIB_mulConstant_InitArgs *pKerInitArgs);
+
+template DSPLIB_STATUS DSPLIB_mulConstant_init_ci<cint>(DSPLIB_kernelHandle                handle,
+                                                        const DSPLIB_bufParams1D_t        *bufParamsIn,
+                                                        const DSPLIB_bufParams1D_t        *bufParamsOut,
+                                                        const DSPLIB_mulConstant_InitArgs *pKerInitArgs);
+
+/*---------------------------------------------------------------------------
+ * Real-type exec template (float, double, int8/16/32, uint8/16/32)
+ *---------------------------------------------------------------------------*/
 template <typename dataType, int32_t dataIn>
 DSPLIB_STATUS
 DSPLIB_mulConstant_exec_ci(DSPLIB_kernelHandle handle, void *restrict pIn1, void *restrict pIn2, void *restrict pOut)
@@ -121,42 +144,26 @@ DSPLIB_mulConstant_exec_ci(DSPLIB_kernelHandle handle, void *restrict pIn1, void
    typedef typename c7x::make_full_vector<dataType>::type vec;
    int32_t                                                eleCount = c7x::element_count_of<vec>::value;
 
-#if DSPLIB_DEBUGPRINT
-   printf("Enter eleCount %d\n", eleCount);
-#endif
-
    uint8_t *pBlock = pKerPrivArgs->bufPblock;
 
    se0Params = *(__SE_TEMPLATE_v1 *) ((uint8_t *) pBlock + SE_SE0_PARAM_OFFSET);
-
    sa0Params = *(__SA_TEMPLATE_v1 *) ((uint8_t *) pBlock + SE_SA0_PARAM_OFFSET);
+
+   __SE0_OPEN(pInLocal2, se0Params);
    __SA0_OPEN(sa0Params);
-
-   // Input samples
-   __SE1_OPEN(pInLocal2, se0Params);
-
-   // Output samples
-   __SA0_OPEN(sa0Params);
-
-#if DSPLIB_DEBUGPRINT
-   printf("DSPLIB_DEBUGPRINT blockSize %d\n", blockSize);
-#endif
-
-   vec out;
 
    dataType x = *pInLocal1;
    vec      a = (vec) x;
-   for (int32_t counter = 0; counter < blockSize; counter += eleCount) {
-      vec b = c7x::strm_eng<1, vec>::get_adv();
 
-      out = a * b;
+   for (int32_t counter = 0; counter < blockSize; counter += eleCount) {
+      vec b   = c7x::strm_eng<0, vec>::get_adv();
+      vec out = a * b;
 
       __vpred tmp = c7x::strm_agen<0, vec>::get_vpred();
       vec    *VB1 = c7x::strm_agen<0, vec>::get_adv(pOutLocal);
-
       __vstore_pred(tmp, VB1, out);
    }
-   __SE1_CLOSE();
+   __SE0_CLOSE();
    __SA0_CLOSE();
 
    return DSPLIB_SUCCESS;
@@ -201,3 +208,139 @@ template DSPLIB_STATUS DSPLIB_mulConstant_exec_ci<uint32_t, DSPLIB_UINT32>(DSPLI
                                                                            void *restrict pIn1,
                                                                            void *restrict pIn2,
                                                                            void *restrict pOut);
+
+/* cfloat: complex float multiply via __complex_multiply */
+template <>
+DSPLIB_STATUS
+DSPLIB_mulConstant_exec_ci<cfloat, DSPLIB_CFLOAT32>(DSPLIB_kernelHandle handle,
+                                                     void *restrict pIn1,
+                                                     void *restrict pIn2,
+                                                     void *restrict pOut)
+{
+   DSPLIB_mulConstant_PrivArgs *pKerPrivArgs = (DSPLIB_mulConstant_PrivArgs *) handle;
+   uint32_t                     blockSize    = pKerPrivArgs->blockSize;
+
+   __SE_TEMPLATE_v1 se0Params;
+   __SA_TEMPLATE_v1 sa0Params;
+
+   cfloat *pInLocal2 = (cfloat *) pIn2;
+   cfloat *pOutLocal = (cfloat *) pOut;
+
+   typedef typename c7x::make_full_vector<cfloat>::type vec;
+   int32_t eleCount = c7x::element_count_of<vec>::value;
+
+   uint8_t *pBlock = pKerPrivArgs->bufPblock;
+
+   se0Params = *(__SE_TEMPLATE_v1 *) ((uint8_t *) pBlock + SE_SE0_PARAM_OFFSET);
+   sa0Params = *(__SA_TEMPLATE_v1 *) ((uint8_t *) pBlock + SE_SA0_PARAM_OFFSET);
+
+   __SE0_OPEN(pInLocal2, se0Params);
+   __SA0_OPEN(sa0Params);
+
+   cfloat x = *(cfloat *) pIn1;
+   vec    a = __duplicate(x);
+
+   for (int32_t counter = 0; counter < blockSize; counter += eleCount) {
+      vec b   = c7x::strm_eng<0, vec>::get_adv();
+
+      vec out = __complex_multiply(a, b);
+
+      __vpred tmp = c7x::strm_agen<0, vec>::get_vpred();
+      vec    *VB1 = c7x::strm_agen<0, vec>::get_adv(pOutLocal);
+      __vstore_pred(tmp, VB1, out);
+   }
+   __SE0_CLOSE();
+   __SA0_CLOSE();
+
+   return DSPLIB_SUCCESS;
+}
+
+/* cshort: Q15 complex multiply via __cmpy_fx (VCMPYR1HH) */
+template <>
+DSPLIB_STATUS
+DSPLIB_mulConstant_exec_ci<cshort, DSPLIB_CINT16>(DSPLIB_kernelHandle handle,
+                                                   void *restrict pIn1,
+                                                   void *restrict pIn2,
+                                                   void *restrict pOut)
+{
+   DSPLIB_mulConstant_PrivArgs *pKerPrivArgs = (DSPLIB_mulConstant_PrivArgs *) handle;
+   uint32_t                     blockSize    = pKerPrivArgs->blockSize;
+
+   __SE_TEMPLATE_v1 se0Params;
+   __SA_TEMPLATE_v1 sa0Params;
+
+   cshort *pInLocal2 = (cshort *) pIn2;
+   cshort *pOutLocal = (cshort *) pOut;
+
+   typedef typename c7x::make_full_vector<cshort>::type vec;
+   int32_t                                              eleCount = c7x::element_count_of<vec>::value;
+
+   uint8_t *pBlock = pKerPrivArgs->bufPblock;
+
+   se0Params = *(__SE_TEMPLATE_v1 *) ((uint8_t *) pBlock + SE_SE0_PARAM_OFFSET);
+   sa0Params = *(__SA_TEMPLATE_v1 *) ((uint8_t *) pBlock + SE_SA0_PARAM_OFFSET);
+
+   __SE0_OPEN(pInLocal2, se0Params);
+   __SA0_OPEN(sa0Params);
+
+   cshort x = *(cshort *) pIn1;
+   vec    a = __duplicate(x);
+
+   for (int32_t counter = 0; counter < blockSize; counter += eleCount) {
+      vec b   = c7x::strm_eng<0, vec>::get_adv();
+      vec out = __cmpy_fx(a, b);
+
+      __vpred tmp = c7x::strm_agen<0, vec>::get_vpred();
+      vec    *VB1 = c7x::strm_agen<0, vec>::get_adv(pOutLocal);
+      __vstore_pred(tmp, VB1, out);
+   }
+   __SE0_CLOSE();
+   __SA0_CLOSE();
+
+   return DSPLIB_SUCCESS;
+}
+
+/* cint: Q31 complex multiply via __cmpy_fx (VCMPYR1WW) */
+template <>
+DSPLIB_STATUS
+DSPLIB_mulConstant_exec_ci<cint, DSPLIB_CINT32>(DSPLIB_kernelHandle handle,
+                                                 void *restrict pIn1,
+                                                 void *restrict pIn2,
+                                                 void *restrict pOut)
+{
+   DSPLIB_mulConstant_PrivArgs *pKerPrivArgs = (DSPLIB_mulConstant_PrivArgs *) handle;
+   uint32_t                     blockSize    = pKerPrivArgs->blockSize;
+
+   __SE_TEMPLATE_v1 se0Params;
+   __SA_TEMPLATE_v1 sa0Params;
+
+   cint *pInLocal2 = (cint *) pIn2;
+   cint *pOutLocal = (cint *) pOut;
+
+   typedef typename c7x::make_full_vector<cint>::type vec;
+   int32_t                                            eleCount = c7x::element_count_of<vec>::value;
+
+   uint8_t *pBlock = pKerPrivArgs->bufPblock;
+
+   se0Params = *(__SE_TEMPLATE_v1 *) ((uint8_t *) pBlock + SE_SE0_PARAM_OFFSET);
+   sa0Params = *(__SA_TEMPLATE_v1 *) ((uint8_t *) pBlock + SE_SA0_PARAM_OFFSET);
+
+   __SE0_OPEN(pInLocal2, se0Params);
+   __SA0_OPEN(sa0Params);
+
+   cint x = *(cint *) pIn1;
+   vec  a = __duplicate(x);
+
+   for (int32_t counter = 0; counter < blockSize; counter += eleCount) {
+      vec b   = c7x::strm_eng<0, vec>::get_adv();
+      vec out = __cmpy_fx(a, b);
+
+      __vpred tmp = c7x::strm_agen<0, vec>::get_vpred();
+      vec    *VB1 = c7x::strm_agen<0, vec>::get_adv(pOutLocal);
+      __vstore_pred(tmp, VB1, out);
+   }
+   __SE0_CLOSE();
+   __SA0_CLOSE();
+
+   return DSPLIB_SUCCESS;
+}
