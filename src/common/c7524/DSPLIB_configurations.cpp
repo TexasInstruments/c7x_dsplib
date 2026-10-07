@@ -30,7 +30,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i32s_i32s_o32s = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE32),     // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -98,7 +98,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i32f_i32f_o32f = {
     /*  fields and the enum values are set by compiler according to the     */
     /*  hardware specification, and are used as is.                         */
     /* -------------------------------------------------------------------- */
-    ASSIGN(A_ATYPE, __MMA_A_CONFIG_ATYPE_F32), // ***
+    ASSIGN(A_ATYPE, __MMA_A_CONFIG_ATYPE_FLOAT32), // ***
     ASSIGN(A_RSVD1, 0), ASSIGN(A_ALUTEN, __MMA_A_CONFIG_NOLUT), ASSIGN(A_RSVD2, 0),
     ASSIGN(A_ARF_CTRL, __MMA_A_CONFIG_ARF_DISABLE), ASSIGN(A_ARF_BASE, 0), ASSIGN(A_RSVD3, 0),
     ASSIGN(A_ARF_SIZE, 0), // 64
@@ -109,14 +109,14 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i32f_i32f_o32f = {
                                                // ASSIGN(B_BTYPE   , __MMA_B_CONFIG_F32),                        //
                                                // ***compiler new build -> ASSIGN(B_BTYPE   , __MMA_B_CONFIG_SIZE32),
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE32), ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),
-    ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                                                             // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0), ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0),                                 // 8 bits
     ASSIGN(B_FLOAT, __MMA_B_CONFIG_FLOAT_ENABLE),                                                        // ***
     ASSIGN(B_RSVD4, 0),
 
     ASSIGN(C_ATYPE, __MMA_C_CONFIG_ATYPE_SA), ASSIGN(C_ARF_BASE, 0), ASSIGN(C_ARF_C7, 0), // 1
-    ASSIGN(C_BTYPE, __MMA_C_CONFIG_BTYPE_F32), ASSIGN(C_RSVD2, 0), ASSIGN(C_OPERATION0, __MMA_C_CONFIG_MUL),
+    ASSIGN(C_BTYPE, __MMA_C_CONFIG_BTYPE_FLOAT32), ASSIGN(C_RSVD2, 0), ASSIGN(C_OPERATION0, __MMA_C_CONFIG_MUL),
     ASSIGN(C_LOP0, __MMA_C_CONFIG_LOP_C), ASSIGN(C_RSVD3, 0), ASSIGN(C_OPERATION1, __MMA_C_CONFIG_MULPLUS),
     ASSIGN(C_LOP1, __MMA_C_CONFIG_LOP_C), ASSIGN(C_BIASORDER, __MMA_C_CONFIG_BIAS_ORDER_COLUMN), ASSIGN(C_RSVD4, 0),
     ASSIGN(C_HWLDDST, __MMA_C_CONFIG_HWLDDST_X4_0), ASSIGN(C_RSVD5, 0),
@@ -149,11 +149,11 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i32f_i32f_o32f = {
     ASSIGN(X_SHIFT, 0), // 7 bits Right shift amount), signed or unsigned depending on CTYPE field
     ASSIGN(X_VPACKN, __MMA_X_CONFIG_VPACKN_DISABLE),
     // ASSIGN(X_XTYPE , __MMA_X_CONFIG_XTYPE_INT32),                  // ***compiler new build -> ASSIGN(X_XTYPE ,
-    // __MMA_X_CONFIG_XTYPE_F32),
-    ASSIGN(X_XTYPE, __MMA_X_CONFIG_XTYPE_F32), ASSIGN(X_SAT_MAX_3_0, 0),
+    // __MMA_X_CONFIG_XTYPE_FLOAT32),
+    ASSIGN(X_XTYPE, __MMA_X_CONFIG_XTYPE_FLOAT32), ASSIGN(X_SAT_MAX_3_0, 0),
     // ASSIGN(X_CTYPE , __MMA_X_CONFIG_CTYPE_INT128),                 // ***compiler new build -> ASSIGN(X_CTYPE ,
-    // __MMA_X_CONFIG_CTYPE_F32),
-    ASSIGN(X_CTYPE, __MMA_X_CONFIG_CTYPE_F32), ASSIGN(X_SAT_MAX_8_4, 0),
+    // __MMA_X_CONFIG_CTYPE_FLOAT32),
+    ASSIGN(X_CTYPE, __MMA_X_CONFIG_CTYPE_FLOAT32), ASSIGN(X_SAT_MAX_8_4, 0),
     ASSIGN(X_CSWPER, DSPLIB_MMA_SIZE_32_BIT),   // C read bank switch period
     ASSIGN(X_CRRSTPER, DSPLIB_MMA_SIZE_32_BIT), // C read row offset reset period
     ASSIGN(X_COFFSET, 0x0),                     // C matrix row read address offset
@@ -180,7 +180,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i16s_i16s_o16s = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE16),     // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW),             // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW),             // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                             // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0), ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
     ASSIGN(B_FLOAT, __MMA_B_CONFIG_FLOAT_DISABLE), ASSIGN(B_RSVD4, 0),
@@ -248,7 +248,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i16s_i16s_o16u = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE16),     // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -317,7 +317,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i16u_i16s_o16s = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE16),     // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -386,7 +386,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i16u_i16s_o16u = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE16),     // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -454,7 +454,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i16s_i16u_o16s = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE16),     // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -522,7 +522,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i16s_i16u_o16u = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE16),     // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -590,7 +590,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i16u_i16u_o16s = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE16),     // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -658,7 +658,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i16u_i16u_o16u = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE16),     // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -730,7 +730,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i8s_i8s_o8s = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE8),      // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -797,7 +797,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i8s_i8u_o8s = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE8),                       // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),                         /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -868,7 +868,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i8u_i8u_o8s = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE8),                       // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),                         /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -939,7 +939,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i8u_i8u_o8u = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE8),                       // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),                         /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -1010,7 +1010,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i8s_i8s_o8u = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE8),      // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -1079,7 +1079,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i8u_i8s_o8s = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE8),      // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -1148,7 +1148,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i8u_i8s_o8u = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE8),      // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
@@ -1216,7 +1216,7 @@ const __HWA_CONFIG_REG_v1 configRegisterStruct_i8s_i8u_o8u = {
     ASSIGN(B_BTYPE, __MMA_B_CONFIG_SIZE8),      // 2 bits
     ASSIGN(B_LDBOPT, __MMA_LDBOPT_MMA1),        /* Control for enhanced B operand row loading    */
     ASSIGN(B_B4EXP, __MMA_B_CONFIG_B4EXP_MMA1), /* B operand expansion control to conv 4-bit ops to 8-bit ops */
-    ASSIGN(B_RSVD1, 0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
+    ASSIGN(B_LDBOPT2, __MMA_LDBOPT2_PAD0), ASSIGN(B_ORDER, __MMA_B_CONFIG_ROW), // 1 bit
     ASSIGN(B_RSVD2, 0), ASSIGN(B_BSTART, 0),                 // 1 bits
     ASSIGN(B_BCNT1_ENABLE, 0),                /* Enable bit for option B row write row cntr for B bank 1. */
     ASSIGN(B_RSVD3, 0), ASSIGN(B_BOFFSET, 0), // 8 bits
