@@ -36,9 +36,9 @@ int DSPLIB_mul_d(uint32_t *pProfile, uint8_t LevelOfFeedback)
    uint64_t archCycles = 0;
    uint64_t estCycles  = 0;
 
-   mul_testParams_t *prm;
-   mul_testParams_t  currPrm;
-   mul_getTestParams(&prm, &test_cases);
+   DSPLIB_mul_testParams_t *prm;
+   DSPLIB_mul_testParams_t  currPrm;
+   DSPLIB_mul_getTestParams(&prm, &test_cases);
 
    DSPLIB_mul_InitArgs kerInitArgs;
 
@@ -57,8 +57,7 @@ int DSPLIB_mul_d(uint32_t *pProfile, uint8_t LevelOfFeedback)
 
    // file IO for Loki benchmarking
    FILE *fpOutputCSV = fopen("DSPLIB_mul.csv", "w+");
-   fprintf(fpOutputCSV, "Kernel, Test ID, Test type, Bit Width, Parameters, Data size, Batch size, Filter size, Arch "
-                        "cycles, Loki cycles, Loki/Arch cycles, Pass/Fail\n");
+   fprintf(fpOutputCSV, "Kernel, Test ID, Test type, Bit Width, Parameters, Data size, Arch cycles, Loki cycles, Loki/Arch cycles, Pass/Fail\n");
 
    for (tpi = 0; tpi < test_cases; tpi++) {
       numReps = prm[tpi].numReps;
@@ -135,17 +134,17 @@ int DSPLIB_mul_d(uint32_t *pProfile, uint8_t LevelOfFeedback)
              * for testing purposes.                                    */
 
             if (currPrm.dataType == DSPLIB_FLOAT32 || currPrm.dataType == DSPLIB_FLOAT64) {
-               TI_fillBuffer_float_bounded(prm[tpi].testPattern, 0, pIn1, prm[tpi].staticIn, bufParamsIn.dim_x, 1, 0,
+               TI_fillBuffer_float_bounded(prm[tpi].testPattern, 0, pIn1, prm[tpi].staticIn1, bufParamsIn.dim_x, 1, 0,
                                            dataWidth, testPatternString);
 
-               TI_fillBuffer_float_bounded(prm[tpi].testPattern, 0, pIn2, prm[tpi].staticIn, bufParamsIn.dim_x, 1, 0,
+               TI_fillBuffer_float_bounded(prm[tpi].testPattern, 0, pIn2, prm[tpi].staticIn2, bufParamsIn.dim_x, 1, 0,
                                            dataWidth, testPatternString);
             }
             else {
-               TI_fillBuffer(prm[tpi].testPattern, (uint8_t) 255, pIn1, prm[tpi].staticIn, bufParamsIn.dim_x, 1, 0,
+               TI_fillBuffer(prm[tpi].testPattern, (uint8_t) 255, pIn1, prm[tpi].staticIn1, bufParamsIn.dim_x, 1, 0,
                              DSPLIB_sizeof(currPrm.dataType), testPatternString);
 
-               TI_fillBuffer(prm[tpi].testPattern, (uint8_t) 255, pIn2, prm[tpi].staticIn, bufParamsIn.dim_x, 1, 0,
+               TI_fillBuffer(prm[tpi].testPattern, (uint8_t) 255, pIn2, prm[tpi].staticIn2, bufParamsIn.dim_x, 1, 0,
                              DSPLIB_sizeof(currPrm.dataType), testPatternString);
             }
             kerInitArgs.funcStyle = DSPLIB_FUNCTION_OPTIMIZED;
@@ -283,14 +282,17 @@ int DSPLIB_mul_d(uint32_t *pProfile, uint8_t LevelOfFeedback)
 
             sprintf(desc, "%s generated input | Data size = %d", testPatternString, currPrm.dataSize);
 
+            DSPLIB_mul_perfEst(handle, &archCycles, &estCycles);
+
             // write to CSV, must happen prior to write to screen because TI_profile_formula_mul clears values in
             // counters
-            fprintf(fpOutputCSV, "mul, %d, %d, %d, Data size:%d, %d, %d, %d, %lu, %lu, %.2f, %d\n", testNum,
+            fprintf(fpOutputCSV, "mul, %d, %d, %d, Data size:%d, %d, %lu, %lu, %.2f, %s\n", testNum,
                     currPrm.testPattern, DSPLIB_sizeof(bufParamsIn.data_type) * 8, currPrm.dataSize, currPrm.dataSize,
-                    archCycles, cycles[TI_PROFILE_KERNEL_OPT],
-                    ((DSPLIB_F32) cycles[TI_PROFILE_KERNEL_OPT]) / ((DSPLIB_F32) archCycles), !currentTestFail);
+                    archCycles, (uint64_t) cycles[TI_PROFILE_KERNEL_OPT],
+                    ((DSPLIB_F32) cycles[TI_PROFILE_KERNEL_OPT]) / ((DSPLIB_F32) archCycles),
+                    currentTestFail ? "FAIL" : "PASS");
 
-            TI_profile_add_test(testNum++, currPrm.dataSize, 0, 0, currentTestFail, desc);
+            TI_profile_add_test(testNum++, currPrm.dataSize, archCycles, estCycles, currentTestFail, desc);
          }
          else {
             sprintf(desc, "Data size=%d", currPrm.dataSize);
@@ -391,6 +393,7 @@ int coverage_test_main()
       case 1005:
          status_nat      = DSPLIB_mul_exec_checkParams(handle, pIn1, pIn2, NULL);
          currentTestFail = (status_nat != DSPLIB_ERR_NULL_POINTER);
+         break;
       case 1006:
          bufParamsIn.data_type  = DSPLIB_INT128;
          bufParamsOut.data_type = DSPLIB_INT32;
