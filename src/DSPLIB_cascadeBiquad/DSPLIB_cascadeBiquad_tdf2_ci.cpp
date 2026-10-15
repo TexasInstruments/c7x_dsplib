@@ -319,7 +319,12 @@ DSPLIB_STATUS DSPLIB_cascadeBiquad_tdf2_exec_ci(DSPLIB_kernelHandle handle,
          /* First stage group reads from input, writes to output.
          Subsequent stage groups read from output, write to output. */
          pInLocal = (dataType *) pOut + chCount;
+#if defined(__C7120__) || defined(__C7100__)
+         __SE1_CLOSE();
+         __SE1_OPEN(pInLocal, se1Params);
+#else
          __SE1_RESET(pInLocal);
+#endif
 
          //
          // Write filter variables
