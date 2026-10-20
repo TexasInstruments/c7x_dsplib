@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #ifndef COMMON_DSPLIB_UTIL_DEBUGPRINTVECTOR_H_
-#define COMMON_DSPLIB_UTIL_DEBUGPRINTFECTOR_H_ 1
+#define COMMON_DSPLIB_UTIL_DEBUGPRINTVECTOR_H_ 1
 
 #include "../DSPLIB_types.h"
 
@@ -112,6 +112,42 @@ static inline void DSPLIB_debugPrintVectorInHex(c7x::long_vec vector)
 #if DSPLIB_DEBUGPRINT
    for (uint i = 0; i < c7x::element_count_of<c7x::long_vec>::value; i++) {
       DSPLIB_PRINTF("%016lx", *((long *) (&vector) + i));
+   }
+
+   DSPLIB_PRINTF("%s", "\n");
+#endif
+}
+
+#pragma FUNC_ALWAYS_INLINE
+static inline void DSPLIB_debugPrintVector(c7x::cshort_vec vector)
+{
+#if DSPLIB_DEBUGPRINT
+   for (uint i = 0; i < c7x::element_count_of<c7x::cshort_vec>::value; i++) {
+      DSPLIB_PRINTF("%05d", *((short *) (&vector) + i));
+   }
+
+   DSPLIB_PRINTF("%s", "\n");
+#endif
+}
+
+#pragma FUNC_ALWAYS_INLINE
+static inline void DSPLIB_debugPrintVector(c7x::cint_vec vector)
+{
+#if DSPLIB_DEBUGPRINT
+   for (uint i = 0; i < c7x::element_count_of<c7x::cint_vec>::value; i++) {
+      DSPLIB_PRINTF("%010d", *((int *) (&vector) + i));
+   }
+
+   DSPLIB_PRINTF("%s", "\n");
+#endif
+}
+
+#pragma FUNC_ALWAYS_INLINE
+static inline void DSPLIB_debugPrintVector(c7x::cfloat_vec vector)
+{
+#if DSPLIB_DEBUGPRINT
+   for (uint i = 0; i < c7x::element_count_of<c7x::cfloat_vec>::value; i++) {
+      DSPLIB_PRINTF("%f ", *((float *) (&vector) + i));
    }
 
    DSPLIB_PRINTF("%s", "\n");
