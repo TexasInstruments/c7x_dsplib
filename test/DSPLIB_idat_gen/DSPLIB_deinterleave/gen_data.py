@@ -250,7 +250,7 @@ def gen_test_case_header_file(testCase):
 # CSV file with paratmeters for all test cases
 testCasesCsvFile = "test_cases_list.csv"
 testIdList = []  # list of test IDs that we want to generate test data
-testIdList += range(0, 200)
+testIdList += range(0, 999)
 # testIdList = [18]
 
 myArgs = DSPLIB_utils.getCmdLineArgs()

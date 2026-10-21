@@ -6,6 +6,7 @@ from __future__ import print_function
 from subprocess import call
 from sys import platform
 
+import os
 import sys
 import numpy as np
 import csv
@@ -32,6 +33,7 @@ def write_header_file(in0, out, testCase, headerFileName):
     attributesOut = '__attribute__((section(".staticData"))) static '
 
     outputDir = "../../DSPLIB_deinterleave/test_data/"
+    os.makedirs(outputDir, exist_ok=True)
 
     with open(outputDir + headerFileName, "w") as f:
         write_attributes(

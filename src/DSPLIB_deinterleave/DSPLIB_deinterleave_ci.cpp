@@ -224,15 +224,16 @@ inline void deinterleave_init(DSPLIB_kernelHandle         handle,
          sa0Params.DIM1   = outEleCount;
          sa0Params.DIMFMT = __SA_DIMFMT_2D;
 
+         // The rows 2-7 are unused
          uint8_t mask[64] = {
              0,  4,  8,  12, 16, 20, 24, 28, // 0
-             2,  9,  10, 11, 3,  13, 14, 15, // 1
-             1,  17, 18, 19, 5,  21, 22, 23, // 2
-             6,  25, 26, 27, 7,  29, 30, 31, // 3
-             32, 33, 34, 35, 36, 37, 38, 39, // 4
-             40, 41, 42, 43, 44, 45, 46, 47, // 5
-             48, 49, 50, 51, 52, 53, 54, 55, // 6
-             56, 57, 58, 59, 60, 61, 62, 63  // 7
+             32, 36, 40, 44, 48, 52, 56, 60, // 1
+             1,  1,  1,  1,  1,  1,  1,  1,  // 2
+             1,  1,  1,  1,  1,  1,  1,  1,  // 3
+             1,  1,  1,  1,  1,  1,  1,  1,  // 4
+             1,  1,  1,  1,  1,  1,  1,  1,  // 5
+             1,  1,  1,  1,  1,  1,  1,  1,  // 6
+             1,  1,  1,  1,  1,  1,  1,  1,  // 7
          };
          pKerPrivArgs->loopCount = DSPLIB_ceilingDiv(heightIn, (eleCount / 4));
 
@@ -260,11 +261,52 @@ inline void deinterleave_init(DSPLIB_kernelHandle         handle,
       }
    }
    else {
+#if defined(__C7504__) || defined(__C7524__)
       se0Params.ICNT0   = widthIn * heightIn;
       se0Params.DIMFMT  = __SE_DIMFMT_1D;
       se0Params.ELETYPE = SE_ELETYPE;
       se0Params.VECLEN  = SE_VECLEN;
       se0Params.DECIM   = __SE_DECIM_2;
+
+      pKerPrivArgs->loopCount = DSPLIB_ceilingDiv(DSPLIB_ceilingDiv(widthIn * heightIn, eleCount), 2);
+#elif defined(__C7100__) || defined(__C7120__)
+      if ((bufParamsIn->data_type == DSPLIB_FLOAT64) || (bufParamsIn->data_type == DSPLIB_INT64) ||
+          (bufParamsIn->data_type == DSPLIB_UINT64)) {
+         se0Params.TRANSPOSE = __SE_TRANSPOSE_64BIT;
+         se0Params.ICNT0     = 1;
+         se0Params.ICNT1     = (heightIn > (uint32_t) eleCount) ? eleCount : heightIn;
+         se0Params.DIM1      = strideIn / dataSize;
+         se0Params.ICNT2     = DSPLIB_ceilingDiv(heightIn, eleCount);
+         se0Params.DIM2      = (strideIn / dataSize) * eleCount;
+         se0Params.DIMFMT    = __SE_DIMFMT_3D;
+         se0Params.ELETYPE   = SE_ELETYPE;
+         se0Params.VECLEN    = SE_VECLEN;
+         pKerPrivArgs->loopCount = DSPLIB_ceilingDiv(heightIn, eleCount);
+      }
+      else if ((bufParamsIn->data_type == DSPLIB_FLOAT32) || (bufParamsIn->data_type == DSPLIB_INT32) ||
+               (bufParamsIn->data_type == DSPLIB_UINT32)) {
+         se0Params.TRANSPOSE = __SE_TRANSPOSE_32BIT;
+         se0Params.ICNT0     = 1;
+         se0Params.ICNT1     = (heightIn > (uint32_t) eleCount) ? eleCount : heightIn;
+         se0Params.DIM1      = strideIn / dataSize;
+         se0Params.ICNT2     = DSPLIB_ceilingDiv(heightIn, eleCount);
+         se0Params.DIM2      = (strideIn / dataSize) * eleCount;
+         se0Params.DIMFMT    = __SE_DIMFMT_3D;
+         se0Params.ELETYPE   = SE_ELETYPE;
+         se0Params.VECLEN    = SE_VECLEN;
+         pKerPrivArgs->loopCount = DSPLIB_ceilingDiv(heightIn, eleCount);
+      }
+      else {
+         se0Params.ICNT0   = widthIn * heightIn;
+         se0Params.DIMFMT  = __SE_DIMFMT_1D;
+         se0Params.ELETYPE = SE_ELETYPE;
+         se0Params.VECLEN  = SE_VECLEN;
+         se0Params.DECIM   = __SE_DECIM_2;
+         pKerPrivArgs->loopCount = DSPLIB_ceilingDiv(DSPLIB_ceilingDiv(widthIn * heightIn, eleCount), 2);
+      }
+#else
+#error invalid target
+#endif
 
       sa0Params.ICNT0  = eleCount;
       sa0Params.ICNT1  = widthIn;
@@ -273,13 +315,6 @@ inline void deinterleave_init(DSPLIB_kernelHandle         handle,
       sa0Params.DIM2   = eleCount;
       sa0Params.VECLEN = SA_VECLEN;
       sa0Params.DIMFMT = __SA_DIMFMT_3D;
-      if (bufParamsIn->data_type == DSPLIB_UINT8 || bufParamsIn->data_type == DSPLIB_INT8) {
-
-         pKerPrivArgs->loopCount = DSPLIB_ceilingDiv(DSPLIB_ceilingDiv(widthIn * heightIn, eleCount), 2);
-      }
-      else {
-         pKerPrivArgs->loopCount = DSPLIB_ceilingDiv(DSPLIB_ceilingDiv(widthIn * heightIn, eleCount), 2);
-      }
 
       *(__SE_TEMPLATE_v1 *) ((uint8_t *) pBlock + SE_SE0_PARAM_OFFSET) = se0Params;
       *(__SA_TEMPLATE_v1 *) ((uint8_t *) pBlock + SE_SA0_PARAM_OFFSET) = sa0Params;
@@ -363,8 +398,6 @@ inline void deinterleave_compute_64_32bit(DSPLIB_kernelHandle handle, void *rest
    dataType *restrict pOutLocal         = (dataType *) pOut;
    typedef typename c7x::make_full_vector<dataType>::type vec;
    int32_t                                                loopCount = pKerPrivArgs->loopCount;
-   typedef typename c7x::make_full_vector<dataType>::type vec;
-
    using vecType = typename c7x_vec_type<dataType>::type;
 
    DSPLIB_DEBUGPRINTFN(0, "pInLocal: %p pOutLocal: %p loopCount: %d\n", pInLocal, pOutLocal, loopCount);
@@ -429,8 +462,6 @@ inline void deinterleave_compute_16bit(DSPLIB_kernelHandle handle, void *restric
    typedef typename c7x::make_full_vector<dataType>::type vec;
    int32_t                                                eleCount  = c7x::element_count_of<vec>::value;
    int32_t                                                loopCount = pKerPrivArgs->loopCount;
-
-   typedef typename c7x::make_full_vector<dataType>::type vec;
    using vecType = typename c7x_vec_type<dataType>::type;
 
    DSPLIB_DEBUGPRINTFN(0, "pInLocal: %p pOutLocal: %p loopCount: %d\n", pInLocal, pOutLocal, loopCount);
@@ -452,35 +483,32 @@ inline void deinterleave_compute_16bit(DSPLIB_kernelHandle handle, void *restric
          __vstore_pred(predTemp, pStoreVec, checkEven);
       }
       __SE0_CLOSE();
+      __SE1_CLOSE();
       __SA0_CLOSE();
    }
    else {
-      {
-         __SE1_OPEN(pInLocal + 1, se0Params);
+      __SE1_OPEN(pInLocal + 1, se0Params);
 
-         for (int32_t i = 0; i < loopCount; i++) {
-            vec loadVec1 = c7x::strm_eng<0, vec>::get_adv();
-            vec loadVec2 = c7x::strm_eng<1, vec>::get_adv();
+      for (int32_t i = 0; i < loopCount; i++) {
+         vec loadVec1 = c7x::strm_eng<0, vec>::get_adv();
+         vec loadVec2 = c7x::strm_eng<1, vec>::get_adv();
 
-            loadVec1 = c7x_vec_cast<vecType>::convert(loadVec1);
-            loadVec2 = c7x_vec_cast<vecType>::convert(loadVec2);
+         loadVec1 = c7x_vec_cast<vecType>::convert(loadVec1);
+         loadVec2 = c7x_vec_cast<vecType>::convert(loadVec2);
 
-            __vpred predTemp  = c7x::strm_agen<0, vec>::get_vpred();
-            vec    *pStoreVec = c7x::strm_agen<0, vec>::get_adv(pOutLocal);
-            __vstore_pred(predTemp, pStoreVec, loadVec1);
+         __vpred predTemp  = c7x::strm_agen<0, vec>::get_vpred();
+         vec    *pStoreVec = c7x::strm_agen<0, vec>::get_adv(pOutLocal);
+         __vstore_pred(predTemp, pStoreVec, loadVec1);
 
-            __vpred predTemp1  = c7x::strm_agen<0, vec>::get_vpred();
-            vec    *pStoreVec1 = c7x::strm_agen<0, vec>::get_adv(pOutLocal);
-            __vstore_pred(predTemp1, pStoreVec1, loadVec2);
-         }
+         __vpred predTemp1  = c7x::strm_agen<0, vec>::get_vpred();
+         vec    *pStoreVec1 = c7x::strm_agen<0, vec>::get_adv(pOutLocal);
+         __vstore_pred(predTemp1, pStoreVec1, loadVec2);
       }
+
       __SE0_CLOSE();
       __SE1_CLOSE();
       __SA0_CLOSE();
    }
-   __SE0_CLOSE();
-   __SE1_CLOSE();
-   __SA0_CLOSE();
 
    DSPLIB_DEBUGPRINTFN(0, "%s\n", "Exiting template function for Transpose 16-bit data");
 }
@@ -501,18 +529,16 @@ inline void deinterleave_compute_8bit(DSPLIB_kernelHandle handle, void *restrict
    dataType *restrict pInLocal          = (dataType *) pIn;
    dataType *restrict pOutLocal         = (dataType *) pOut;
    typedef typename c7x::make_full_vector<dataType>::type vec;
-   int32_t                                                loopCount = pKerPrivArgs->loopCount;
-   using vecType                                                    = typename c7x_vec_type<dataType>::type;
-
-   using vecType = typename c7x_vec_type<dataType>::type;
+   int32_t   loopCount = pKerPrivArgs->loopCount;
+   using vecType       = typename c7x_vec_type<dataType>::type;
 
    DSPLIB_DEBUGPRINTFN(0, "pInLocal: %p pOutLocal: %p loopCount: %d\n", pInLocal, pOutLocal, loopCount);
 
    __SE0_OPEN(pInLocal, se0Params);
    __SA0_OPEN(sa0Params);
 
-   uchar32 vMask = *stov_ptr(uchar32, (uint8_t *) mask);
    if (widthIn == 1) {
+      c7x::uchar_vec vMask = *(c7x::uchar_vec *) mask;
       for (int i = 0; i < loopCount; i++) {
          vec loadVec = c7x::strm_eng<0, vec>::get_adv();
 
