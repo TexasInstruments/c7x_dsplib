@@ -46,6 +46,7 @@
 #include "DSPLIB_mul/DSPLIB_mul.h"
 #include "DSPLIB_mulConstant/DSPLIB_mulConstant.h"
 #include "DSPLIB_negate/DSPLIB_negate.h"
+#include "DSPLIB_nonZeroCheck/DSPLIB_nonZeroCheck.h"
 #include "DSPLIB_q15tofl/DSPLIB_q15tofl.h"
 #include "DSPLIB_qrd/DSPLIB_qrd.h"
 #include "DSPLIB_qrd/DSPLIB_qrd_inverse.h"
