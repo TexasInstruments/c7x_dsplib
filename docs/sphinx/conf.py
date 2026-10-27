@@ -172,6 +172,7 @@ _API_GROUP_ORDER = [
         "DSPLIB_minEvery",
         "DSPLIB_minIndex",
         "DSPLIB_minerror",
+        "DSPLIB_logicalNOT",
     ]),
     ("Matrix", [
         "DSPLIB_diag",
