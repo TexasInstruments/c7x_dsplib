@@ -81,6 +81,7 @@ reference implementation under `test/DSPLIB_idat_gen/DSPLIB_<kernel>/` for test 
 | `DSPLIB_bitwiseANDConst` | Element-wise bitwise AND of a matrix with a constant (1x1) value |
 | `DSPLIB_logicalComparator` | Element-wise relational comparison of two matrices (==, !=, <, <=, >, >=) |
 | `DSPLIB_logicalNOT` | Element-wise logical NOT (Boolean invert) of a matrix: outputs 1 where the input is zero, 0 otherwise |
+| `DSPLIB_conditionalReplace` | Per-channel conditional replacement of integer and floating point data: compares each sample against a per-channel constant (==, !=, <, <=, >, >=) and substitutes a per-channel replacement value |
 
 ### Matrix
 | Kernel | Description |
