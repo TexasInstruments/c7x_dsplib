@@ -78,6 +78,9 @@ MEMORY
   MSMC3SRAM_STATIC   (RWX): org = 0x70200000, len = 0x200000
   MSMC3SRAM_DATACN   (RWX): org = 0x70400000, len = 0x300000
   MSMC3SRAM_PT       (RWX): org = 0x70700000, len = 0x100000
+  // Off-chip static test-vector region so large test sets (e.g. cascadeBiquad, ~28 MiB) link on j784s4.
+  // Lower-2GB DDR window, matches EXTMEM_STATIC base of other targets; mapped in dsplib_j784s4_pte.c.
+  EXTMEM_STATIC      (RWX): org = 0x80000000, len = 0x4000000
   MSMCSRAM (RWX)          : org = 0x68000000, len = 0x300000
 #else
   MSMCSRAM_CINIT (RWX)  : org = 0x70000000, len = 0x000100
@@ -162,7 +165,7 @@ SECTIONS
   .cio:             > MSMC3SRAM
   .stack:           > MSMC3SRAM
   .ddrData          > MSMC3SRAM_DATACN
-  .staticData       > MSMC3SRAM_STATIC
+  .staticData       > EXTMEM_STATIC   // off-chip DDR (was MSMC3SRAM_STATIC, 2 MiB); see MEMORY block above
   .msmcData         > MSMCSRAM
    xdc.meta:        > MSMC3SRAM, type = COPY
 #else

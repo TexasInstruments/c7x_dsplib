@@ -1381,12 +1381,13 @@ inline void minerror_exec_ci_integer8_inputs(void *restrict pErrCoefs,
       iColShort3 = convert_char_to_short<vecPromoted, vecPartial>(iEven2, false);
       dotProduct3 = (iColShort3 * errCoefs3);
 
-      mul_char_to_short<vecPromoted &, vecPartial>(iOdd2, errCoefs4, dotProduct4, dotProduct);
-      mul_char_to_short<vecPromoted &, vecPartial>(iEven3, errCoefs5, dotProduct5, dotProduct);
-      mul_char_to_short<vecPromoted &, vecPartial>(iOdd3, errCoefs6, dotProduct6, dotProduct);
-      mul_char_to_short<vecPromoted &, vecPartial>(iEven4, errCoefs7, dotProduct7, dotProduct);
-      mul_char_to_short<vecPromoted &, vecPartial>(iOdd4, errCoefs8, dotProduct8, dotProduct);
-      mul_char_to_short<vecPromoted &, vecPartial>(iEven5, errCoefs9, dotProduct9, dotProduct);
+      vecPromoted dotProductOdd = vecPromoted(0); // throwaway: odd half output (not accumulated)
+      mul_char_to_short<vecPromoted &, vecPartial>(iOdd2, errCoefs4, dotProduct4, dotProductOdd);
+      mul_char_to_short<vecPromoted &, vecPartial>(iEven3, errCoefs5, dotProduct5, dotProductOdd);
+      mul_char_to_short<vecPromoted &, vecPartial>(iOdd3, errCoefs6, dotProduct6, dotProductOdd);
+      mul_char_to_short<vecPromoted &, vecPartial>(iEven4, errCoefs7, dotProduct7, dotProductOdd);
+      mul_char_to_short<vecPromoted &, vecPartial>(iOdd4, errCoefs8, dotProduct8, dotProductOdd);
+      mul_char_to_short<vecPromoted &, vecPartial>(iEven5, errCoefs9, dotProduct9, dotProductOdd);
 
       vecPromoted acc1 = (__shift_right(dotProduct1, vecPromoted(1))) + (__shift_right(dotProduct2, vecPromoted(1)));
       vecPromoted acc2 = (__shift_right(dotProduct3, vecPromoted(1))) + (__shift_right(dotProduct4, vecPromoted(1)));
@@ -1395,7 +1396,7 @@ inline void minerror_exec_ci_integer8_inputs(void *restrict pErrCoefs,
       vecPromoted acc5 = (__shift_right(acc1, vecPromoted(1))) + (__shift_right(acc2, vecPromoted(1)));
       vecPromoted acc6 = (__shift_right(acc3, vecPromoted(1))) + (__shift_right(acc4, vecPromoted(1)));
       vecPromoted acc7 = (__shift_right(acc5, vecPromoted(1))) + (__shift_right(acc6, vecPromoted(1)));
-      dotProduct = (__shift_right(acc7, vecPromoted(1))) + (__shift_right(dotProduct9, vecPromoted(1)));
+      vecPromoted dotProduct = (__shift_right(acc7, vecPromoted(1))) + (__shift_right(dotProduct9, vecPromoted(1)));
 
       vecPromoted vCurrIdxPrmt;
 
