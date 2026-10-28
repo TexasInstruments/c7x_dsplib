@@ -6,7 +6,7 @@ DSPLIB — C7x DSP Library
 DSPLIB is TI's optimized digital signal processing library for the **C7™+MMA** DSP architecture.
 It provides a suite of kernels targeting the C7™ vector and streaming engines (SE/SA) and the
 Matrix Multiply Accelerator (MMA), enabling high-throughput signal processing and linear algebra
-on TI SoCs such as AM62D and AM275.
+on TI SoCs such as AM62D, AM275 and AM283.
 
 Each kernel ships in two variants selected at init time: a C-native reference (``_cn``, portable
 and functionally correct) and a C7™ intrinsic-optimized variant (``_ci``, hardware-optimized for
@@ -32,7 +32,7 @@ SE/SA streaming engines).
       :link: perf/index
       :link-type: doc
 
-      Measured kernel cycle counts on C7504 (AM62D) and C7524 (AM275).
+      Measured kernel cycle counts on C7504 (AM62D) and C7524 (AM275/AM283).
 
    .. grid-item-card:: :si-icon:`material/file-tree` Repository Layout
       :link: repository_layout

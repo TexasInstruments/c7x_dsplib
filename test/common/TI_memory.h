@@ -43,7 +43,7 @@
 #elif SOC == j722s
 #define DSPLIB_L3_RESULTS_BUFFER_SIZE 800 * 1024 // 800 Kbytes to start with out of 1 MB in EL2, sect2
 #define DSPLIB_L2_BUFFER_SIZE 256 * 1024
-#elif SOC == AM275
+#elif (SOC == AM275) || (SOC == AM283)
 #define DSPLIB_L3_RESULTS_BUFFER_SIZE 800 * 1024 // 800 Kbytes to start with out of 1 MB in EL2, sect2
 #define DSPLIB_L2_BUFFER_SIZE 256 * 1024         // 800 Kbytes to start with out of 1 MB in EL2, sect2
 #else

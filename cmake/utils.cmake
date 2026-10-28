@@ -129,7 +129,8 @@ set(DSPLIB_C7x_linker_SOC_defines
     --define=AM62A=4
     --define=j722s=5
     --define=AM62D=6
-    --define=AM275=7)
+    --define=AM275=7
+    --define=AM283=8)
 set(DSPLIB_C7x_SOC_defines
     -D=j721e=1
     -D=j721s2=2
@@ -137,7 +138,8 @@ set(DSPLIB_C7x_SOC_defines
     -D=AM62A=4
     -D=j722s=5
     -D=AM62D=6
-    -D=AM275=7)
+    -D=AM275=7
+    -D=AM283=8)
 set(DSPLIB_x86_SOC_defines
     j721e=1
     j721s2=2
@@ -145,7 +147,8 @@ set(DSPLIB_x86_SOC_defines
     AM62A=4
     j722s=5
     AM62D=6
-    AM275=7)
+    AM275=7
+    AM283=8)
 
 # how do I do add a long list without using concat set(foo
 # --display_error_number --diag_remark=10068 --abi=eabi) set(foo ${foo}
