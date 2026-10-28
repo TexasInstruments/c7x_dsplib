@@ -24,6 +24,7 @@
 #include "DSPLIB_fir/DSPLIB_fir.h"
 #include "DSPLIB_fltoq15/DSPLIB_fltoq15.h"
 #include "DSPLIB_interleave/DSPLIB_interleave.h"
+#include "DSPLIB_logicalNOT/DSPLIB_logicalNOT.h"
 #include "DSPLIB_lud/DSPLIB_lud.h"
 #include "DSPLIB_lud/DSPLIB_lud_inv.h"
 #include "DSPLIB_lud/DSPLIB_lud_sol.h"

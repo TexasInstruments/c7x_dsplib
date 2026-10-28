@@ -75,6 +75,7 @@ reference implementation under `test/DSPLIB_idat_gen/DSPLIB_<kernel>/` for test 
 | `DSPLIB_minEvery` | Element-wise minimum of two vectors |
 | `DSPLIB_minIndex` | Index of the minimum value |
 | `DSPLIB_minerror` | Minimum error search |
+| `DSPLIB_logicalNOT` | Element-wise logical NOT (Boolean invert) of a matrix: outputs 1 where the input is zero, 0 otherwise |
 
 ### Matrix
 | Kernel | Description |
