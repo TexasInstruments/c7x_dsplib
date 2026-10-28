@@ -51,8 +51,8 @@ typedef DSPLIB_STATUS (*pFxnDSPLIB_recip_exec)(DSPLIB_kernelHandle handle, void 
  */
 template <typename dataType>
 extern DSPLIB_STATUS DSPLIB_recip_init_ci(DSPLIB_kernelHandle          handle,
-                                          const DSPLIB_bufParams1D_t  *bufParamsIn,
-                                          const DSPLIB_bufParams1D_t  *bufParamsOut,
+                                          const DSPLIB_bufParams2D_t  *bufParamsIn,
+                                          const DSPLIB_bufParams2D_t  *bufParamsOut,
                                           const DSPLIB_recip_InitArgs *pKerInitArgs);
 
 /**
@@ -108,11 +108,21 @@ typedef struct {
     *         @ref DSPLIB_recip_exec_cn and
     *         @ref DSPLIB_recip_exec_ci.                        */
    pFxnDSPLIB_recip_exec execute;
-   /** @brief Size of input buffer for different batches
+   /** @brief Number of elements in each input row (dim_x) set during
     *         @ref DSPLIB_recip_init that will be retrieved
     *         and used by @ref DSPLIB_recip_exec                */
-   int32_t blockSize;
-   uint8_t bufPblock[DSPLIB_RECIP_IXX_IXX_OXX_PBLOCK_SIZE];
+   int32_t width;
+   /** @brief Number of rows (dim_y)                                      */
+   int32_t height;
+   /** @brief Stride between input rows in elements                      */
+   int32_t strideIn;
+   /** @brief Stride between output rows in elements                     */
+   int32_t strideOut;
+   /** @brief Number of loop iterations of @ref DSPLIB_recip_exec_ci      */
+   int32_t numVecs;
+   /** @brief Data type of the input and output buffers                   */
+   uint32_t dataType;
+   uint8_t  bufPblock[DSPLIB_RECIP_IXX_IXX_OXX_PBLOCK_SIZE];
 
    // init args dsplib_recip
    DSPLIB_recip_InitArgs initArgs;

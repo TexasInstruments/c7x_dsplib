@@ -21,7 +21,9 @@ int main(void)
 
    float outSp[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-   size_t size = 14;
+   // 2 rows of 7 values
+   size_t width  = 7;
+   size_t height = 2;
 
    // handles and struct for call to kernel
    DSPLIB_STATUS         status;
@@ -29,19 +31,23 @@ int main(void)
    int32_t               handleSize = DSPLIB_recip_getHandleSize(&kerInitArgs);
    DSPLIB_kernelHandle   handle     = malloc(handleSize);
 
-   DSPLIB_bufParams1D_t bufParamsIn, bufParamsOut;
+   DSPLIB_bufParams2D_t bufParamsIn, bufParamsOut;
 
    // fill in input and output buffer parameters
    bufParamsIn.data_type = DSPLIB_FLOAT32;
-   bufParamsIn.dim_x     = size;
+   bufParamsIn.dim_x     = width;
+   bufParamsIn.dim_y     = height;
+   bufParamsIn.stride_y  = width * sizeof(float);
 
    bufParamsOut.data_type = DSPLIB_FLOAT32;
-   bufParamsOut.dim_x     = size;
+   bufParamsOut.dim_x     = width;
+   bufParamsOut.dim_y     = height;
+   bufParamsOut.stride_y  = width * sizeof(float);
 
    // set floating point store pattern to linear
    kerInitArgs.storeStyle = DSPLIB_LINEAR_ST;
 
-   kerInitArgs.dataSize  = size;
+   kerInitArgs.dataSize  = width;
    kerInitArgs.funcStyle = DSPLIB_FUNCTION_OPTIMIZED;
 
    status = DSPLIB_SUCCESS;
@@ -65,8 +71,10 @@ int main(void)
    // print results
    printf("\nFloating Point Example Outputs:\n");
 
-   for (size_t i = 0; i < size; i++) {
-      printf("(1 / %10g) = %10g\n", inSp[i], outSp[i]);
+   for (size_t row = 0; row < height; row++) {
+      for (size_t i = 0; i < width; i++) {
+         printf("row %zu: (1 / %10g) = %10g\n", row, inSp[row * width + i], outSp[row * width + i]);
+      }
    }
 
    /* Fixed Point Recip Computation Example */
@@ -78,8 +86,10 @@ int main(void)
    int16_t outFixed[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-   size_t inSize  = 14;
-   size_t outSize = 28;
+   // 2 rows of 7 values; each output row holds 2 * 7 values (exp and frac)
+   size_t inWidth     = 7;
+   size_t outWidth    = 14;
+   size_t heightFixed = 2;
 
    // handles and struct for call to kernel
    DSPLIB_STATUS         statusFixed;
@@ -87,21 +97,25 @@ int main(void)
    int32_t               handleSizeFixed = DSPLIB_recip_getHandleSize(&kerInitArgsFixed);
    DSPLIB_kernelHandle   handleFixed     = malloc(handleSizeFixed);
 
-   DSPLIB_bufParams1D_t bufParamsInFixed, bufParamsOutFixed;
+   DSPLIB_bufParams2D_t bufParamsInFixed, bufParamsOutFixed;
 
    // fill in input and output buffer parameters
    bufParamsInFixed.data_type = DSPLIB_INT16;
-   bufParamsInFixed.dim_x     = inSize;
+   bufParamsInFixed.dim_x     = inWidth;
+   bufParamsInFixed.dim_y     = heightFixed;
+   bufParamsInFixed.stride_y  = inWidth * sizeof(int16_t);
 
    bufParamsOutFixed.data_type = DSPLIB_INT16;
-   // output must be 2x input size for fixed point computation
-   bufParamsOutFixed.dim_x = outSize;
+   // output row must be 2x input row width for fixed point computation
+   bufParamsOutFixed.dim_x    = outWidth;
+   bufParamsOutFixed.dim_y    = heightFixed;
+   bufParamsOutFixed.stride_y = outWidth * sizeof(int16_t);
 
    // fixed point store pattern: horizontal stack or interleaved store
    kerInitArgsFixed.storeStyle = DSPLIB_HSTACK_ST;
    /* kerInitArgsFixed.storeStyle = DSPLIB_INTERLEAVE_ST; */
 
-   kerInitArgsFixed.dataSize  = inSize;
+   kerInitArgsFixed.dataSize  = inWidth;
    kerInitArgsFixed.funcStyle = DSPLIB_FUNCTION_OPTIMIZED;
 
    statusFixed = DSPLIB_SUCCESS;
@@ -126,13 +140,18 @@ int main(void)
    // print results
    printf("\nFixed Point Example Outputs:\n");
 
-   for (size_t i = 0; i < inSize; i++) {
-      printf("Q15_recip_hstack(%d): Exp = %d, Frac = %d\n", inFixed[i], outFixed[i], outFixed[i + inSize]);
+   for (size_t row = 0; row < heightFixed; row++) {
+      for (size_t i = 0; i < inWidth; i++) {
+         printf("row %zu: Q15_recip_hstack(%d): Exp = %d, Frac = %d\n", row, inFixed[row * inWidth + i],
+                outFixed[row * outWidth + i], outFixed[row * outWidth + inWidth + i]);
+      }
    }
 
-   /* for (size_t i = 0; i < inSize; i++) { */
-   /*    printf("Q15_recip_interleave(%d): Exp = %d, Frac = %d\n", inFixed[i], outFixed[2*i], outFixed[2*i + 1]);
-    */
+   /* for (size_t row = 0; row < heightFixed; row++) { */
+   /*    for (size_t i = 0; i < inWidth; i++) { */
+   /*       printf("row %zu: Q15_recip_interleave(%d): Exp = %d, Frac = %d\n", row, inFixed[row * inWidth + i], */
+   /*              outFixed[row * outWidth + 2 * i], outFixed[row * outWidth + 2 * i + 1]); */
+   /*    } */
    /* } */
 
    return 0;

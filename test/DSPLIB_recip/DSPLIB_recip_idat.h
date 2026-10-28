@@ -16,7 +16,10 @@ typedef struct {
    void                   *staticIn;
    void                   *staticOut;
    uint32_t                dataType;
-   uint32_t                dataSize;
+   uint32_t                width;     // Number of elements in each input row (dim_x)
+   uint32_t                height;    // Number of rows (dim_y)
+   uint32_t                strideIn;  // Input stride in bytes
+   uint32_t                strideOut; // Output stride in bytes
    DSPLIB_recip_storeStyle storeStyle;
    uint32_t                outputDataLocation; // 0 -> HEAP (probably L2SRAM), 1 -> MSMC
    uint32_t                numReps;

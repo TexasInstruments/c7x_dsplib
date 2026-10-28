@@ -11,8 +11,8 @@ int32_t DSPLIB_recip_getHandleSize(DSPLIB_recip_InitArgs *pKerInitArgs)
 }
 
 DSPLIB_STATUS DSPLIB_recip_init_checkParams(DSPLIB_kernelHandle          handle,
-                                            const DSPLIB_bufParams1D_t  *bufParamsIn,
-                                            const DSPLIB_bufParams1D_t  *bufParamsOut,
+                                            const DSPLIB_bufParams2D_t  *bufParamsIn,
+                                            const DSPLIB_bufParams2D_t  *bufParamsOut,
                                             const DSPLIB_recip_InitArgs *pKerInitArgs)
 {
    DSPLIB_STATUS status = DSPLIB_SUCCESS;
@@ -36,7 +36,22 @@ DSPLIB_STATUS DSPLIB_recip_init_checkParams(DSPLIB_kernelHandle          handle,
          status = DSPLIB_ERR_INVALID_TYPE;
       }
       else {
-         /* Nothing to do here */
+         if ((bufParamsIn->dim_x == 0) || (bufParamsIn->dim_y == 0) || (pKerInitArgs->dataSize != bufParamsIn->dim_x)) {
+            status = DSPLIB_ERR_INVALID_DIMENSION;
+         }
+         // fixed point output holds exponent and fraction for every input sample
+         else if ((bufParamsOut->dim_y != bufParamsIn->dim_y) ||
+                  (bufParamsOut->dim_x !=
+                   ((bufParamsIn->data_type == DSPLIB_INT16) ? (2 * bufParamsIn->dim_x) : bufParamsIn->dim_x))) {
+            status = DSPLIB_ERR_INVALID_DIMENSION;
+         }
+         else if ((bufParamsIn->stride_y < bufParamsIn->dim_x * DSPLIB_sizeof(bufParamsIn->data_type)) ||
+                  (bufParamsOut->stride_y < bufParamsOut->dim_x * DSPLIB_sizeof(bufParamsOut->data_type))) {
+            status = DSPLIB_ERR_INVALID_DIMENSION;
+         }
+         else {
+            /* Nothing to do here */
+         }
       }
    }
 
@@ -62,8 +77,8 @@ DSPLIB_recip_exec_checkParams(DSPLIB_kernelHandle handle, const void *restrict p
 }
 
 DSPLIB_STATUS DSPLIB_recip_init(DSPLIB_kernelHandle          handle,
-                                DSPLIB_bufParams1D_t        *bufParamsIn,
-                                DSPLIB_bufParams1D_t        *bufParamsOut,
+                                DSPLIB_bufParams2D_t        *bufParamsIn,
+                                DSPLIB_bufParams2D_t        *bufParamsOut,
                                 const DSPLIB_recip_InitArgs *pKerInitArgs)
 {
    DSPLIB_STATUS          status       = DSPLIB_SUCCESS;
@@ -72,11 +87,15 @@ DSPLIB_STATUS DSPLIB_recip_init(DSPLIB_kernelHandle          handle,
 #if DSPLIB_DEBUGPRINT
    printf("DSPLIB_DEBUGPRINT Enter DSPLIB_recip_init\n");
 #endif
-   pKerPrivArgs->blockSize = pKerInitArgs->dataSize;
+   pKerPrivArgs->width     = pKerInitArgs->dataSize;
+   pKerPrivArgs->height    = bufParamsIn->dim_y;
+   pKerPrivArgs->dataType  = bufParamsIn->data_type;
+   pKerPrivArgs->strideIn  = bufParamsIn->stride_y / DSPLIB_sizeof(bufParamsIn->data_type);
+   pKerPrivArgs->strideOut = bufParamsOut->stride_y / DSPLIB_sizeof(bufParamsOut->data_type);
 
 #if DSPLIB_DEBUGPRINT
-   printf("DSPLIB_DEBUGPRINT DSPLIB_recip_init pKerPrivArgs->blockSize %d bufParamsIn->data_type %d\n",
-          pKerPrivArgs->blockSize, bufParamsIn->data_type);
+   printf("DSPLIB_DEBUGPRINT DSPLIB_recip_init pKerPrivArgs->width %d bufParamsIn->data_type %d\n", pKerPrivArgs->width,
+          bufParamsIn->data_type);
 #endif
 
    // fill private args with init args
@@ -138,7 +157,7 @@ DSPLIB_STATUS DSPLIB_recip_exec(DSPLIB_kernelHandle handle, void *restrict pIn, 
    DSPLIB_recip_PrivArgs *pKerPrivArgs = (DSPLIB_recip_PrivArgs *) handle;
 
 #if DSPLIB_DEBUGPRINT
-   printf("DSPLIB_DEBUGPRINT pKerPrivArgs->blockSize %d\n", pKerPrivArgs->blockSize);
+   printf("DSPLIB_DEBUGPRINT pKerPrivArgs->width %d\n", pKerPrivArgs->width);
 #endif
    status = pKerPrivArgs->execute(handle, pIn, pOut);
 
