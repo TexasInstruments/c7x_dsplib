@@ -1,0 +1,9 @@
+void DSPLIB_absoluteValue_getTestParams(DSPLIB_absoluteValue_testParams_t **params, int32_t *numTests)
+{
+    *params = testParams;
+    *numTests = sizeof(testParams) / sizeof(DSPLIB_absoluteValue_testParams_t);
+}
+
+/* ======================================================================== */
+/*  End of file:  DSPLIB_absoluteValue_idat.c                                         */
+/* ======================================================================== */

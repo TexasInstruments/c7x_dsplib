@@ -351,6 +351,9 @@ If dir = 1, copies from Y(nRows,nCols) to X(M,N) into the index (stRow,stCol).
 \subsection DSPLIB_realImagToComplex DSPLIB_realImagToComplex
 \htmlinclude ./html/DSPLIB_realImagToComplex_performance_c7504.html
 
+\subsection DSPLIB_absoluteValue DSPLIB_absoluteValue
+\htmlinclude ./html/DSPLIB_absoluteValue_performance_c7504.html
+
 <BR>
 
 */
@@ -477,6 +480,9 @@ If dir = 1, copies from Y(nRows,nCols) to X(M,N) into the index (stRow,stCol).
 
 \subsection DSPLIB_realImagToComplex DSPLIB_realImagToComplex
 \htmlinclude ./html/DSPLIB_realImagToComplex_performance_c7524.html
+
+\subsection DSPLIB_absoluteValue DSPLIB_absoluteValue
+\htmlinclude ./html/DSPLIB_absoluteValue_performance_c7524.html
 
 <BR>
 

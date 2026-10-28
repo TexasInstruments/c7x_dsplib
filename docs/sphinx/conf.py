@@ -146,6 +146,7 @@ _API_GROUP_ORDER = [
         "DSPLIB_COMMON",
     ]),
     ("Arithmetic", [
+        "DSPLIB_absoluteValue",
         "DSPLIB_add",
         "DSPLIB_addConstant",
         "DSPLIB_addNCh",

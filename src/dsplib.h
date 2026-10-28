@@ -5,6 +5,7 @@
 #ifndef _DSPLIB_H_
 #define _DSPLIB_H_
 
+#include "DSPLIB_absoluteValue/DSPLIB_absoluteValue.h"
 #include "DSPLIB_add/DSPLIB_add.h"
 #include "DSPLIB_addConstant/DSPLIB_addConstant.h"
 #include "DSPLIB_addNCh/DSPLIB_addNCh.h"
