@@ -73,10 +73,10 @@ MEMORY
   L2SRAM_CINIT (RWX)  : org = 0x7E000000, len = 0x000100 //for 256byte init     c7x_0 = 7E000000, c7x_1 = 7E200000
   L2SRAM (RWX)        : org = 0x7E000100, len = 0x1fff00 //for 2MBytes  EL2
   L2SRAMAUX   (RWX): org = 0x7F000000, len = 0x040000   // for 256 KBytes J7AEN c7x_0 = 7F000000, c7x_1 = 7F800000
-#elif SOC == AM275 
+#elif (SOC == AM275) || (SOC == AM283)
   L2SRAM_CINIT (RWX)  : org = 0x7E000000, len = 0x000100 //for 256byte init
   L2SRAM (RWX)        : org = 0x7E000100, len = 0x1fff00 //for 2MBytes  EL2
-  L2SRAMAUX      (RWX): org = 0x7E200000, len = 0x040000   // for 256 KBytes AM275
+  L2SRAMAUX      (RWX): org = 0x7E200000, len = 0x040000   // for 256 KBytes AM275/AM283
   HYPERRAM       (RW) : org = 0x68000000, len = 0x4000000   // 64 MB HyperRAM
 #endif
 
@@ -124,7 +124,7 @@ SECTIONS
   .cio:             > L2SRAM
   .stack:           > EXTMEM
   .ddrData          > EXTMEM_DATACN
-#if SOC == AM275 
+#if (SOC == AM275) || (SOC == AM283)
   .staticData       > HYPERRAM
 #else
   .staticData       > EXTMEM

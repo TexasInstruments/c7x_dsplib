@@ -258,7 +258,7 @@ bin/Debug/test_DSPLIB_<kernel_name>_<device>_x86_64 \endcode
 
   - DSPLIB utilizes CMake to build, ensure that system has CMake v3.16.0 or higher
   - Build options:
-    - SOC=AM62A/j721e/j721s2/j784s4/j722s/AM275
+    - SOC=AM62A/j721e/j721s2/j784s4/j722s/AM275/AM283
     - DEVICE=C7504/C7100/C7120/C7524/C7524
     - TARGET_PLATFORM=PC/""
     - KERNEL_NAME
@@ -295,7 +295,7 @@ bin/Debug/test_DSPLIB_<kernel_name>_<device>_x86_64 \endcode
     - "Build" and "Run" buttons can be used to build for target/PC and run for PC
   - Note: If changing build configuration options significantly (e.g. changing between target and host emulation
 builds), delete build folder before rebuilding
-  - Note: AUTO_TEST binaries don't run on AM275 due lack of external memory; please build binaries with TEST_CASE flag
+  - Note: AUTO_TEST binaries don't run on AM275/AM283 due lack of external memory; please build binaries with TEST_CASE flag
 
  \par Run
 

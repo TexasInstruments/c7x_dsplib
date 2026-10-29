@@ -6,7 +6,7 @@
 #include <stdint.h>
 
 extern const uint64_t pte_lvl2_40000000[512];
-#if SOC == AM275
+#if (SOC == AM275) || (SOC == AM283)
 const uint64_t pte_lvl2_40000000[512] __attribute__((section(".data:pte:pte_lvl2_40000000"), aligned(4096))) = {
     0,
     0,

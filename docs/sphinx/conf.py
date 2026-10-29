@@ -346,10 +346,10 @@ _PERF_SUMMARY = os.path.join(
 _PERF_HTML_DIR = os.path.join(os.path.dirname(__file__), "..", "doxygen", "html")
 
 # Doxygen device macro -> (slug, human title)
-# Only C7504 (AM62D) and C7524 (AM275) numbers are published for now.
+# Only C7504 (AM62D) and C7524 (AM275/AM283) numbers are published for now.
 _PERF_DEVICES = [
     ("__C7504__", "c7504", "C7504 (AM62D)"),
-    ("__C7524__", "c7524", "C7524 (AM275)"),
+    ("__C7524__", "c7524", "C7524 (AM275/AM283)"),
 ]
 
 

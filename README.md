@@ -16,7 +16,7 @@
 DSPLIB is TI's optimized digital signal processing library for the **C7<sup>™</sup>+MMA** DSP architecture.
 It provides a suite of kernels targeting the C7<sup>™</sup> vector and streaming engines (SE/SA) and the
 Matrix Multiply Accelerator (MMA), enabling high-throughput signal processing and linear algebra
-on TI SoCs such as AM62D and AM275.
+on TI SoCs such as AM62D, AM275 and AM283.
 
 Each kernel ships in two variants selected at init time via the `DSPLIB_FUNCTION_OPT` /
 `DSPLIB_FUNCTION_NATC` enum in the kernel's `InitArgs`:
@@ -129,6 +129,7 @@ reference implementation under `test/DSPLIB_idat_gen/DSPLIB_<kernel>/` for test 
 |--------|----------|-------------|
 | AM62D | C7504 | MMAv2 |
 | AM275 | C7524 | MMAv2f (adds 32-bit float support) |
+| AM283 | C7524 | MMAv2f (adds 32-bit float support) |
 
 
 ## Setup Instructions
@@ -160,10 +161,14 @@ DSPLIB uses **CMake presets** to manage build configurations.
 | `release-autotest-am62d-target` | AM62D | On-device + tests |
 | `release-autotest-am275-pc` | AM275 | PC simulation + tests |
 | `release-autotest-am275-target` | AM275 | On-device + tests |
+| `release-autotest-am283-pc` | AM283 | PC simulation + tests |
+| `release-autotest-am283-target` | AM283 | On-device + tests |
 | `release-buildlib-am62d-pc` | AM62D | PC (library only) |
 | `release-buildlib-am62d-target` | AM62D | On-device (library only) |
 | `release-buildlib-am275-pc` | AM275 | PC (library only) |
 | `release-buildlib-am275-target` | AM275 | On-device (library only) |
+| `release-buildlib-am283-pc` | AM283 | PC (library only) |
+| `release-buildlib-am283-target` | AM283 | On-device (library only) |
 
 ### Quick Start — PC simulation (AM62D)
 

@@ -10,7 +10,7 @@ Bug reports and feature requests are welcome via [TI E2E Community Forums](https
 
 When filing a bug on E2E, include:
 
-- **Device** — AM62Dx or AM275x
+- **Device** — AM62Dx, AM275x or AM283x
 - **Toolchain** — `ti-cgt-c7000` version
 - **Kernel** — which `DSPLIB_*` function
 - **Variant** — `OPT` (`_ci`) or `NATC` (`_cn`)
