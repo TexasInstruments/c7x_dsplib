@@ -23,6 +23,7 @@ extern "C" {
  *
  * @ingroup  DSPLIB
  */
+
 /**@{*/
 
 /**
@@ -159,6 +160,8 @@ DSPLIB_mul_exec(DSPLIB_kernelHandle handle, void *restrict pIn1, void *restrict 
  *  @remarks     None
  */
 void DSPLIB_mul_perfEst(DSPLIB_kernelHandle handle, uint64_t *archCycles, uint64_t *estCycles);
+
+/**@}*/
 
 #ifdef __cplusplus
 }
