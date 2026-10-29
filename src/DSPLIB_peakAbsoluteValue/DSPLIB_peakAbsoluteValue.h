@@ -28,6 +28,16 @@ extern "C" {
  *            -128 is 127 for DSPLIB_INT8.
  *          - dim_x and dim_y of the input must be at least 1, and stride_y must be a multiple of the element size and
  *            at least dim_x elements.
+ *          - Implementation (C7x): rows are read by two streaming engines (start and end of each row). Rows of up to
+ *            4 vectors finish two rows per loop iteration; longer rows use an inner loop and one horizontal maximum
+ *            per row. When there are at least 8 rows (4 for 64-bit types), the rows are 4-byte (8-byte for 64-bit
+ *            types) aligned, the row length is a whole number of 4-byte (8-byte) units and the cycle model prefers
+ *            it, a transposed stream is used instead: one vector holds the same column of 8 (4) rows, so the peaks
+ *            of a whole group of rows are a vertical maximum with a single store and no horizontal maximum. The
+ *            two streaming engines walk the groups of rows from the top and from the bottom. The cycle model
+ *            includes the memory stalls measured on the EVM, which grow when the row stride is not a multiple of
+ *            32 bytes, so the transposed variant is mainly chosen for many short or medium rows. The variant is
+ *            chosen in @ref DSPLIB_peakAbsoluteValue_init and has no effect on the results.
  *
  * @ingroup  DSPLIB
  */

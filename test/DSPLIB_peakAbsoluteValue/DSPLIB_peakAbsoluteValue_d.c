@@ -574,7 +574,7 @@ int main()
 {
    int test_fail = 1, cov_fail = 1;
 
-   uint32_t profile[256 * 3];
+   uint32_t profile[512 * 3];
 
    DSPLIB_TEST_init();
 

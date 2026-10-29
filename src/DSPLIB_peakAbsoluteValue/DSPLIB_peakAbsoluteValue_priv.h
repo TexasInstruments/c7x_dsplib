@@ -21,6 +21,7 @@
 #define SE_PARAM_BASE (0x0000)
 #define SE_SE0_PARAM_OFFSET (SE_PARAM_BASE)
 #define SE_SE1_PARAM_OFFSET (SE_SE0_PARAM_OFFSET + SE_PARAM_SIZE)
+#define SE_SA0_PARAM_OFFSET (SE_SE0_PARAM_OFFSET + 2 * SE_PARAM_SIZE)
 
 /**
  * @brief Macro to define the size of bufPblock array of
@@ -28,12 +29,64 @@
  *
  */
 #define DSPLIB_peakAbsoluteValue_IXX_IXX_OXX_PBLOCK_SIZE                                                               \
-   (2 * SE_PARAM_SIZE + 1 * DSPLIB_PARAM_SIZE + 2 * sizeof(int32_t))
+   (3 * SE_PARAM_SIZE + 1 * DSPLIB_PARAM_SIZE + 2 * sizeof(int32_t))
 
 /* The per-type tables below are indexed in the order 8-bit int, 16-bit int, 32-bit int, 64-bit int, float, double. The
  * loop terms come from the compiled .asm (C7504 and C7524 are identical); the overhead terms are a least-squares fit to
  * the Loki cycles of all 213 test cases of the test suite (max error 3 cycles over the rows-of-at-most-4-vectors
  * cases, 1 cycle over the longer rows). */
+
+/**
+ * @brief Transposed variant (rowsPerGroup rows per vector, see @ref DSPLIB_peakAbsoluteValue_transposed_exec_ci):
+ *        cycles to fill the software pipeline of its inner loop ("N + trip_cnt * 2" in the compiled .asm), by data
+ *        type, and cycles per inner-loop iteration of 4 vectors (all data types).
+ */
+#define DSPLIB_PEAKABSOLUTEVALUE_TRANSPOSED_PIPE_UP_CYCLES                                                             \
+   {                                                                                                                   \
+      3, 3, 3, 4, 6, 4                                                                                                 \
+   }
+#define DSPLIB_PEAKABSOLUTEVALUE_TRANSPOSED_CYCLES_PER_ITERATION (2)
+
+/**
+ * @brief Transposed variant: cycles per pass of the group loop outside the inner loop (merge of the four maxima of
+ *        each of the two groups, fold of the bytes or halfwords of a lane for 8-bit and 16-bit, two stores, loop), by
+ *        data type.
+ */
+#define DSPLIB_PEAKABSOLUTEVALUE_TRANSPOSED_GROUP_OVERHEAD_CYCLES                                                      \
+   {                                                                                                                   \
+      8, 6, 5, 1, 1, 1                                                                                                 \
+   }
+
+/**
+ * @brief Transposed variant: cycles outside the loops of a call (two SEOPEN, one SAOPEN, template loads, call and
+ *        return), by data type. This term and the one above are a least-squares fit to the Loki cycles of the 65 test
+ *        cases that use this variant (exact to the cycle).
+ */
+#define DSPLIB_PEAKABSOLUTEVALUE_TRANSPOSED_CALL_OVERHEAD_CYCLES                                                       \
+   {                                                                                                                   \
+      48, 48, 48, 48, 50, 48                                                                                           \
+   }
+
+/**
+ * @brief Transposed variant: memory stalls the EVM adds on top of the Loki cycles (Loki does not model the memory
+ *        system). A transposed vector gathers one granule from each of rowsPerGroup rows. When the row stride is a
+ *        multiple of 32 bytes this costs little, otherwise nearly one more cycle per iteration. Fixed part per call,
+ *        and stall cycles per 16 iterations of the inner loop for an aligned and for an unaligned stride, by data type.
+ *        Least-squares fit to the EVM cycles of the 65 test cases that use this variant on AM62D (AM275 within 2
+ *        cycles); max error 59 cycles for the 8-bit to 32-bit types, 21 for the 64-bit types.
+ */
+#define DSPLIB_PEAKABSOLUTEVALUE_TRANSPOSED_STALL_FIXED_CYCLES                                                         \
+   {                                                                                                                   \
+      34, 34, 34, 17, 34, 17                                                                                           \
+   }
+#define DSPLIB_PEAKABSOLUTEVALUE_TRANSPOSED_STALL_PER_16_ITERATIONS_ALIGNED                                            \
+   {                                                                                                                   \
+      2, 2, 2, 5, 2, 5                                                                                                 \
+   }
+#define DSPLIB_PEAKABSOLUTEVALUE_TRANSPOSED_STALL_PER_16_ITERATIONS_UNALIGNED                                          \
+   {                                                                                                                   \
+      29, 29, 29, 25, 29, 25                                                                                           \
+   }
 
 /**
  * @brief Rows of 5 or more vectors (inner loop): cycles to fill the software pipeline of the inner loop and cycles per
@@ -84,10 +137,12 @@
 
 /**
  * @brief Cycles outside the loops of a call (two SEOPEN, template loads, output store, call and return), by data type.
+ *        Fit to the Loki cycles, plus 11 cycles that the EVM measures on top of Loki on every row-variant test case
+ *        (median over 197 cases on AM62D, 12 on AM275, independent of the data type).
  */
 #define DSPLIB_PEAKABSOLUTEVALUE_CALL_OVERHEAD_CYCLES                                                                  \
    {                                                                                                                   \
-      40, 40, 45, 42, 47, 48                                                                                           \
+      51, 51, 56, 53, 58, 59                                                                                           \
    }
 
 /**
@@ -166,6 +221,19 @@ template <typename dataType, typename unsignedType, int32_t vecsPerStream, int32
 extern DSPLIB_STATUS
 DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci(DSPLIB_kernelHandle handle, void *restrict pIn, void *restrict pOut);
 
+/**
+ *  @brief Variant of @ref DSPLIB_peakAbsoluteValue_exec_ci for several full groups of rows (a group is rowsPerGroup
+ *         rows, 8 for types up to 32 bits and 4 for 64-bit types). A transposed stream puts the same column of a
+ *         whole group into one vector (lane r = row r), so the peaks of a group are a plain vertical maximum and are
+ *         stored with one store; there is no horizontal maximum. Stream 0 walks the groups from the top and stream 1
+ *         from the bottom of the rows, so there is no partial group.
+ * Selected by @ref DSPLIB_peakAbsoluteValue_init_ci when the rows are aligned to the 32-bit (64-bit) transpose granule
+ * and the cost model prefers it.
+ */
+template <typename dataType>
+extern DSPLIB_STATUS
+DSPLIB_peakAbsoluteValue_transposed_exec_ci(DSPLIB_kernelHandle handle, void *restrict pIn, void *restrict pOut);
+
 template <typename dataType, typename unsignedType>
 extern DSPLIB_STATUS
 DSPLIB_peakAbsoluteValue_exec_ci(DSPLIB_kernelHandle handle, void *restrict pIn, void *restrict pOut);
@@ -216,6 +284,12 @@ typedef struct {
    int32_t vecsPerStream;
    /** @brief Element offset of the start of the second input stream, derived in the C7x init */
    int32_t stream1Offset;
+   /** @brief 1 if the transposed variant was selected in the C7x init, 0 otherwise                           */
+   int32_t transposed;
+   /** @brief Transposed variant: rows held side by side in the lanes of one vector                           */
+   int32_t rowsPerGroup;
+   /** @brief Transposed variant: passes of the group loop, each handles one group of rows per stream          */
+   int32_t numPasses;
    uint8_t bufPblock[DSPLIB_peakAbsoluteValue_IXX_IXX_OXX_PBLOCK_SIZE];
 } DSPLIB_peakAbsoluteValue_PrivArgs;
 

@@ -127,83 +127,114 @@ DSPLIB_STATUS DSPLIB_peakAbsoluteValue_init(DSPLIB_kernelHandle                 
       }
    }
    else {
-      /* Rows of up to 2 vectors and of 3-4 vectors run two rows per loop iteration (the first row alone for an odd
-       number of rows), longer rows use an inner loop */
+      /* Row variants: rows of up to 2 vectors and of 3-4 vectors run two rows per loop iteration (the first row alone
+       * for an odd number of rows), longer rows use an inner loop. init_ci then decides whether the transposed variant
+       * is cheaper, and the variant is picked from the table below */
       int32_t eleCount   = (int32_t) (__C7X_VEC_SIZE_BYTES__ / DSPLIB_sizeof(bufParamsIn->data_type));
       int32_t numVecs    = (pKerPrivArgs->width + eleCount - 1) / eleCount;
       int32_t variantIdx = (numVecs <= 2) ? 0 : ((numVecs <= 4) ? 1 : 2);
 
+      const pFxnDSPLIB_peakAbsoluteValue_exec(*execVariants)[3] = NULL;
+
       if (bufParamsIn->data_type == DSPLIB_INT8) {
-         pFxnDSPLIB_peakAbsoluteValue_exec execVariants[2][3] = {
+         static const pFxnDSPLIB_peakAbsoluteValue_exec execTable[3][3] = {
+             /* even number of rows */
              {DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int8_t, uint8_t, 1, 0>,
               DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int8_t, uint8_t, 2, 0>,
               DSPLIB_peakAbsoluteValue_exec_ci<int8_t, uint8_t>},
+             /* odd number of rows */
              {DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int8_t, uint8_t, 1, 1>,
               DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int8_t, uint8_t, 2, 1>,
-              DSPLIB_peakAbsoluteValue_exec_ci<int8_t, uint8_t>}};
-         pKerPrivArgs->execute = execVariants[pKerPrivArgs->height & 1][variantIdx];
-         status = DSPLIB_peakAbsoluteValue_init_ci<int8_t>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+              DSPLIB_peakAbsoluteValue_exec_ci<int8_t, uint8_t>},
+             /* transposed */
+             {DSPLIB_peakAbsoluteValue_transposed_exec_ci<int8_t>, NULL, NULL}};
+         execVariants = execTable;
+         status       = DSPLIB_peakAbsoluteValue_init_ci<int8_t>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
       }
       else if (bufParamsIn->data_type == DSPLIB_INT16) {
-         pFxnDSPLIB_peakAbsoluteValue_exec execVariants[2][3] = {
+         static const pFxnDSPLIB_peakAbsoluteValue_exec execTable[3][3] = {
+             /* even number of rows */
              {DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int16_t, uint16_t, 1, 0>,
               DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int16_t, uint16_t, 2, 0>,
               DSPLIB_peakAbsoluteValue_exec_ci<int16_t, uint16_t>},
+             /* odd number of rows */
              {DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int16_t, uint16_t, 1, 1>,
               DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int16_t, uint16_t, 2, 1>,
-              DSPLIB_peakAbsoluteValue_exec_ci<int16_t, uint16_t>}};
-         pKerPrivArgs->execute = execVariants[pKerPrivArgs->height & 1][variantIdx];
-         status = DSPLIB_peakAbsoluteValue_init_ci<int16_t>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+              DSPLIB_peakAbsoluteValue_exec_ci<int16_t, uint16_t>},
+             /* transposed */
+             {DSPLIB_peakAbsoluteValue_transposed_exec_ci<int16_t>, NULL, NULL}};
+         execVariants = execTable;
+         status       = DSPLIB_peakAbsoluteValue_init_ci<int16_t>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
       }
       else if (bufParamsIn->data_type == DSPLIB_INT32) {
-         pFxnDSPLIB_peakAbsoluteValue_exec execVariants[2][3] = {
+         static const pFxnDSPLIB_peakAbsoluteValue_exec execTable[3][3] = {
+             /* even number of rows */
              {DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int32_t, uint32_t, 1, 0>,
               DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int32_t, uint32_t, 2, 0>,
               DSPLIB_peakAbsoluteValue_exec_ci<int32_t, uint32_t>},
+             /* odd number of rows */
              {DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int32_t, uint32_t, 1, 1>,
               DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int32_t, uint32_t, 2, 1>,
-              DSPLIB_peakAbsoluteValue_exec_ci<int32_t, uint32_t>}};
-         pKerPrivArgs->execute = execVariants[pKerPrivArgs->height & 1][variantIdx];
-         status = DSPLIB_peakAbsoluteValue_init_ci<int32_t>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+              DSPLIB_peakAbsoluteValue_exec_ci<int32_t, uint32_t>},
+             /* transposed */
+             {DSPLIB_peakAbsoluteValue_transposed_exec_ci<int32_t>, NULL, NULL}};
+         execVariants = execTable;
+         status       = DSPLIB_peakAbsoluteValue_init_ci<int32_t>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
       }
       else if (bufParamsIn->data_type == DSPLIB_INT64) {
-         pFxnDSPLIB_peakAbsoluteValue_exec execVariants[2][3] = {
+         static const pFxnDSPLIB_peakAbsoluteValue_exec execTable[3][3] = {
+             /* even number of rows */
              {DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int64_t, uint64_t, 1, 0>,
               DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int64_t, uint64_t, 2, 0>,
               DSPLIB_peakAbsoluteValue_exec_ci<int64_t, uint64_t>},
+             /* odd number of rows */
              {DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int64_t, uint64_t, 1, 1>,
               DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<int64_t, uint64_t, 2, 1>,
-              DSPLIB_peakAbsoluteValue_exec_ci<int64_t, uint64_t>}};
-         pKerPrivArgs->execute = execVariants[pKerPrivArgs->height & 1][variantIdx];
-         status = DSPLIB_peakAbsoluteValue_init_ci<int64_t>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+              DSPLIB_peakAbsoluteValue_exec_ci<int64_t, uint64_t>},
+             /* transposed */
+             {DSPLIB_peakAbsoluteValue_transposed_exec_ci<int64_t>, NULL, NULL}};
+         execVariants = execTable;
+         status       = DSPLIB_peakAbsoluteValue_init_ci<int64_t>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
       }
       else if (bufParamsIn->data_type == DSPLIB_FLOAT32) {
-#if DSPLIB_DEBUGPRINT
-         printf("DSPLIB_DEBUGPRINT bufParamsIn->data_type == DSPLIB_FLOAT32\n");
-#endif
-         pFxnDSPLIB_peakAbsoluteValue_exec execVariants[2][3] = {
+         static const pFxnDSPLIB_peakAbsoluteValue_exec execTable[3][3] = {
+             /* even number of rows */
              {DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<float, uint32_t, 1, 0>,
               DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<float, uint32_t, 2, 0>,
               DSPLIB_peakAbsoluteValue_exec_ci<float, uint32_t>},
+             /* odd number of rows */
              {DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<float, uint32_t, 1, 1>,
               DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<float, uint32_t, 2, 1>,
-              DSPLIB_peakAbsoluteValue_exec_ci<float, uint32_t>}};
-         pKerPrivArgs->execute = execVariants[pKerPrivArgs->height & 1][variantIdx];
-         status = DSPLIB_peakAbsoluteValue_init_ci<float>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+              DSPLIB_peakAbsoluteValue_exec_ci<float, uint32_t>},
+             /* transposed */
+             {DSPLIB_peakAbsoluteValue_transposed_exec_ci<float>, NULL, NULL}};
+         execVariants = execTable;
+         status       = DSPLIB_peakAbsoluteValue_init_ci<float>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
       }
       else if (bufParamsIn->data_type == DSPLIB_FLOAT64) {
-         pFxnDSPLIB_peakAbsoluteValue_exec execVariants[2][3] = {
+         static const pFxnDSPLIB_peakAbsoluteValue_exec execTable[3][3] = {
+             /* even number of rows */
              {DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<double, uint64_t, 1, 0>,
               DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<double, uint64_t, 2, 0>,
               DSPLIB_peakAbsoluteValue_exec_ci<double, uint64_t>},
+             /* odd number of rows */
              {DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<double, uint64_t, 1, 1>,
               DSPLIB_peakAbsoluteValue_rowPerIteration_exec_ci<double, uint64_t, 2, 1>,
-              DSPLIB_peakAbsoluteValue_exec_ci<double, uint64_t>}};
-         pKerPrivArgs->execute = execVariants[pKerPrivArgs->height & 1][variantIdx];
-         status = DSPLIB_peakAbsoluteValue_init_ci<double>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
+              DSPLIB_peakAbsoluteValue_exec_ci<double, uint64_t>},
+             /* transposed */
+             {DSPLIB_peakAbsoluteValue_transposed_exec_ci<double>, NULL, NULL}};
+         execVariants = execTable;
+         status       = DSPLIB_peakAbsoluteValue_init_ci<double>(handle, bufParamsIn, bufParamsOut, pKerInitArgs);
       }
       else {
          status = DSPLIB_ERR_INVALID_TYPE;
+      }
+
+      if (status == DSPLIB_SUCCESS) {
+         int32_t tableRow = (pKerPrivArgs->transposed == 1) ? 2 : (pKerPrivArgs->height & 1);
+         int32_t tableCol = (pKerPrivArgs->transposed == 1) ? 0 : variantIdx;
+
+         pKerPrivArgs->execute = execVariants[tableRow][tableCol];
       }
    }
 #if DSPLIB_DEBUGPRINT

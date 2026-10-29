@@ -501,6 +501,126 @@
 #include "test_data/staticRefCase128.h"
 #endif
 
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 218))
+#include "test_data/staticRefCase218.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 219))
+#include "test_data/staticRefCase219.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 223))
+#include "test_data/staticRefCase223.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 224))
+#include "test_data/staticRefCase224.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 225))
+#include "test_data/staticRefCase225.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 228))
+#include "test_data/staticRefCase228.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 229))
+#include "test_data/staticRefCase229.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 233))
+#include "test_data/staticRefCase233.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 234))
+#include "test_data/staticRefCase234.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 235))
+#include "test_data/staticRefCase235.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 238))
+#include "test_data/staticRefCase238.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 239))
+#include "test_data/staticRefCase239.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 243))
+#include "test_data/staticRefCase243.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 244))
+#include "test_data/staticRefCase244.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 245))
+#include "test_data/staticRefCase245.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 248))
+#include "test_data/staticRefCase248.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 249))
+#include "test_data/staticRefCase249.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 253))
+#include "test_data/staticRefCase253.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 254))
+#include "test_data/staticRefCase254.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 255))
+#include "test_data/staticRefCase255.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 258))
+#include "test_data/staticRefCase258.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 259))
+#include "test_data/staticRefCase259.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 263))
+#include "test_data/staticRefCase263.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 264))
+#include "test_data/staticRefCase264.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 265))
+#include "test_data/staticRefCase265.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 268))
+#include "test_data/staticRefCase268.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 269))
+#include "test_data/staticRefCase269.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 273))
+#include "test_data/staticRefCase273.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 274))
+#include "test_data/staticRefCase274.h"
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 275))
+#include "test_data/staticRefCase275.h"
+#endif
+
 static DSPLIB_peakAbsoluteValue_testParams_t testParams[] = {
 /*
  testPattern,
@@ -3737,6 +3857,951 @@ static DSPLIB_peakAbsoluteValue_testParams_t testParams[] = {
     DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
     1,                                                // numReps
     215                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 216))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT8,                                      // dataType
+    256,                                              // width
+    8,                                                // height (channels)
+    256,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    216                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 217))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT8,                                      // dataType
+    100,                                              // width
+    9,                                                // height (channels)
+    100,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    217                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 218))
+   {
+    5,
+    (void *) staticRefInCase218,                      // staticIn
+    (void *) staticRefOutCase218,                     // staticOut
+    DSPLIB_INT8,                                      // dataType
+    257,                                              // width
+    23,                                               // height (channels)
+    260,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    218                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 219))
+   {
+    5,
+    (void *) staticRefInCase219,                      // staticIn
+    (void *) staticRefOutCase219,                     // staticOut
+    DSPLIB_INT8,                                      // dataType
+    2049,                                             // width
+    16,                                               // height (channels)
+    2052,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    219                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 220))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT8,                                      // dataType
+    512,                                              // width
+    7,                                                // height (channels)
+    512,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    220                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 221))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT8,                                      // dataType
+    100,                                              // width
+    19,                                               // height (channels)
+    108,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    221                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 222))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT8,                                      // dataType
+    129,                                              // width
+    17,                                               // height (channels)
+    129,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    222                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 223))
+   {
+    5,
+    (void *) staticRefInCase223,                      // staticIn
+    (void *) staticRefOutCase223,                     // staticOut
+    DSPLIB_INT8,                                      // dataType
+    29,                                               // width
+    8,                                                // height (channels)
+    32,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    223                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 224))
+   {
+    5,
+    (void *) staticRefInCase224,                      // staticIn
+    (void *) staticRefOutCase224,                     // staticOut
+    DSPLIB_INT8,                                      // dataType
+    28,                                               // width
+    16,                                               // height (channels)
+    28,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    224                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 225))
+   {
+    5,
+    (void *) staticRefInCase225,                      // staticIn
+    (void *) staticRefOutCase225,                     // staticOut
+    DSPLIB_INT8,                                      // dataType
+    32,                                               // width
+    16,                                               // height (channels)
+    32,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    225                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 226))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT16,                                     // dataType
+    256,                                              // width
+    8,                                                // height (channels)
+    512,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    226                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 227))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT16,                                     // dataType
+    100,                                              // width
+    9,                                                // height (channels)
+    200,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    227                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 228))
+   {
+    5,
+    (void *) staticRefInCase228,                      // staticIn
+    (void *) staticRefOutCase228,                     // staticOut
+    DSPLIB_INT16,                                     // dataType
+    257,                                              // width
+    23,                                               // height (channels)
+    520,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    228                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 229))
+   {
+    5,
+    (void *) staticRefInCase229,                      // staticIn
+    (void *) staticRefOutCase229,                     // staticOut
+    DSPLIB_INT16,                                     // dataType
+    2049,                                             // width
+    16,                                               // height (channels)
+    4104,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    229                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 230))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT16,                                     // dataType
+    512,                                              // width
+    7,                                                // height (channels)
+    1024,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    230                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 231))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT16,                                     // dataType
+    100,                                              // width
+    19,                                               // height (channels)
+    216,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    231                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 232))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT16,                                     // dataType
+    129,                                              // width
+    17,                                               // height (channels)
+    258,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    232                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 233))
+   {
+    5,
+    (void *) staticRefInCase233,                      // staticIn
+    (void *) staticRefOutCase233,                     // staticOut
+    DSPLIB_INT16,                                     // dataType
+    29,                                               // width
+    8,                                                // height (channels)
+    64,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    233                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 234))
+   {
+    5,
+    (void *) staticRefInCase234,                      // staticIn
+    (void *) staticRefOutCase234,                     // staticOut
+    DSPLIB_INT16,                                     // dataType
+    14,                                               // width
+    16,                                               // height (channels)
+    32,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    234                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 235))
+   {
+    5,
+    (void *) staticRefInCase235,                      // staticIn
+    (void *) staticRefOutCase235,                     // staticOut
+    DSPLIB_INT16,                                     // dataType
+    16,                                               // width
+    16,                                               // height (channels)
+    32,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    235                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 236))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT32,                                     // dataType
+    256,                                              // width
+    8,                                                // height (channels)
+    1024,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    236                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 237))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT32,                                     // dataType
+    100,                                              // width
+    9,                                                // height (channels)
+    400,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    237                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 238))
+   {
+    5,
+    (void *) staticRefInCase238,                      // staticIn
+    (void *) staticRefOutCase238,                     // staticOut
+    DSPLIB_INT32,                                     // dataType
+    257,                                              // width
+    23,                                               // height (channels)
+    1028,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    238                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 239))
+   {
+    5,
+    (void *) staticRefInCase239,                      // staticIn
+    (void *) staticRefOutCase239,                     // staticOut
+    DSPLIB_INT32,                                     // dataType
+    2049,                                             // width
+    16,                                               // height (channels)
+    8196,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    239                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 240))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT32,                                     // dataType
+    512,                                              // width
+    7,                                                // height (channels)
+    2048,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    240                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 241))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT32,                                     // dataType
+    100,                                              // width
+    19,                                               // height (channels)
+    432,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    241                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 242))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT32,                                     // dataType
+    129,                                              // width
+    17,                                               // height (channels)
+    516,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    242                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 243))
+   {
+    5,
+    (void *) staticRefInCase243,                      // staticIn
+    (void *) staticRefOutCase243,                     // staticOut
+    DSPLIB_INT32,                                     // dataType
+    29,                                               // width
+    8,                                                // height (channels)
+    116,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    243                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 244))
+   {
+    5,
+    (void *) staticRefInCase244,                      // staticIn
+    (void *) staticRefOutCase244,                     // staticOut
+    DSPLIB_INT32,                                     // dataType
+    7,                                                // width
+    16,                                               // height (channels)
+    28,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    244                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 245))
+   {
+    5,
+    (void *) staticRefInCase245,                      // staticIn
+    (void *) staticRefOutCase245,                     // staticOut
+    DSPLIB_INT32,                                     // dataType
+    8,                                                // width
+    16,                                               // height (channels)
+    32,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    245                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 246))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT64,                                     // dataType
+    256,                                              // width
+    4,                                                // height (channels)
+    2048,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    246                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 247))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT64,                                     // dataType
+    100,                                              // width
+    5,                                                // height (channels)
+    800,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    247                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 248))
+   {
+    5,
+    (void *) staticRefInCase248,                      // staticIn
+    (void *) staticRefOutCase248,                     // staticOut
+    DSPLIB_INT64,                                     // dataType
+    257,                                              // width
+    11,                                               // height (channels)
+    2056,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    248                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 249))
+   {
+    5,
+    (void *) staticRefInCase249,                      // staticIn
+    (void *) staticRefOutCase249,                     // staticOut
+    DSPLIB_INT64,                                     // dataType
+    2049,                                             // width
+    8,                                                // height (channels)
+    16392,                                            // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    249                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 250))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT64,                                     // dataType
+    512,                                              // width
+    3,                                                // height (channels)
+    4096,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    250                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 251))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT64,                                     // dataType
+    100,                                              // width
+    11,                                               // height (channels)
+    864,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    251                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 252))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT64,                                     // dataType
+    129,                                              // width
+    17,                                               // height (channels)
+    1032,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    252                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 253))
+   {
+    5,
+    (void *) staticRefInCase253,                      // staticIn
+    (void *) staticRefOutCase253,                     // staticOut
+    DSPLIB_INT64,                                     // dataType
+    29,                                               // width
+    4,                                                // height (channels)
+    232,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    253                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 254))
+   {
+    5,
+    (void *) staticRefInCase254,                      // staticIn
+    (void *) staticRefOutCase254,                     // staticOut
+    DSPLIB_INT64,                                     // dataType
+    7,                                                // width
+    8,                                                // height (channels)
+    56,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    254                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 255))
+   {
+    5,
+    (void *) staticRefInCase255,                      // staticIn
+    (void *) staticRefOutCase255,                     // staticOut
+    DSPLIB_INT64,                                     // dataType
+    8,                                                // width
+    8,                                                // height (channels)
+    64,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    255                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 256))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_FLOAT32,                                   // dataType
+    256,                                              // width
+    8,                                                // height (channels)
+    1024,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    256                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 257))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_FLOAT32,                                   // dataType
+    100,                                              // width
+    9,                                                // height (channels)
+    400,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    257                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 258))
+   {
+    5,
+    (void *) staticRefInCase258,                      // staticIn
+    (void *) staticRefOutCase258,                     // staticOut
+    DSPLIB_FLOAT32,                                   // dataType
+    257,                                              // width
+    23,                                               // height (channels)
+    1028,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    258                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 259))
+   {
+    5,
+    (void *) staticRefInCase259,                      // staticIn
+    (void *) staticRefOutCase259,                     // staticOut
+    DSPLIB_FLOAT32,                                   // dataType
+    2049,                                             // width
+    16,                                               // height (channels)
+    8196,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    259                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 260))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_FLOAT32,                                   // dataType
+    512,                                              // width
+    7,                                                // height (channels)
+    2048,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    260                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 261))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_FLOAT32,                                   // dataType
+    100,                                              // width
+    19,                                               // height (channels)
+    432,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    261                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 262))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_FLOAT32,                                   // dataType
+    129,                                              // width
+    17,                                               // height (channels)
+    516,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    262                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 263))
+   {
+    5,
+    (void *) staticRefInCase263,                      // staticIn
+    (void *) staticRefOutCase263,                     // staticOut
+    DSPLIB_FLOAT32,                                   // dataType
+    29,                                               // width
+    8,                                                // height (channels)
+    116,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    263                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 264))
+   {
+    5,
+    (void *) staticRefInCase264,                      // staticIn
+    (void *) staticRefOutCase264,                     // staticOut
+    DSPLIB_FLOAT32,                                   // dataType
+    7,                                                // width
+    16,                                               // height (channels)
+    28,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    264                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 265))
+   {
+    5,
+    (void *) staticRefInCase265,                      // staticIn
+    (void *) staticRefOutCase265,                     // staticOut
+    DSPLIB_FLOAT32,                                   // dataType
+    8,                                                // width
+    16,                                               // height (channels)
+    32,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    265                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 266))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_FLOAT64,                                   // dataType
+    256,                                              // width
+    4,                                                // height (channels)
+    2048,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    266                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 267))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_FLOAT64,                                   // dataType
+    100,                                              // width
+    5,                                                // height (channels)
+    800,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    267                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 268))
+   {
+    5,
+    (void *) staticRefInCase268,                      // staticIn
+    (void *) staticRefOutCase268,                     // staticOut
+    DSPLIB_FLOAT64,                                   // dataType
+    257,                                              // width
+    11,                                               // height (channels)
+    2056,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    268                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 269))
+   {
+    5,
+    (void *) staticRefInCase269,                      // staticIn
+    (void *) staticRefOutCase269,                     // staticOut
+    DSPLIB_FLOAT64,                                   // dataType
+    2049,                                             // width
+    8,                                                // height (channels)
+    16392,                                            // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    269                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 270))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_FLOAT64,                                   // dataType
+    512,                                              // width
+    3,                                                // height (channels)
+    4096,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    270                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 271))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_FLOAT64,                                   // dataType
+    100,                                              // width
+    11,                                               // height (channels)
+    864,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    271                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 272))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_FLOAT64,                                   // dataType
+    129,                                              // width
+    17,                                               // height (channels)
+    1032,                                             // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    272                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 273))
+   {
+    5,
+    (void *) staticRefInCase273,                      // staticIn
+    (void *) staticRefOutCase273,                     // staticOut
+    DSPLIB_FLOAT64,                                   // dataType
+    29,                                               // width
+    4,                                                // height (channels)
+    232,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    273                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 274))
+   {
+    5,
+    (void *) staticRefInCase274,                      // staticIn
+    (void *) staticRefOutCase274,                     // staticOut
+    DSPLIB_FLOAT64,                                   // dataType
+    7,                                                // width
+    8,                                                // height (channels)
+    56,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    274                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 275))
+   {
+    5,
+    (void *) staticRefInCase275,                      // staticIn
+    (void *) staticRefOutCase275,                     // staticOut
+    DSPLIB_FLOAT64,                                   // dataType
+    8,                                                // width
+    8,                                                // height (channels)
+    64,                                               // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    275                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 276))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT8,                                      // dataType
+    100,                                              // width
+    2,                                                // height (channels)
+    100,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    276                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 277))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_INT64,                                     // dataType
+    13,                                               // width
+    2,                                                // height (channels)
+    104,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    277                                               // testID
+    },
+#endif
+
+#if (defined(ALL_TEST_CASES) || (TEST_CASE == 278))
+   {
+    3,
+    (void *) NULL,                                    // staticIn
+    (void *) NULL,                                    // staticOut
+    DSPLIB_FLOAT64,                                   // dataType
+    13,                                               // width
+    2,                                                // height (channels)
+    104,                                              // strideIn (bytes)
+    DSPLIB_TEST_OUTPUT_MSMC,                          // outputDataLocation
+    1,                                                // numReps
+    278                                               // testID
     },
 #endif
 
