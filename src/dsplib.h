@@ -10,6 +10,7 @@
 #include "DSPLIB_addConstant/DSPLIB_addConstant.h"
 #include "DSPLIB_addNCh/DSPLIB_addNCh.h"
 #include "DSPLIB_bexp/DSPLIB_bexp.h"
+#include "DSPLIB_binaryLogicGate/DSPLIB_binaryLogicGate.h"
 #include "DSPLIB_bitwiseANDConst/DSPLIB_bitwiseANDConst.h"
 #include "DSPLIB_blkCopy2D/DSPLIB_blkCopy2D.h"
 #include "DSPLIB_blkCopyConst2D/DSPLIB_blkCopyConst2D.h"
