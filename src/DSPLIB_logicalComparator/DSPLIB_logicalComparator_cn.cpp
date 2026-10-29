@@ -4,17 +4,57 @@
 
 #include "DSPLIB_logicalComparator_priv.h"
 #include <cstdint>
+#include <type_traits>
+
+// Define the compare templates (tag dispatch on opType)
+template <uint32_t opType> using opTagCn = std::integral_constant<uint32_t, opType>;
 
 template <typename dataTypeIn, typename dataTypeOut>
-DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn(DSPLIB_kernelHandle handle,
-                                                  void *restrict pIn0,
-                                                  void *restrict pIn1,
-                                                  void *restrict pOut)
+inline dataTypeOut logicalComparator_op_cn(opTagCn<DSPLIB_LOGICALCOMPARATOR_EQ>, dataTypeIn a, dataTypeIn b)
+{
+   return a == b;
+}
+
+template <typename dataTypeIn, typename dataTypeOut>
+inline dataTypeOut logicalComparator_op_cn(opTagCn<DSPLIB_LOGICALCOMPARATOR_NE>, dataTypeIn a, dataTypeIn b)
+{
+   return a != b;
+}
+
+template <typename dataTypeIn, typename dataTypeOut>
+inline dataTypeOut logicalComparator_op_cn(opTagCn<DSPLIB_LOGICALCOMPARATOR_LT>, dataTypeIn a, dataTypeIn b)
+{
+   return a < b;
+}
+
+template <typename dataTypeIn, typename dataTypeOut>
+inline dataTypeOut logicalComparator_op_cn(opTagCn<DSPLIB_LOGICALCOMPARATOR_LE>, dataTypeIn a, dataTypeIn b)
+{
+   return a <= b;
+}
+
+template <typename dataTypeIn, typename dataTypeOut>
+inline dataTypeOut logicalComparator_op_cn(opTagCn<DSPLIB_LOGICALCOMPARATOR_GT>, dataTypeIn a, dataTypeIn b)
+{
+   return a > b;
+}
+
+template <typename dataTypeIn, typename dataTypeOut>
+inline dataTypeOut logicalComparator_op_cn(opTagCn<DSPLIB_LOGICALCOMPARATOR_GE>, dataTypeIn a, dataTypeIn b)
+{
+   return a >= b;
+}
+
+template <typename dataTypeIn, typename dataTypeOut, uint32_t opType>
+DSPLIB_STATUS DSPLIB_logicalComparator_exec_cn(DSPLIB_kernelHandle handle,
+                                               void *restrict pIn0,
+                                               void *restrict pIn1,
+                                               void *restrict pOut)
 {
    DSPLIB_STATUS                      status       = DSPLIB_SUCCESS;
    DSPLIB_logicalComparator_PrivArgs *pKerPrivArgs = (DSPLIB_logicalComparator_PrivArgs *) handle;
 
-   DSPLIB_DEBUGPRINTFN(0, "%s\n", "Enter DSPLIB_logicalComparator_eq_exec_cn");
+   DSPLIB_DEBUGPRINTFN(0, "%s\n", "Enter DSPLIB_logicalComparator_exec_cn");
 
    dataTypeIn *restrict pIn0Local  = (dataTypeIn *) pIn0;
    dataTypeIn *restrict pIn1Local  = (dataTypeIn *) pIn1;
@@ -27,454 +67,370 @@ DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn(DSPLIB_kernelHandle handle,
 
    for (uint32_t m = 0; m < dim_y; m++) {
       for (uint32_t n = 0; n < dim_x; n++) {
-         pOutLocal[m * strideOut + n] = pIn0Local[m * strideIn + n] == pIn1Local[m * strideIn + n];
+         pOutLocal[m * strideOut + n] = logicalComparator_op_cn<dataTypeIn, dataTypeOut>(
+             opTagCn<opType>(), pIn0Local[m * strideIn + n], pIn1Local[m * strideIn + n]);
       }
    }
 
    return status;
 }
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn<int8_t, uint8_t>(DSPLIB_kernelHandle handle,
-                                                                            void *restrict pIn0,
-                                                                            void *restrict pIn1,
-                                                                            void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn<uint8_t, uint8_t>(DSPLIB_kernelHandle handle,
-                                                                             void *restrict pIn0,
-                                                                             void *restrict pIn1,
-                                                                             void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn<int16_t, uint16_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn<uint16_t, uint16_t>(DSPLIB_kernelHandle handle,
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_EQ>(DSPLIB_kernelHandle handle,
                                                                                void *restrict pIn0,
                                                                                void *restrict pIn1,
                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn<int32_t, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn<uint32_t, uint32_t>(DSPLIB_kernelHandle handle,
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_NE>(DSPLIB_kernelHandle handle,
                                                                                void *restrict pIn0,
                                                                                void *restrict pIn1,
                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn<int64_t, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn<uint64_t, uint64_t>(DSPLIB_kernelHandle handle,
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_LT>(DSPLIB_kernelHandle handle,
                                                                                void *restrict pIn0,
                                                                                void *restrict pIn1,
                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn<float, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                            void *restrict pIn0,
-                                                                            void *restrict pIn1,
-                                                                            void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn<double, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                             void *restrict pIn0,
-                                                                             void *restrict pIn1,
-                                                                             void *restrict pOut);
-
-template <typename dataTypeIn, typename dataTypeOut>
-DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_cn(DSPLIB_kernelHandle handle,
-                                                  void *restrict pIn0,
-                                                  void *restrict pIn1,
-                                                  void *restrict pOut)
-{
-   DSPLIB_STATUS                      status       = DSPLIB_SUCCESS;
-   DSPLIB_logicalComparator_PrivArgs *pKerPrivArgs = (DSPLIB_logicalComparator_PrivArgs *) handle;
-
-   DSPLIB_DEBUGPRINTFN(0, "%s\n", "Enter DSPLIB_logicalComparator_ne_exec_cn");
-
-   dataTypeIn *restrict pIn0Local  = (dataTypeIn *) pIn0;
-   dataTypeIn *restrict pIn1Local  = (dataTypeIn *) pIn1;
-   dataTypeOut *restrict pOutLocal = (dataTypeOut *) pOut;
-
-   uint32_t dim_x     = pKerPrivArgs->dim_x;
-   uint32_t dim_y     = pKerPrivArgs->dim_y;
-   int32_t  strideIn  = pKerPrivArgs->strideIn;
-   int32_t  strideOut = pKerPrivArgs->strideOut;
-
-   for (uint32_t m = 0; m < dim_y; m++) {
-      for (uint32_t n = 0; n < dim_x; n++) {
-         pOutLocal[m * strideOut + n] = pIn0Local[m * strideIn + n] != pIn1Local[m * strideIn + n];
-      }
-   }
-
-   return status;
-}
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_cn<int8_t, uint8_t>(DSPLIB_kernelHandle handle,
-                                                                            void *restrict pIn0,
-                                                                            void *restrict pIn1,
-                                                                            void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_cn<uint8_t, uint8_t>(DSPLIB_kernelHandle handle,
-                                                                             void *restrict pIn0,
-                                                                             void *restrict pIn1,
-                                                                             void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_cn<int16_t, uint16_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_cn<uint16_t, uint16_t>(DSPLIB_kernelHandle handle,
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_LE>(DSPLIB_kernelHandle handle,
                                                                                void *restrict pIn0,
                                                                                void *restrict pIn1,
                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_cn<int32_t, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_cn<uint32_t, uint32_t>(DSPLIB_kernelHandle handle,
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_GT>(DSPLIB_kernelHandle handle,
                                                                                void *restrict pIn0,
                                                                                void *restrict pIn1,
                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_cn<int64_t, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_cn<uint64_t, uint64_t>(DSPLIB_kernelHandle handle,
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_GE>(DSPLIB_kernelHandle handle,
                                                                                void *restrict pIn0,
                                                                                void *restrict pIn1,
                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_cn<float, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                            void *restrict pIn0,
-                                                                            void *restrict pIn1,
-                                                                            void *restrict pOut);
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_EQ>(DSPLIB_kernelHandle handle,
+                                                                                void *restrict pIn0,
+                                                                                void *restrict pIn1,
+                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_cn<double, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                             void *restrict pIn0,
-                                                                             void *restrict pIn1,
-                                                                             void *restrict pOut);
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_NE>(DSPLIB_kernelHandle handle,
+                                                                                void *restrict pIn0,
+                                                                                void *restrict pIn1,
+                                                                                void *restrict pOut);
 
-template <typename dataTypeIn, typename dataTypeOut>
-DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_cn(DSPLIB_kernelHandle handle,
-                                                  void *restrict pIn0,
-                                                  void *restrict pIn1,
-                                                  void *restrict pOut)
-{
-   DSPLIB_STATUS                      status       = DSPLIB_SUCCESS;
-   DSPLIB_logicalComparator_PrivArgs *pKerPrivArgs = (DSPLIB_logicalComparator_PrivArgs *) handle;
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_LT>(DSPLIB_kernelHandle handle,
+                                                                                void *restrict pIn0,
+                                                                                void *restrict pIn1,
+                                                                                void *restrict pOut);
 
-   DSPLIB_DEBUGPRINTFN(0, "%s\n", "Enter DSPLIB_logicalComparator_lt_exec_cn");
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_LE>(DSPLIB_kernelHandle handle,
+                                                                                void *restrict pIn0,
+                                                                                void *restrict pIn1,
+                                                                                void *restrict pOut);
 
-   dataTypeIn *restrict pIn0Local  = (dataTypeIn *) pIn0;
-   dataTypeIn *restrict pIn1Local  = (dataTypeIn *) pIn1;
-   dataTypeOut *restrict pOutLocal = (dataTypeOut *) pOut;
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_GT>(DSPLIB_kernelHandle handle,
+                                                                                void *restrict pIn0,
+                                                                                void *restrict pIn1,
+                                                                                void *restrict pOut);
 
-   uint32_t dim_x     = pKerPrivArgs->dim_x;
-   uint32_t dim_y     = pKerPrivArgs->dim_y;
-   int32_t  strideIn  = pKerPrivArgs->strideIn;
-   int32_t  strideOut = pKerPrivArgs->strideOut;
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_GE>(DSPLIB_kernelHandle handle,
+                                                                                void *restrict pIn0,
+                                                                                void *restrict pIn1,
+                                                                                void *restrict pOut);
 
-   for (uint32_t m = 0; m < dim_y; m++) {
-      for (uint32_t n = 0; n < dim_x; n++) {
-         pOutLocal[m * strideOut + n] = pIn0Local[m * strideIn + n] < pIn1Local[m * strideIn + n];
-      }
-   }
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_EQ>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
 
-   return status;
-}
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_NE>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_cn<int8_t, uint8_t>(DSPLIB_kernelHandle handle,
-                                                                            void *restrict pIn0,
-                                                                            void *restrict pIn1,
-                                                                            void *restrict pOut);
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_LT>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_cn<uint8_t, uint8_t>(DSPLIB_kernelHandle handle,
-                                                                             void *restrict pIn0,
-                                                                             void *restrict pIn1,
-                                                                             void *restrict pOut);
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_LE>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_cn<int16_t, uint16_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_GT>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_cn<uint16_t, uint16_t>(DSPLIB_kernelHandle handle,
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_GE>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_EQ>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_NE>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_LT>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_LE>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_GT>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_GE>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_EQ>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_NE>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_LT>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_LE>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_GT>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_GE>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_EQ>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_NE>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_LT>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_LE>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_GT>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_GE>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_EQ>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_NE>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_LT>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_LE>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_GT>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_GE>(DSPLIB_kernelHandle handle,
+                                                                                 void *restrict pIn0,
+                                                                                 void *restrict pIn1,
+                                                                                 void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_EQ>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_NE>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_LT>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_LE>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_GT>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_GE>(DSPLIB_kernelHandle handle,
+                                                                                  void *restrict pIn0,
+                                                                                  void *restrict pIn1,
+                                                                                  void *restrict pOut);
+
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_EQ>(DSPLIB_kernelHandle handle,
                                                                                void *restrict pIn0,
                                                                                void *restrict pIn1,
                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_cn<int32_t, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_cn<uint32_t, uint32_t>(DSPLIB_kernelHandle handle,
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_NE>(DSPLIB_kernelHandle handle,
                                                                                void *restrict pIn0,
                                                                                void *restrict pIn1,
                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_cn<int64_t, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_cn<uint64_t, uint64_t>(DSPLIB_kernelHandle handle,
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_LT>(DSPLIB_kernelHandle handle,
                                                                                void *restrict pIn0,
                                                                                void *restrict pIn1,
                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_cn<float, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                            void *restrict pIn0,
-                                                                            void *restrict pIn1,
-                                                                            void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_cn<double, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                             void *restrict pIn0,
-                                                                             void *restrict pIn1,
-                                                                             void *restrict pOut);
-
-template <typename dataTypeIn, typename dataTypeOut>
-DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_cn(DSPLIB_kernelHandle handle,
-                                                  void *restrict pIn0,
-                                                  void *restrict pIn1,
-                                                  void *restrict pOut)
-{
-   DSPLIB_STATUS                      status       = DSPLIB_SUCCESS;
-   DSPLIB_logicalComparator_PrivArgs *pKerPrivArgs = (DSPLIB_logicalComparator_PrivArgs *) handle;
-
-   DSPLIB_DEBUGPRINTFN(0, "%s\n", "Enter DSPLIB_logicalComparator_le_exec_cn");
-
-   dataTypeIn *restrict pIn0Local  = (dataTypeIn *) pIn0;
-   dataTypeIn *restrict pIn1Local  = (dataTypeIn *) pIn1;
-   dataTypeOut *restrict pOutLocal = (dataTypeOut *) pOut;
-
-   uint32_t dim_x     = pKerPrivArgs->dim_x;
-   uint32_t dim_y     = pKerPrivArgs->dim_y;
-   int32_t  strideIn  = pKerPrivArgs->strideIn;
-   int32_t  strideOut = pKerPrivArgs->strideOut;
-
-   for (uint32_t m = 0; m < dim_y; m++) {
-      for (uint32_t n = 0; n < dim_x; n++) {
-         pOutLocal[m * strideOut + n] = pIn0Local[m * strideIn + n] <= pIn1Local[m * strideIn + n];
-      }
-   }
-
-   return status;
-}
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_cn<int8_t, uint8_t>(DSPLIB_kernelHandle handle,
-                                                                            void *restrict pIn0,
-                                                                            void *restrict pIn1,
-                                                                            void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_cn<uint8_t, uint8_t>(DSPLIB_kernelHandle handle,
-                                                                             void *restrict pIn0,
-                                                                             void *restrict pIn1,
-                                                                             void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_cn<int16_t, uint16_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_cn<uint16_t, uint16_t>(DSPLIB_kernelHandle handle,
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_LE>(DSPLIB_kernelHandle handle,
                                                                                void *restrict pIn0,
                                                                                void *restrict pIn1,
                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_cn<int32_t, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_cn<uint32_t, uint32_t>(DSPLIB_kernelHandle handle,
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_GT>(DSPLIB_kernelHandle handle,
                                                                                void *restrict pIn0,
                                                                                void *restrict pIn1,
                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_cn<int64_t, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_cn<uint64_t, uint64_t>(DSPLIB_kernelHandle handle,
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_GE>(DSPLIB_kernelHandle handle,
                                                                                void *restrict pIn0,
                                                                                void *restrict pIn1,
                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_cn<float, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                            void *restrict pIn0,
-                                                                            void *restrict pIn1,
-                                                                            void *restrict pOut);
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_EQ>(DSPLIB_kernelHandle handle,
+                                                                                void *restrict pIn0,
+                                                                                void *restrict pIn1,
+                                                                                void *restrict pOut);
 
-template DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_cn<double, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                             void *restrict pIn0,
-                                                                             void *restrict pIn1,
-                                                                             void *restrict pOut);
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_NE>(DSPLIB_kernelHandle handle,
+                                                                                void *restrict pIn0,
+                                                                                void *restrict pIn1,
+                                                                                void *restrict pOut);
 
-template <typename dataTypeIn, typename dataTypeOut>
-DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_cn(DSPLIB_kernelHandle handle,
-                                                  void *restrict pIn0,
-                                                  void *restrict pIn1,
-                                                  void *restrict pOut)
-{
-   DSPLIB_STATUS                      status       = DSPLIB_SUCCESS;
-   DSPLIB_logicalComparator_PrivArgs *pKerPrivArgs = (DSPLIB_logicalComparator_PrivArgs *) handle;
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_LT>(DSPLIB_kernelHandle handle,
+                                                                                void *restrict pIn0,
+                                                                                void *restrict pIn1,
+                                                                                void *restrict pOut);
 
-   DSPLIB_DEBUGPRINTFN(0, "%s\n", "Enter DSPLIB_logicalComparator_gt_exec_cn");
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_LE>(DSPLIB_kernelHandle handle,
+                                                                                void *restrict pIn0,
+                                                                                void *restrict pIn1,
+                                                                                void *restrict pOut);
 
-   dataTypeIn *restrict pIn0Local  = (dataTypeIn *) pIn0;
-   dataTypeIn *restrict pIn1Local  = (dataTypeIn *) pIn1;
-   dataTypeOut *restrict pOutLocal = (dataTypeOut *) pOut;
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_GT>(DSPLIB_kernelHandle handle,
+                                                                                void *restrict pIn0,
+                                                                                void *restrict pIn1,
+                                                                                void *restrict pOut);
 
-   uint32_t dim_x     = pKerPrivArgs->dim_x;
-   uint32_t dim_y     = pKerPrivArgs->dim_y;
-   int32_t  strideIn  = pKerPrivArgs->strideIn;
-   int32_t  strideOut = pKerPrivArgs->strideOut;
-
-   for (uint32_t m = 0; m < dim_y; m++) {
-      for (uint32_t n = 0; n < dim_x; n++) {
-         pOutLocal[m * strideOut + n] = pIn0Local[m * strideIn + n] > pIn1Local[m * strideIn + n];
-      }
-   }
-
-   return status;
-}
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_cn<int8_t, uint8_t>(DSPLIB_kernelHandle handle,
-                                                                            void *restrict pIn0,
-                                                                            void *restrict pIn1,
-                                                                            void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_cn<uint8_t, uint8_t>(DSPLIB_kernelHandle handle,
-                                                                             void *restrict pIn0,
-                                                                             void *restrict pIn1,
-                                                                             void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_cn<int16_t, uint16_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_cn<uint16_t, uint16_t>(DSPLIB_kernelHandle handle,
-                                                                               void *restrict pIn0,
-                                                                               void *restrict pIn1,
-                                                                               void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_cn<int32_t, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_cn<uint32_t, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                               void *restrict pIn0,
-                                                                               void *restrict pIn1,
-                                                                               void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_cn<int64_t, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_cn<uint64_t, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                               void *restrict pIn0,
-                                                                               void *restrict pIn1,
-                                                                               void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_cn<float, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                            void *restrict pIn0,
-                                                                            void *restrict pIn1,
-                                                                            void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_cn<double, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                             void *restrict pIn0,
-                                                                             void *restrict pIn1,
-                                                                             void *restrict pOut);
-
-template <typename dataTypeIn, typename dataTypeOut>
-DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_cn(DSPLIB_kernelHandle handle,
-                                                  void *restrict pIn0,
-                                                  void *restrict pIn1,
-                                                  void *restrict pOut)
-{
-   DSPLIB_STATUS                      status       = DSPLIB_SUCCESS;
-   DSPLIB_logicalComparator_PrivArgs *pKerPrivArgs = (DSPLIB_logicalComparator_PrivArgs *) handle;
-
-   DSPLIB_DEBUGPRINTFN(0, "%s\n", "Enter DSPLIB_logicalComparator_ge_exec_cn");
-
-   dataTypeIn *restrict pIn0Local  = (dataTypeIn *) pIn0;
-   dataTypeIn *restrict pIn1Local  = (dataTypeIn *) pIn1;
-   dataTypeOut *restrict pOutLocal = (dataTypeOut *) pOut;
-
-   uint32_t dim_x     = pKerPrivArgs->dim_x;
-   uint32_t dim_y     = pKerPrivArgs->dim_y;
-   int32_t  strideIn  = pKerPrivArgs->strideIn;
-   int32_t  strideOut = pKerPrivArgs->strideOut;
-
-   for (uint32_t m = 0; m < dim_y; m++) {
-      for (uint32_t n = 0; n < dim_x; n++) {
-         pOutLocal[m * strideOut + n] = pIn0Local[m * strideIn + n] >= pIn1Local[m * strideIn + n];
-      }
-   }
-
-   return status;
-}
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_cn<int8_t, uint8_t>(DSPLIB_kernelHandle handle,
-                                                                            void *restrict pIn0,
-                                                                            void *restrict pIn1,
-                                                                            void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_cn<uint8_t, uint8_t>(DSPLIB_kernelHandle handle,
-                                                                             void *restrict pIn0,
-                                                                             void *restrict pIn1,
-                                                                             void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_cn<int16_t, uint16_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_cn<uint16_t, uint16_t>(DSPLIB_kernelHandle handle,
-                                                                               void *restrict pIn0,
-                                                                               void *restrict pIn1,
-                                                                               void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_cn<int32_t, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_cn<uint32_t, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                               void *restrict pIn0,
-                                                                               void *restrict pIn1,
-                                                                               void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_cn<int64_t, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                              void *restrict pIn0,
-                                                                              void *restrict pIn1,
-                                                                              void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_cn<uint64_t, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                               void *restrict pIn0,
-                                                                               void *restrict pIn1,
-                                                                               void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_cn<float, uint32_t>(DSPLIB_kernelHandle handle,
-                                                                            void *restrict pIn0,
-                                                                            void *restrict pIn1,
-                                                                            void *restrict pOut);
-
-template DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_cn<double, uint64_t>(DSPLIB_kernelHandle handle,
-                                                                             void *restrict pIn0,
-                                                                             void *restrict pIn1,
-                                                                             void *restrict pOut);
+template DSPLIB_STATUS
+DSPLIB_logicalComparator_exec_cn<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_GE>(DSPLIB_kernelHandle handle,
+                                                                                void *restrict pIn0,
+                                                                                void *restrict pIn1,
+                                                                                void *restrict pOut);

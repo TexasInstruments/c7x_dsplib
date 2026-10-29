@@ -32,7 +32,7 @@ typedef DSPLIB_STATUS (*pFxnDSPLIB_logicalComparator_exec)(DSPLIB_kernelHandle h
  *         to the declaration of @ref DSPLIB_logicalComparator_init.
  *
  * @details This function determines the configuration for the streaming engine
- *          and MMA hardware resources based on the function call parameters,
+ *          and stream address generator based on the function call parameters,
  *          and the configuration is saved in bufPBlock array. In the kernel
  *          call sequence, @ref DSPLIB_logicalComparator_exec_ci would be
  *          called later independently by the application. When
@@ -65,47 +65,19 @@ DSPLIB_STATUS DSPLIB_logicalComparator_init_ci(DSPLIB_kernelHandle              
 
 /*!
  *  @brief This function is the main execution function for the C7x
- *         implementation of the kernel which compares inputs using 'equal to' operator. The function declaration
- * conforms to the declaration of @ref DSPLIB_logicalComparator_exec.
+ *         implementation of the kernel which compares two inputs using the relational operator (==, !=, <, <=, >, >=)
+ *         selected at compile time by the opType template parameter. The function declaration conforms to the
+ *         declaration of @ref DSPLIB_logicalComparator_exec.
  *
- * @details The function uses MMA hardware accelerator to perform the
- *          convolution computation. Filter data is loaded into B panel of the
- *          MMA from memory using one streaming engine, while the input data is
- *          loaded into A vectors of the MMA using the other streaming engine.
- *          Result of the compute from MMA C panel is stored into memory using
- *          a stream address generator.
+ * @details The function uses two streaming engines to load the two input
+ *          buffers and a stream address generator to store the result. The
+ *          comparison is selected through an inline helper chosen by opType,
+ *          so no runtime branching occurs in the compute loop. Output elements
+ *          are 1 where the comparison holds and 0 otherwise.
  *
- *  @param [in]  handle       : Active handle to the kernel
- *  @param [in]  pIn0         : Pointer to buffer holding the input0 buffer
- *  @param [in]  pIn1         : Pointer to buffer holding the input1 buffer.
- *  @param [out] pOut         : Pointer to buffer holding the output buffer
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * DSPLIB_STATUS.
- *
- *  @par Performance Considerations:
- *    For best performance,
- *    - the input and output data buffers are expected to be in L2 memory
- *    - the buffer pointers are assumed to be 64-byte aligned
- *
- */
-template <typename dataTypeIn, typename dataTypeOut>
-DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_ci(DSPLIB_kernelHandle handle,
-                                                  void *restrict pIn0,
-                                                  void *restrict pIn1,
-                                                  void *restrict pOut);
-
-/*!
- *  @brief This function is the main execution function for the C7x
- *         implementation of the kernel which compares inputs using 'not equal to' operator. The function declaration
- * conforms to the declaration of @ref DSPLIB_logicalComparator_exec.
- *
- * @details The function uses MMA hardware accelerator to perform the
- *          convolution computation. Filter data is loaded into B panel of the
- *          MMA from memory using one streaming engine, while the input data is
- *          loaded into A vectors of the MMA using the other streaming engine.
- *          Result of the compute from MMA C panel is stored into memory using
- *          a stream address generator.
+ *  @tparam dataTypeIn    : Element type of the input buffers
+ *  @tparam dataTypeOut   : Element type of the output buffer
+ *  @tparam opType        : Relational operator, one of @ref DSPLIB_logicalComparator_opType
  *
  *  @param [in]  handle       : Active handle to the kernel
  *  @param [in]  pIn0         : Pointer to buffer holding the input0 buffer
@@ -121,144 +93,17 @@ DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_ci(DSPLIB_kernelHandle handle,
  *    - the buffer pointers are assumed to be 64-byte aligned
  *
  */
-template <typename dataTypeIn, typename dataTypeOut>
-DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_ci(DSPLIB_kernelHandle handle,
-                                                  void *restrict pIn0,
-                                                  void *restrict pIn1,
-                                                  void *restrict pOut);
-
-/*!
- *  @brief This function is the main execution function for the C7x
- *         implementation of the kernel which compares inputs using 'less than' operator. The function declaration
- * conforms to the declaration of @ref DSPLIB_logicalComparator_exec.
- *
- * @details The function uses MMA hardware accelerator to perform the
- *          convolution computation. Filter data is loaded into B panel of the
- *          MMA from memory using one streaming engine, while the input data is
- *          loaded into A vectors of the MMA using the other streaming engine.
- *          Result of the compute from MMA C panel is stored into memory using
- *          a stream address generator.
- *
- *  @param [in]  handle       : Active handle to the kernel
- *  @param [in]  pIn0         : Pointer to buffer holding the input0 buffer
- *  @param [in]  pIn1         : Pointer to buffer holding the input1 buffer.
- *  @param [out] pOut         : Pointer to buffer holding the output buffer
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * DSPLIB_STATUS.
- *
- *  @par Performance Considerations:
- *    For best performance,
- *    - the input and output data buffers are expected to be in L2 memory
- *    - the buffer pointers are assumed to be 64-byte aligned
- *
- */
-template <typename dataTypeIn, typename dataTypeOut>
-DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_ci(DSPLIB_kernelHandle handle,
-                                                  void *restrict pIn0,
-                                                  void *restrict pIn1,
-                                                  void *restrict pOut);
-
-/*!
- *  @brief This function is the main execution function for the C7x
- *         implementation of the kernel which compares inputs using 'less than or equal to' operator. The function
- *         declaration conforms to the declaration of @ref DSPLIB_logicalComparator_exec.
- *
- * @details The function uses MMA hardware accelerator to perform the
- *          convolution computation. Filter data is loaded into B panel of the
- *          MMA from memory using one streaming engine, while the input data is
- *          loaded into A vectors of the MMA using the other streaming engine.
- *          Result of the compute from MMA C panel is stored into memory using
- *          a stream address generator.
- *
- *  @param [in]  handle       : Active handle to the kernel
- *  @param [in]  pIn0         : Pointer to buffer holding the input0 buffer
- *  @param [in]  pIn1         : Pointer to buffer holding the input1 buffer.
- *  @param [out] pOut         : Pointer to buffer holding the output buffer
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * DSPLIB_STATUS.
- *
- *  @par Performance Considerations:
- *    For best performance,
- *    - the input and output data buffers are expected to be in L2 memory
- *    - the buffer pointers are assumed to be 64-byte aligned
- *
- */
-template <typename dataTypeIn, typename dataTypeOut>
-DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_ci(DSPLIB_kernelHandle handle,
-                                                  void *restrict pIn0,
-                                                  void *restrict pIn1,
-                                                  void *restrict pOut);
-
-/*!
- *  @brief This function is the main execution function for the C7x
- *         implementation of the kernel which compares inputs using 'greater than' operator. The function declaration
- *         conforms to the declaration of @ref DSPLIB_logicalComparator_exec.
- *
- * @details The function uses MMA hardware accelerator to perform the
- *          convolution computation. Filter data is loaded into B panel of the
- *          MMA from memory using one streaming engine, while the input data is
- *          loaded into A vectors of the MMA using the other streaming engine.
- *          Result of the compute from MMA C panel is stored into memory using
- *          a stream address generator.
- *
- *  @param [in]  handle       : Active handle to the kernel
- *  @param [in]  pIn0         : Pointer to buffer holding the input0 buffer
- *  @param [in]  pIn1         : Pointer to buffer holding the input1 buffer.
- *  @param [out] pOut         : Pointer to buffer holding the output buffer
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * DSPLIB_STATUS.
- *
- *  @par Performance Considerations:
- *    For best performance,
- *    - the input and output data buffers are expected to be in L2 memory
- *    - the buffer pointers are assumed to be 64-byte aligned
- *
- */
-template <typename dataTypeIn, typename dataTypeOut>
-DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_ci(DSPLIB_kernelHandle handle,
-                                                  void *restrict pIn0,
-                                                  void *restrict pIn1,
-                                                  void *restrict pOut);
-
-/*!
- *  @brief This function is the main execution function for the C7x
- *         implementation of the kernel which compares inputs using 'greater than or equal to' operator. The function
- *         declaration conforms to the declaration of @ref DSPLIB_logicalComparator_exec.
- *
- * @details The function uses MMA hardware accelerator to perform the
- *          convolution computation. Filter data is loaded into B panel of the
- *          MMA from memory using one streaming engine, while the input data is
- *          loaded into A vectors of the MMA using the other streaming engine.
- *          Result of the compute from MMA C panel is stored into memory using
- *          a stream address generator.
- *
- *  @param [in]  handle       : Active handle to the kernel
- *  @param [in]  pIn0         : Pointer to buffer holding the input0 buffer
- *  @param [in]  pIn1         : Pointer to buffer holding the input1 buffer.
- *  @param [out] pOut         : Pointer to buffer holding the output buffer
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * DSPLIB_STATUS.
- *
- *  @par Performance Considerations:
- *    For best performance,
- *    - the input and output data buffers are expected to be in L2 memory
- *    - the buffer pointers are assumed to be 64-byte aligned
- *
- */
-template <typename dataTypeIn, typename dataTypeOut>
-DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_ci(DSPLIB_kernelHandle handle,
-                                                  void *restrict pIn0,
-                                                  void *restrict pIn1,
-                                                  void *restrict pOut);
+template <typename dataTypeIn, typename dataTypeOut, uint32_t opType>
+DSPLIB_STATUS DSPLIB_logicalComparator_exec_ci(DSPLIB_kernelHandle handle,
+                                               void *restrict pIn0,
+                                               void *restrict pIn1,
+                                               void *restrict pOut);
 
 /*!
  *  @brief This function is the main execution function for the natural
- *         C implementation of the kernel which compares inputs using 'equal to' operator. The function declaration
- *         conforms to the declaration of @ref DSPLIB_logicalComparator_exec.
+ *         C implementation of the kernel which compares inputs using the comparison operator (==, !=, <, <=, >, >=)
+ *         selected by the opType template parameter. The function declaration conforms to the declaration of
+ *         @ref DSPLIB_logicalComparator_exec.
  *
  * @details
  *
@@ -271,121 +116,11 @@ DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_ci(DSPLIB_kernelHandle handle,
  * DSPLIB_STATUS.
  *
  */
-template <typename dataTypeIn, typename dataTypeOut>
-extern DSPLIB_STATUS DSPLIB_logicalComparator_eq_exec_cn(DSPLIB_kernelHandle handle,
-                                                         void *restrict pIn0,
-                                                         void *restrict pIn1,
-                                                         void *restrict pOut);
-
-/*!
- *  @brief This function is the main execution function for the natural
- *         C implementation of the kernel which compares inputs using 'not equal to' operator. The function declaration
- *         conforms to the declaration of @ref DSPLIB_logicalComparator_exec.
- *
- * @details
- *
- *  @param [in]  handle       : Active handle to the kernel
- *  @param [in]  pIn0         : Pointer to buffer holding the input0 buffer
- *  @param [in]  pIn1         : Pointer to buffer holding the input1 buffer.
- *  @param [out] pOut         : Pointer to buffer holding the output buffer
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * DSPLIB_STATUS.
- *
- */
-template <typename dataTypeIn, typename dataTypeOut>
-extern DSPLIB_STATUS DSPLIB_logicalComparator_ne_exec_cn(DSPLIB_kernelHandle handle,
-                                                         void *restrict pIn0,
-                                                         void *restrict pIn1,
-                                                         void *restrict pOut);
-
-/*!
- *  @brief This function is the main execution function for the natural
- *         C implementation of the kernel which compares inputs using 'less than' operator. The function declaration
- *         conforms to the declaration of @ref DSPLIB_logicalComparator_exec.
- *
- * @details
- *
- *  @param [in]  handle       : Active handle to the kernel
- *  @param [in]  pIn0         : Pointer to buffer holding the input0 buffer
- *  @param [in]  pIn1         : Pointer to buffer holding the input1 buffer.
- *  @param [out] pOut         : Pointer to buffer holding the output buffer
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * DSPLIB_STATUS.
- *
- */
-template <typename dataTypeIn, typename dataTypeOut>
-extern DSPLIB_STATUS DSPLIB_logicalComparator_lt_exec_cn(DSPLIB_kernelHandle handle,
-                                                         void *restrict pIn0,
-                                                         void *restrict pIn1,
-                                                         void *restrict pOut);
-
-/*!
- *  @brief This function is the main execution function for the natural
- *         C implementation of the kernel which compares inputs using 'less than or equal to' operator. The function
- *         declaration conforms to the declaration of @ref DSPLIB_logicalComparator_exec.
- *
- * @details
- *
- *  @param [in]  handle       : Active handle to the kernel
- *  @param [in]  pIn0         : Pointer to buffer holding the input0 buffer
- *  @param [in]  pIn1         : Pointer to buffer holding the input1 buffer.
- *  @param [out] pOut         : Pointer to buffer holding the output buffer
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * DSPLIB_STATUS.
- *
- */
-template <typename dataTypeIn, typename dataTypeOut>
-extern DSPLIB_STATUS DSPLIB_logicalComparator_le_exec_cn(DSPLIB_kernelHandle handle,
-                                                         void *restrict pIn0,
-                                                         void *restrict pIn1,
-                                                         void *restrict pOut);
-
-/*!
- *  @brief This function is the main execution function for the natural
- *         C implementation of the kernel which compares inputs using 'greater than' operator. The function declaration
- *         conforms to the declaration of @ref DSPLIB_logicalComparator_exec.
- *
- * @details
- *
- *  @param [in]  handle       : Active handle to the kernel
- *  @param [in]  pIn0         : Pointer to buffer holding the input0 buffer
- *  @param [in]  pIn1         : Pointer to buffer holding the input1 buffer.
- *  @param [out] pOut         : Pointer to buffer holding the output buffer
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * DSPLIB_STATUS.
- *
- */
-template <typename dataTypeIn, typename dataTypeOut>
-extern DSPLIB_STATUS DSPLIB_logicalComparator_gt_exec_cn(DSPLIB_kernelHandle handle,
-                                                         void *restrict pIn0,
-                                                         void *restrict pIn1,
-                                                         void *restrict pOut);
-
-/*!
- *  @brief This function is the main execution function for the natural
- *         C implementation of the kernel which compares inputs using 'greater than or equal to' operator. The function
- *         declaration conforms to the declaration of @ref DSPLIB_logicalComparator_exec.
- *
- * @details
- *
- *  @param [in]  handle       : Active handle to the kernel
- *  @param [in]  pIn0         : Pointer to buffer holding the input0 buffer
- *  @param [in]  pIn1         : Pointer to buffer holding the input1 buffer.
- *  @param [out] pOut         : Pointer to buffer holding the output buffer
- *
- *  @return      Status value indicating success or failure. Refer to @ref
- * DSPLIB_STATUS.
- *
- */
-template <typename dataTypeIn, typename dataTypeOut>
-extern DSPLIB_STATUS DSPLIB_logicalComparator_ge_exec_cn(DSPLIB_kernelHandle handle,
-                                                         void *restrict pIn0,
-                                                         void *restrict pIn1,
-                                                         void *restrict pOut);
+template <typename dataTypeIn, typename dataTypeOut, uint32_t opType>
+extern DSPLIB_STATUS DSPLIB_logicalComparator_exec_cn(DSPLIB_kernelHandle handle,
+                                                      void *restrict pIn0,
+                                                      void *restrict pIn1,
+                                                      void *restrict pOut);
 
 /*!
  * @brief Structure that is reserved for internal use by the kernel
