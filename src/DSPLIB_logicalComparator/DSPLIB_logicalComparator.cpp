@@ -177,22 +177,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          if (pKerPrivArgs->dataType == DSPLIB_FLOAT32) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_cn<float, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_cn<float, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_cn<float, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_cn<float, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_cn<float, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_cn<float, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -202,22 +202,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_FLOAT64) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_cn<double, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_cn<double, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_cn<double, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_cn<double, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_cn<double, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_cn<double, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -227,22 +227,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_INT8) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_cn<int8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_cn<int8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_cn<int8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_cn<int8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_cn<int8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_cn<int8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -252,22 +252,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_UINT8) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_cn<uint8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_cn<uint8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_cn<uint8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_cn<uint8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_cn<uint8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_cn<uint8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -277,22 +277,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_INT16) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_cn<int16_t, uint16_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_cn<int16_t, uint16_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_cn<int16_t, uint16_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_cn<int16_t, uint16_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_cn<int16_t, uint16_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_cn<int16_t, uint16_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -302,22 +302,28 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_UINT16) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_cn<uint16_t, uint16_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_cn<uint16_t, uint16_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_cn<uint16_t, uint16_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_cn<uint16_t, uint16_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_cn<uint16_t, uint16_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_cn<uint16_t, uint16_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -327,22 +333,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_INT32) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_cn<int32_t, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_cn<int32_t, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_cn<int32_t, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_cn<int32_t, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_cn<int32_t, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_cn<int32_t, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -352,22 +358,28 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_UINT32) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_cn<uint32_t, uint32_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_cn<uint32_t, uint32_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_cn<uint32_t, uint32_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_cn<uint32_t, uint32_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_cn<uint32_t, uint32_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_cn<uint32_t, uint32_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -377,22 +389,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_INT64) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_cn<int64_t, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_cn<int64_t, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_cn<int64_t, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_cn<int64_t, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_cn<int64_t, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_cn<int64_t, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_cn<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -402,22 +414,28 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_UINT64) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_cn<uint64_t, uint64_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_cn<uint64_t, uint64_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_cn<uint64_t, uint64_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_cn<uint64_t, uint64_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_cn<uint64_t, uint64_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_cn<uint64_t, uint64_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_cn<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -432,22 +450,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          if (pKerPrivArgs->dataType == DSPLIB_FLOAT32) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_ci<float, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_ci<float, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_ci<float, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_ci<float, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_ci<float, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_ci<float, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<float, uint32_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -457,22 +475,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_FLOAT64) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_ci<double, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_ci<double, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_ci<double, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_ci<double, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_ci<double, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_ci<double, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<double, uint64_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -482,22 +500,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_INT8) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_ci<int8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_ci<int8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_ci<int8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_ci<int8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_ci<int8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_ci<int8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -507,22 +525,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_UINT8) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_ci<uint8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_ci<uint8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_ci<uint8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_ci<uint8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_ci<uint8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_ci<uint8_t, uint8_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<uint8_t, uint8_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -532,22 +550,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_INT16) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_ci<int16_t, uint16_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_ci<int16_t, uint16_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_ci<int16_t, uint16_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_ci<int16_t, uint16_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_ci<int16_t, uint16_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_ci<int16_t, uint16_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -557,22 +575,28 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_UINT16) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_ci<uint16_t, uint16_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_ci<uint16_t, uint16_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_ci<uint16_t, uint16_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_ci<uint16_t, uint16_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_ci<uint16_t, uint16_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_ci<uint16_t, uint16_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint16_t, uint16_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -582,22 +606,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_INT32) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_ci<int32_t, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_ci<int32_t, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_ci<int32_t, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_ci<int32_t, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_ci<int32_t, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_ci<int32_t, uint32_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -607,22 +631,28 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_UINT32) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_ci<uint32_t, uint32_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_ci<uint32_t, uint32_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_ci<uint32_t, uint32_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_ci<uint32_t, uint32_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_ci<uint32_t, uint32_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_ci<uint32_t, uint32_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint32_t, uint32_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -632,22 +662,22 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_INT64) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_ci<int64_t, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_ci<int64_t, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_ci<int64_t, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_ci<int64_t, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_ci<int64_t, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_ci<int64_t, uint64_t>;
+               pKerPrivArgs->execute = DSPLIB_logicalComparator_exec_ci<int64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
@@ -657,22 +687,28 @@ DSPLIB_STATUS DSPLIB_logicalComparator_set(DSPLIB_kernelHandle                  
          else if (pKerPrivArgs->dataType == DSPLIB_UINT64) {
             switch (pKerSetArgs->opType) {
             case DSPLIB_LOGICALCOMPARATOR_EQ:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_eq_exec_ci<uint64_t, uint64_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_EQ>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_NE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ne_exec_ci<uint64_t, uint64_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_NE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_lt_exec_ci<uint64_t, uint64_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_LT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_LE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_le_exec_ci<uint64_t, uint64_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_LE>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GT:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_gt_exec_ci<uint64_t, uint64_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_GT>;
                break;
             case DSPLIB_LOGICALCOMPARATOR_GE:
-               pKerPrivArgs->execute = DSPLIB_logicalComparator_ge_exec_ci<uint64_t, uint64_t>;
+               pKerPrivArgs->execute =
+                   DSPLIB_logicalComparator_exec_ci<uint64_t, uint64_t, DSPLIB_LOGICALCOMPARATOR_GE>;
                break;
             default:
                status = DSPLIB_ERR_INVALID_VALUE;
