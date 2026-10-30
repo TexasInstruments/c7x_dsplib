@@ -74,6 +74,15 @@ def resolve_dType(dType):
     return DSPLIB_dType
 
 
+def sizeof_dType(dType):
+    """Size in bytes of a C data type name such as int16_t, float or double."""
+    if dType == "float":
+        return 4
+    if dType == "double":
+        return 8
+    return int("".join(c for c in dType if c.isdigit())) // 8
+
+
 def minMaxVal(dType):
     if dType[0] == "i" or dType[0] == "u":
         [minVal, maxVal] = [np.finfo("float32").min, np.finfo("float32").max]

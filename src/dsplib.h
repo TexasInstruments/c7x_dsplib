@@ -37,6 +37,7 @@
 #include "DSPLIB_matTrans/DSPLIB_matTrans.h"
 #include "DSPLIB_mat_submat_copy/DSPLIB_mat_submat_copy.h"
 #include "DSPLIB_max/DSPLIB_max.h"
+#include "DSPLIB_peakAbsoluteValue/DSPLIB_peakAbsoluteValue.h"
 #include "DSPLIB_maxEvery/DSPLIB_maxEvery.h"
 #include "DSPLIB_maxIndex/DSPLIB_maxIndex.h"
 #include "DSPLIB_min/DSPLIB_min.h"
