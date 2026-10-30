@@ -57,6 +57,7 @@
 #include "DSPLIB_subConstant/DSPLIB_subConstant.h"
 #include "DSPLIB_svd/DSPLIB_svd.h"
 #include "DSPLIB_svd_small/DSPLIB_svd_small.h"
+#include "DSPLIB_thresholdDetector/DSPLIB_thresholdDetector.h"
 #include "DSPLIB_w_vec/DSPLIB_w_vec.h"
 #include "common/DSPLIB_bufParams.h"
 #include "common/DSPLIB_types.h"
