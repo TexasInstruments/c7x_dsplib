@@ -26,6 +26,7 @@
 #include "DSPLIB_dotprod/DSPLIB_dotprod.h"
 #include "DSPLIB_fir/DSPLIB_fir.h"
 #include "DSPLIB_fltoq15/DSPLIB_fltoq15.h"
+#include "DSPLIB_conditionalReplace/DSPLIB_conditionalReplace.h"
 #include "DSPLIB_interleave/DSPLIB_interleave.h"
 #include "DSPLIB_logicalComparator/DSPLIB_logicalComparator.h"
 #include "DSPLIB_logicalNOT/DSPLIB_logicalNOT.h"
