@@ -12,6 +12,27 @@
 #include "DSPLIB_bufParams.h"
 #include "DSPLIB_types.h"
 
+#if defined (__C7100__) || defined (__C7120__) || defined (__C7502__) || defined (__C7504__) || defined (__C7524__) || defined (__C7508__)
+#include "c71/DSPLIB_utility.h"
+#if MMALIB_DEBUGPRINT >= 1
+#include "c71/DSPLIB_debug.h"
+#endif
+#else
+#error invalid target
+#endif
+
+#if defined (__C7100__)
+#include "c7100/DSPLIB_utility.h"
+#elif defined (__C7120__)
+#include "c7120/DSPLIB_utility.h"
+#elif defined (__C7504__)
+#include "c7504/DSPLIB_utility.h"
+#elif defined (__C7524__)
+#include "c7524/DSPLIB_utility.h"
+#else
+#error invalid target
+#endif
+
 /*******************************************************************************
  *
  * EXTERNAL VARIABLES

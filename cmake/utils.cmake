@@ -207,6 +207,7 @@ function(DSPLIB_compile_options)
       --mma_version=${MMA}
       ${DSPLIB_C7x_SOC_defines}
       -DDSPLIB_DEBUGPRINT=${DSPLIB_DEBUGPRINT}
+      $<$<BOOL:${DSPLIB_BENCHMARK}>:-DDSPLIB_BENCHMARK=${DSPLIB_BENCHMARK}>
       -DEVM_TEST
       -DSOC=${SOC}
       -D__C7X_UNSTABLE_API

@@ -20,6 +20,7 @@
 #include "DSPLIB_cholesky/DSPLIB_cholesky.h"
 #include "DSPLIB_cholesky/DSPLIB_cholesky_inplace.h"
 #include "DSPLIB_cholesky/DSPLIB_cholesky_solver.h"
+#include "DSPLIB_complexMatrixMultiply/DSPLIB_complexMatrixMultiply.h"
 #include "DSPLIB_deinterleave/DSPLIB_deinterleave.h"
 #include "DSPLIB_diag/DSPLIB_diag.h"
 #include "DSPLIB_dotp_sqr/DSPLIB_dotp_sqr.h"

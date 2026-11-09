@@ -27,7 +27,7 @@
             "cacheVariables": {
                 "SOC": "AM62D",
                 "DEVICE": "C7504",
-		"MMA"   : "2_256"
+                "MMA": "2_256"
             }
         },
         {
@@ -53,7 +53,7 @@
             "cacheVariables": {
                 "SOC": "AM275",
                 "DEVICE": "C7524",
-		"MMA"   : "2_256F"
+                "MMA": "2_256F"
             }
         },
         {
@@ -63,7 +63,7 @@
             "cacheVariables": {
                 "SOC": "AM283",
                 "DEVICE": "C7524",
-		"MMA"   : "2_256F"
+                "MMA": "2_256F"
             }
         },
         {
@@ -99,12 +99,38 @@
             }
         },
         {
-	   "name": "base-buildlib",
-	   "hidden": true,
-	   "cacheVariables": {
-	   "BUILD_LIB": "1"
-	  }
-	},
+            "name": "base-j784s4",
+            "hidden": true,
+            "inherits": "base-common",
+            "cacheVariables": {
+                "SOC": "j784s4",
+                "DEVICE": "C7120",
+                "MMA": "2"
+            }
+        },
+        {
+            "name": "base-j784s4-target",
+            "hidden": true,
+            "inherits": "base-j784s4",
+            "cacheVariables": {
+                "TARGET_PLATFORM": "TARGET"
+            }
+        },
+        {
+            "name": "base-j784s4-pc",
+            "hidden": true,
+            "inherits": "base-j784s4",
+            "cacheVariables": {
+                "TARGET_PLATFORM": "PC"
+            }
+        },
+        {
+            "name": "base-buildlib",
+            "hidden": true,
+            "cacheVariables": {
+                "BUILD_LIB": "1"
+            }
+        },
         {
             "name": "base-autotest",
             "hidden": true,
@@ -114,172 +140,464 @@
             }
         },
         {
+            "name": "base-singlekernel",
+            "hidden": true,
+            "cacheVariables": {
+                "BUILD_TEST": "1",
+                "ALL_TEST_CASES": "1"
+            }
+        },
+        {
             "name": "release-autotest-am62d-pc",
-            "inherits": ["base-am62d-pc", "base-autotest"],
+            "inherits": [
+                "base-am62d-pc",
+                "base-autotest"
+            ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "release"
             }
         },
         {
             "name": "debug-autotest-am62d-pc",
-            "inherits": ["base-am62d-pc", "base-autotest"],
+            "inherits": [
+                "base-am62d-pc",
+                "base-autotest"
+            ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "debug"
             }
         },
         {
             "name": "release-autotest-am62d-target",
-            "inherits": ["base-am62d-target", "base-autotest"],
+            "inherits": [
+                "base-am62d-target",
+                "base-autotest"
+            ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "release"
             }
         },
         {
             "name": "debug-autotest-am62d-target",
-            "inherits": ["base-am62d-target", "base-autotest"],
+            "inherits": [
+                "base-am62d-target",
+                "base-autotest"
+            ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "debug"
             }
         },
         {
             "name": "release-autotest-am275-target",
-            "inherits": ["base-am275-target", "base-autotest"],
+            "inherits": [
+                "base-am275-target",
+                "base-autotest"
+            ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "release"
             }
         },
         {
             "name": "release-autotest-am283-target",
-            "inherits": ["base-am283-target", "base-autotest"],
+            "inherits": [
+                "base-am283-target",
+                "base-autotest"
+            ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "release"
             }
         },
         {
             "name": "debug-autotest-am275-target",
-            "inherits": ["base-am275-target", "base-autotest"],
+            "inherits": [
+                "base-am275-target",
+                "base-autotest"
+            ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "debug"
             }
         },
         {
             "name": "debug-autotest-am283-target",
-            "inherits": ["base-am283-target", "base-autotest"],
+            "inherits": [
+                "base-am283-target",
+                "base-autotest"
+            ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "debug"
             }
         },
         {
             "name": "release-autotest-am275-pc",
-            "inherits": ["base-am275-pc", "base-autotest"],
+            "inherits": [
+                "base-am275-pc",
+                "base-autotest"
+            ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "release"
             }
         },
         {
             "name": "release-autotest-am283-pc",
-            "inherits": ["base-am283-pc", "base-autotest"],
+            "inherits": [
+                "base-am283-pc",
+                "base-autotest"
+            ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "release"
             }
         },
         {
             "name": "debug-autotest-am275-pc",
-            "inherits": ["base-am275-pc", "base-autotest"],
+            "inherits": [
+                "base-am275-pc",
+                "base-autotest"
+            ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "debug"
             }
         },
         {
             "name": "debug-autotest-am283-pc",
-            "inherits": ["base-am283-pc", "base-autotest"],
+            "inherits": [
+                "base-am283-pc",
+                "base-autotest"
+            ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "debug"
             }
         },
         {
-      "name": "release-buildlib-am62d-pc",
-      "inherits": ["base-am62d-pc", "base-buildlib"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "release"
-      }
-    },
-    {
-      "name": "debug-buildlib-am62d-pc",
-      "inherits": ["base-am62d-pc", "base-buildlib"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "debug"
-      }
-    },
-    {
-      "name": "release-buildlib-am62d-target",
-      "inherits": ["base-am62d-target", "base-buildlib"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "release"
-      }
-    },
-    {
-      "name": "debug-buildlib-am62d-target",
-      "inherits": ["base-am62d-target", "base-buildlib"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "debug"
-      }
-    },
-    {
-      "name": "release-buildlib-am275-pc",
-      "inherits": ["base-am275-pc", "base-buildlib"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "release"
-      }
-    },
-    {
-      "name": "release-buildlib-am283-pc",
-      "inherits": ["base-am283-pc", "base-buildlib"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "release"
-      }
-    },
-    {
-      "name": "debug-buildlib-am275-pc",
-      "inherits": ["base-am275-pc", "base-buildlib"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "debug"
-      }
-    },
-    {
-      "name": "debug-buildlib-am283-pc",
-      "inherits": ["base-am283-pc", "base-buildlib"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "debug"
-      }
-    },
-    {
-      "name": "release-buildlib-am275-target",
-      "inherits": ["base-am275-target", "base-buildlib"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "release"
-      }
-    },
-    {
-      "name": "release-buildlib-am283-target",
-      "inherits": ["base-am283-target", "base-buildlib"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "release"
-      }
-    },
-    {
-      "name": "debug-buildlib-am275-target",
-      "inherits": ["base-am275-target", "base-buildlib"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "debug"
-      }
-    },
-    {
-      "name": "debug-buildlib-am283-target",
-      "inherits": ["base-am283-target", "base-buildlib"],
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "debug"
-      }
-    }
+            "name": "release-buildlib-am62d-pc",
+            "inherits": [
+                "base-am62d-pc",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-buildlib-am62d-pc",
+            "inherits": [
+                "base-am62d-pc",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-buildlib-am62d-target",
+            "inherits": [
+                "base-am62d-target",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-buildlib-am62d-target",
+            "inherits": [
+                "base-am62d-target",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-buildlib-am275-pc",
+            "inherits": [
+                "base-am275-pc",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "release-buildlib-am283-pc",
+            "inherits": [
+                "base-am283-pc",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-buildlib-am275-pc",
+            "inherits": [
+                "base-am275-pc",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "debug-buildlib-am283-pc",
+            "inherits": [
+                "base-am283-pc",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-buildlib-am275-target",
+            "inherits": [
+                "base-am275-target",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "release-buildlib-am283-target",
+            "inherits": [
+                "base-am283-target",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-buildlib-am275-target",
+            "inherits": [
+                "base-am275-target",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "debug-buildlib-am283-target",
+            "inherits": [
+                "base-am283-target",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-autotest-j784s4-pc",
+            "inherits": [
+                "base-j784s4-pc",
+                "base-autotest"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-autotest-j784s4-pc",
+            "inherits": [
+                "base-j784s4-pc",
+                "base-autotest"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-autotest-j784s4-target",
+            "inherits": [
+                "base-j784s4-target",
+                "base-autotest"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-autotest-j784s4-target",
+            "inherits": [
+                "base-j784s4-target",
+                "base-autotest"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-buildlib-j784s4-pc",
+            "inherits": [
+                "base-j784s4-pc",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-buildlib-j784s4-pc",
+            "inherits": [
+                "base-j784s4-pc",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-buildlib-j784s4-target",
+            "inherits": [
+                "base-j784s4-target",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-buildlib-j784s4-target",
+            "inherits": [
+                "base-j784s4-target",
+                "base-buildlib"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-singlekernel-am62d-pc",
+            "inherits": [
+                "base-am62d-pc",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-singlekernel-am62d-pc",
+            "inherits": [
+                "base-am62d-pc",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-singlekernel-am62d-target",
+            "inherits": [
+                "base-am62d-target",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-singlekernel-am62d-target",
+            "inherits": [
+                "base-am62d-target",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-singlekernel-am275-pc",
+            "inherits": [
+                "base-am275-pc",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-singlekernel-am275-pc",
+            "inherits": [
+                "base-am275-pc",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-singlekernel-am275-target",
+            "inherits": [
+                "base-am275-target",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-singlekernel-am275-target",
+            "inherits": [
+                "base-am275-target",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-singlekernel-j784s4-pc",
+            "inherits": [
+                "base-j784s4-pc",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-singlekernel-j784s4-pc",
+            "inherits": [
+                "base-j784s4-pc",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "release-singlekernel-j784s4-target",
+            "inherits": [
+                "base-j784s4-target",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "release"
+            }
+        },
+        {
+            "name": "debug-singlekernel-j784s4-target",
+            "inherits": [
+                "base-j784s4-target",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug"
+            }
+        },
+        {
+            "name": "debug-example-j784s4-pc",
+            "inherits": [
+                "base-j784s4-pc",
+                "base-singlekernel"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "debug",
+                "BUILD_EXAMPLE": "1",
+                "DSPLIB_DEBUGPRINT": "0"
+            }
+        }
     ]
 }

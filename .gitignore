@@ -28,8 +28,10 @@ __pycache__/
 scripts/
 tests/
 docs/superpowers/
+tmp/
 
 # Editor / AI tooling
+.venv/
 .vscode/
 .claude/
 .venv/
