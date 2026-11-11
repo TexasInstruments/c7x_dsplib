@@ -119,7 +119,7 @@ DSPLIB_STATUS DSPLIB_peakAbsoluteValue_init_checkParams(DSPLIB_kernelHandle     
  *
  *  @param [in]  handle       :  Active handle to the kernel
  *  @param [in]  pIn  :  Pointer to the structure input buffer
- *  @param [out] pout :  Pointer to the output buffer
+ *  @param [out] pOut :  Pointer to the output buffer
  *
  *  @return      Status value indicating success or failure. Refer to @ref DSPLIB_STATUS.
  *
@@ -127,7 +127,7 @@ DSPLIB_STATUS DSPLIB_peakAbsoluteValue_init_checkParams(DSPLIB_kernelHandle     
  */
 DSPLIB_STATUS
 DSPLIB_peakAbsoluteValue_exec_checkParams(DSPLIB_kernelHandle handle,
-                                          const void *restrict pIn1,
+                                          const void *restrict pIn,
                                           const void *restrict pOut);
 
 /**
@@ -138,7 +138,7 @@ DSPLIB_peakAbsoluteValue_exec_checkParams(DSPLIB_kernelHandle handle,
  *
  *  @param [in]  handle       :  Active handle to the kernel
  *  @param [in]  pIn  :  Pointer to the structure input buffer
- *  @param [out] pout :  Pointer to the output buffer
+ *  @param [out] pOut :  Pointer to the output buffer
  *
  *  @return      Status value indicating success or failure. Refer to @ref DSPLIB_STATUS.
  *

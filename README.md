@@ -45,6 +45,7 @@ reference implementation under `test/DSPLIB_idat_gen/DSPLIB_<kernel>/` for test 
 ### Arithmetic
 | Kernel | Description |
 |--------|-------------|
+| `DSPLIB_absoluteValue` | Absolute value of each element of a 2D matrix |
 | `DSPLIB_add` | Element-wise addition |
 | `DSPLIB_addConstant` | Add scalar constant to each element |
 | `DSPLIB_addNCh` | Multi-channel element-wise addition |
@@ -82,6 +83,7 @@ reference implementation under `test/DSPLIB_idat_gen/DSPLIB_<kernel>/` for test 
 | `DSPLIB_logicalComparator` | Element-wise relational comparison of two matrices (==, !=, <, <=, >, >=) |
 | `DSPLIB_logicalNOT` | Element-wise logical NOT (Boolean invert) of a matrix: outputs 1 where the input is zero, 0 otherwise |
 | `DSPLIB_conditionalReplace` | Per-channel conditional replacement of integer and floating point data: compares each sample against a per-channel constant (==, !=, <, <=, >, >=) and substitutes a per-channel replacement value |
+| `DSPLIB_peakAbsoluteValue` | Maximum absolute value of every row of a 2D input (one peak per row, e.g. per channel) |
 
 ### Matrix
 | Kernel | Description |
