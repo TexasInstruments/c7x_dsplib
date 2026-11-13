@@ -196,12 +196,6 @@
         <td align="center"> No OS </td>
         <td align="center"> </td>
       </tr>
-      <tr>
-        <td align="center"> C7120 (J784S4)</td>
-        <td align="center"> No OS </td>
-        <td align="center"> No OS </td>
-        <td align="center"> </td>
-      </tr>
 
 
     </table>
@@ -283,8 +277,6 @@
     <h2><a class="anchor" name="Fixed_Issues"></a>Fixed Issues</h2>
     <p>
     <ol>
-      <li> Fixed C7120 compile issues in child kernels: added guards for __SE_RESET() modes available only on C75x in DSPLIB_cascadeBiquad, removed invalid variables from DSPLIB_minerror_ci, and fixed memory linking for larger static tests (XLIB-1173) </li>
-      <li> Fixed DSPLIB_deinterleave compatibility with C7120 by using scalable vector types and C7120-compatible streaming engine decimation properties (XLIB-1062) </li>
       <li> Fixed CMake toolchain path resolution to use the HOME environment variable instead of /home/&lt;user&gt; (SITSW-13077) </li>
       <li> Fixed missing Doxygen member group close in DSPLIB_mul.h and updated DSPLIB_peakAbsoluteValue header documentation (XLIB-1177) </li>
     </ol>
