@@ -190,6 +190,7 @@ _API_GROUP_ORDER = [
         "DSPLIB_mat_submat_copy",
         "DSPLIB_blkCopy2D",
         "DSPLIB_blkCopyConst2D",
+        "DSPLIB_tableSourceRowColSelector",
     ]),
     ("Linear Algebra", [
         "DSPLIB_cholesky",

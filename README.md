@@ -95,6 +95,7 @@ reference implementation under `test/DSPLIB_idat_gen/DSPLIB_<kernel>/` for test 
 | `DSPLIB_mat_submat_copy` | Sub-matrix copy |
 | `DSPLIB_blkCopy2D` | 2-D block copy |
 | `DSPLIB_blkCopyConst2D` | 2-D block copy with constant fill |
+| `DSPLIB_tableSourceRowColSelector` | Table row or column selection by index |
 
 ### Linear Algebra
 | Kernel | Description |
