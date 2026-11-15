@@ -39,6 +39,10 @@ extern "C" {
  *            32 bytes, so the transposed variant is mainly chosen for many short or medium rows. The variant is
  *            chosen in @ref DSPLIB_peakAbsoluteValue_init and has no effect on the results.
  *
+ * @par Device Support:
+ *          Implemented for 256-bit C7x devices only (C7504, C7524). On other devices
+ *          @ref DSPLIB_peakAbsoluteValue_init_checkParams returns @ref DSPLIB_ERR_NOT_IMPLEMENTED.
+ *
  * @ingroup  DSPLIB
  */
 /**@{**/
