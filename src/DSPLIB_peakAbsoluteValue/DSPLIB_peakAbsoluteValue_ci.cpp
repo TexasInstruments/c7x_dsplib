@@ -6,6 +6,9 @@
 #include "DSPLIB_peakAbsoluteValue_priv.h"
 #include <type_traits>
 
+/* The optimized implementation targets 256-bit C7x only (C7504, C7524) */
+#if (__C7X_VEC_SIZE_BITS__ == 256)
+
 /* Absolute value of every lane. Integers use the saturating __abs. float and double clear the sign bit (bit-identical
  * to VABSSP/VABSDP, but it also runs on the .M unit, which gives ii = 2 instead of 3 in the multi-iteration loop). */
 template <typename vec> static inline vec DSPLIB_peakAbsoluteValue_absLanes(vec inVec) { return __abs(inVec); }
@@ -645,11 +648,14 @@ template DSPLIB_STATUS DSPLIB_peakAbsoluteValue_transposed_exec_ci<double>(DSPLI
                                                                            void *restrict pIn,
                                                                            void *restrict pOut);
 
+#endif /* #if (__C7X_VEC_SIZE_BITS__ == 256) */
+
 void DSPLIB_peakAbsoluteValue_perfEst(DSPLIB_kernelHandle handle,
                                       uint64_t           *archCycles,
                                       uint64_t           *estCycles,
                                       uint32_t            dataType)
 {
+#if (__C7X_VEC_SIZE_BITS__ == 256)
    DSPLIB_peakAbsoluteValue_PrivArgs *pKerPrivArgs = (DSPLIB_peakAbsoluteValue_PrivArgs *) handle;
    uint64_t                           height       = (uint64_t) pKerPrivArgs->height;
 
@@ -690,4 +696,10 @@ void DSPLIB_peakAbsoluteValue_perfEst(DSPLIB_kernelHandle handle,
       *estCycles  = DSPLIB_peakAbsoluteValue_rowVariantCycles(typeIdx, pKerPrivArgs->vecsPerStream,
                                                               pKerPrivArgs->numIterations, height, 0U);
    }
+#else
+   (void) handle;
+   (void) dataType;
+   *archCycles = 0U;
+   *estCycles  = 0U;
+#endif
 }

@@ -339,22 +339,37 @@ int DSPLIB_peakAbsoluteValue_d(uint32_t *pProfile, uint8_t LevelOfFeedback)
 
 int test_main(uint32_t *pProfile)
 {
+   int fail;
+#if (__C7X_VEC_SIZE_BITS__ != 256)
+   /* The kernel is implemented for 256-bit C7x only (C7504, C7524); elsewhere init must report NOT_IMPLEMENTED */
+   DSPLIB_peakAbsoluteValue_InitArgs kerInitArgs;
+   kerInitArgs.funcStyle = DSPLIB_FUNCTION_OPTIMIZED;
+   memset(pProfile, 0, 3U * (uint32_t) test_cases * sizeof(uint32_t));
+   fail = (DSPLIB_peakAbsoluteValue_init_checkParams(NULL, NULL, NULL, &kerInitArgs) != DSPLIB_ERR_NOT_IMPLEMENTED) ? 1
+                                                                                                                    : 0;
+#else
 #if !defined(_HOST_BUILD)
    if (TI_cache_init()) {
       TI_memError("DSPLIB_peakAbsoluteValue");
-      return 1;
+      fail = 1;
    }
    else
 #else
    printf("_HOST_BUILD is defined.\n");
 #endif
    {
-      return DSPLIB_peakAbsoluteValue_d(&pProfile[0], 0);
+      fail = DSPLIB_peakAbsoluteValue_d(&pProfile[0], 0);
    }
+#endif
+   return fail;
 }
 
 int coverage_test_main()
 {
+   int fail = 0;
+#if (__C7X_VEC_SIZE_BITS__ != 256)
+   /* Not implemented for this vector width: nothing to cover (see test_main) */
+#else
    int32_t                           testNum         = 1000;
    int32_t                           currentTestFail = 0;
    DSPLIB_STATUS                     status_nat;
@@ -363,7 +378,6 @@ int coverage_test_main()
    DSPLIB_peakAbsoluteValue_InitArgs kerInitArgs;
    int32_t                           handleSize = DSPLIB_peakAbsoluteValue_getHandleSize(&kerInitArgs);
    DSPLIB_kernelHandle               handle     = malloc(handleSize);
-   int                               fail       = 0;
    void                             *pIn        = (void *) TI_memalign(DSPLIB_L2DATA_ALIGNMENT, 64);
    void                             *pOut       = (void *) TI_memalign(DSPLIB_L2DATA_ALIGNMENT, 64);
 
@@ -563,6 +577,8 @@ int coverage_test_main()
       at the end of coverage test cases. */
    int32_t handleSize_LDRA = DSPLIB_peakAbsoluteValue_getHandleSize(&kerInitArgs);
    printf("!!! Pushing final execution history. handleSize_LDRA: %d\n", handleSize_LDRA);
+#endif
+
 #endif
 
    return fail;

@@ -20,6 +20,7 @@ DSPLIB_STATUS DSPLIB_peakAbsoluteValue_init_checkParams(DSPLIB_kernelHandle     
 #if DSPLIB_DEBUGPRINT
    printf("Enter DSPLIB_peakAbsoluteValue_init_checkParams\n");
 #endif
+#if (__C7X_VEC_SIZE_BITS__ == 256)
    if ((handle == NULL) || (bufParamsIn == NULL) || (bufParamsOut == NULL) || (pKerInitArgs == NULL)) {
       status = DSPLIB_ERR_NULL_POINTER;
    }
@@ -55,6 +56,16 @@ DSPLIB_STATUS DSPLIB_peakAbsoluteValue_init_checkParams(DSPLIB_kernelHandle     
    else {
       /* Nothing to do here */
    }
+#else
+#if DSPLIB_DEBUGPRINT
+   printf("DSPLIB_peakAbsoluteValue is NOT IMPLEMENTED for __C7X_VEC_SIZE_BITS__ != 256\n");
+#endif
+   (void) handle;
+   (void) bufParamsIn;
+   (void) bufParamsOut;
+   (void) pKerInitArgs;
+   status = DSPLIB_ERR_NOT_IMPLEMENTED;
+#endif
 
    return status;
 }
@@ -90,6 +101,14 @@ DSPLIB_STATUS DSPLIB_peakAbsoluteValue_init(DSPLIB_kernelHandle                 
 #if DSPLIB_DEBUGPRINT
    printf("DSPLIB_DEBUGPRINT Enter DSPLIB_peakAbsoluteValue_init\n");
 #endif
+#if (__C7X_VEC_SIZE_BITS__ != 256)
+   /* Not implemented off 256-bit devices for any funcStyle (including NATC), consistent with init_checkParams */
+   (void) bufParamsIn;
+   (void) bufParamsOut;
+   (void) pKerInitArgs;
+   (void) pKerPrivArgs;
+   status = DSPLIB_ERR_NOT_IMPLEMENTED;
+#else
    pKerPrivArgs->width  = (int32_t) bufParamsIn->dim_x;
    pKerPrivArgs->height = (int32_t) bufParamsIn->dim_y;
    pKerPrivArgs->strideInElements =
@@ -127,6 +146,7 @@ DSPLIB_STATUS DSPLIB_peakAbsoluteValue_init(DSPLIB_kernelHandle                 
       }
    }
    else {
+#if (__C7X_VEC_SIZE_BITS__ == 256)
       /* Row variants: rows of up to 2 vectors and of 3-4 vectors run two rows per loop iteration (the first row alone
        * for an odd number of rows), longer rows use an inner loop. init_ci then decides whether the transposed variant
        * is cheaper, and the variant is picked from the table below */
@@ -236,10 +256,14 @@ DSPLIB_STATUS DSPLIB_peakAbsoluteValue_init(DSPLIB_kernelHandle                 
 
          pKerPrivArgs->execute = execVariants[tableRow][tableCol];
       }
+#else
+      status = DSPLIB_ERR_NOT_IMPLEMENTED;
+#endif
    }
 #if DSPLIB_DEBUGPRINT
    printf("DSPLIB_DEBUGPRINT  CP 3 status %d\n", status);
 #endif
+#endif /* (__C7X_VEC_SIZE_BITS__ != 256) */
    return status;
 }
 
